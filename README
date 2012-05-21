@@ -1,0 +1,34 @@
+Overview
+========
+
+This repository contains (or will contain) a Chef repository for provisioning
+the NCS Navigator application suite and a Vagrant configuration for testing
+provisioning scripts, applications, and setting up development infrastructure.
+
+Most of the information needed to set up an NCS Navigator application suite is
+public; however, as is the case with all deployments, some information must be
+kept private (i.e. keys).
+
+
+Required materials
+==================
+
+- A Vagrant box.
+  The box MUST use NAT on eth0 and host-only networking on eth1.  Host-only
+  addresses used are 192.168.56.[220,222]/24.  For other configurations,
+  alter the Vagrantfile.
+
+- The private key for that box.
+  The key SHOULD be in the repository directory and SHOULD be named
+  ncs-vagrant.  For other configurations, alter the Vagrantfile.
+
+- A Chef server.
+  The Chef server SHOULD have an environment called ncs_development.  For
+  other configurations, alter the Vagrantfile.
+
+- The validation key for your Chef server.
+  The key SHOULD be in the repository directory.  The Vagrantfile assumes a
+  name of nubic-validator.pem; for other configurations, alter the
+  Vagrantfile.
+
+# vim:ts=2:sw=2:et:tw=78
