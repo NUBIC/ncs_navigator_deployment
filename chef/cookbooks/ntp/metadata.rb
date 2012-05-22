@@ -7,6 +7,8 @@ version           "1.1.8"
 
 recipe "ntp", "Installs and configures ntp either as a server or client"
 
+depends "selinux", "~> 1.0"
+
 %w{ ubuntu debian redhat centos fedora scientific freebsd }.each do |os|
   supports os
 end
