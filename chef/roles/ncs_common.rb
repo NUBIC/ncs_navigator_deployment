@@ -9,5 +9,9 @@ run_list(
 default_attributes(
   "ntp" => {
     "servers" => ["time.northwestern.edu"]
+  },
+  "monit" => {
+    "poll_period" => 30,
+    "poll_start_delay" => 5
   }
 )
