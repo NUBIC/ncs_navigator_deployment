@@ -2,6 +2,13 @@ package "monit" do
   action :install
 end
 
+monit_conf = case node[:platform]
+             when "ubuntu","debian"
+               "/etc/monit/monitrc"
+             when "centos"
+               "/etc/monit.conf"
+             end
+
 if platform?("ubuntu")
   cookbook_file "/etc/default/monit" do
     source "monit.default"
@@ -17,7 +24,7 @@ service "monit" do
   supports [:start, :restart, :stop]
 end
 
-template "/etc/monit/monitrc" do
+template monit_conf do
   owner "root"
   group "root"
   mode 0700
