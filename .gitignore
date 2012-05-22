@@ -1,6 +1,6 @@
 *.sw?
 .rbx
 ncs-vagrant*
-nubic-validator.pem
+*.pem
 *.box
 .vagrant
