@@ -1,0 +1,19 @@
+This repository contains the full history of Opscode's blank Chef repository.
+This was done to make it easier to merge in updates to that repo.  (They're
+infrequent, but they happen.)
+
+To update, add a remote:
+
+    $ git remote add opscode-chef-repo https://github.com/opscode/chef-repo.git
+
+Then fetch and merge using the subtree strategy:
+
+    $ git fetch opscode-chef-repo
+    $ git merge -s subtree opscode-chef-repo/master
+
+Alternatively, you can pull opscode-chef-repo onto master:
+
+    $ git pull -s subtree opscode-chef-repo master
+
+
+# vim:ts=2:sw=2:et:tw=78
