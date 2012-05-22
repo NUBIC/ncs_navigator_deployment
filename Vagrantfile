@@ -1,9 +1,23 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
+RUN_LISTS = {
+  :app => [
+    'role[ncs_common]'
+  ],
+  :cas => [
+    'role[ncs_common]',
+  ],
+  :db => [
+    'role[ncs_common]'
+  ]
+}
+
 def base_config(role, config)
   username = ENV['USER']
   hostname = `hostname -s`.chomp
+
+  raise "No run list defined for #{role}" if RUN_LISTS[role].nil?
 
   config.vm.define role do |config|
     config.vm.box = "ncs"
@@ -15,6 +29,7 @@ def base_config(role, config)
       chef.chef_server_url = "http://192.168.56.1:4000"
       chef.environment = "ncs_development"
       chef.validation_key_path = "nubic-validator.pem"
+      chef.run_list = RUN_LISTS[role]
     end
 
     yield config
