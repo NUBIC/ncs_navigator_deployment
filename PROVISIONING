@@ -1,0 +1,39 @@
+Provisioning of NCS Navigator application nodes
+===============================================
+
+There are three types of nodes for an NCS Navigator deployment: app server,
+CAS server, and database server.  Recipes are as follows:
+
+
+Common 
+------
+
+- monit
+- ntp
+  - permit incoming NTP traffic from the configured time servers
+
+
+App server
+----------
+
+- apache2
+- build-essential (for building native extensions of Ruby libraries)
+- passenger
+- tomcat (for PSC)
+
+
+CAS
+---
+
+- apache2
+- tomcat
+
+
+Database
+--------
+
+- postgresql (v9.0)
+  - SSL connections enabled
+- redis (v2.4.13)
+
+# vim:ts=2:sw=2:et:tw=78
