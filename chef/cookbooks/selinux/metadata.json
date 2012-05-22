@@ -1,0 +1,29 @@
+{
+  "name": "selinux",
+  "description": "LWRPs for managing security contexts",
+  "long_description": "= DESCRIPTION:\n\nProvides a `selinux_security_context` LWRP.\n\n= REQUIREMENTS:\n\nA system running SELinux in enforcing or permissive mode.\n\n= ATTRIBUTES: \n\nNone.\n\n= USAGE:\n\nThe `selinux_security_context` LWRP is meant to be used from other cookbooks.  Example usage:\n\n== Restore a default security context\n\n    selinux_security_context \"/some/path\" do\n      action :restore\n    end\n",
+  "maintainer": "NUBIC",
+  "maintainer_email": "yipdw@northwestern.edu",
+  "license": "Apache 2.0",
+  "platforms": {
+  },
+  "dependencies": {
+  },
+  "recommendations": {
+  },
+  "suggestions": {
+  },
+  "conflicting": {
+  },
+  "providing": {
+  },
+  "replacing": {
+  },
+  "attributes": {
+  },
+  "groupings": {
+  },
+  "recipes": {
+  },
+  "version": "1.0.0"
+}
