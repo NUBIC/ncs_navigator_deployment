@@ -9,7 +9,7 @@ RUN_LISTS = {
     'role[ncs_common]',
   ],
   :db => [
-    'role[ncs_common]'
+    'role[ncs_db]'
   ]
 }
 
