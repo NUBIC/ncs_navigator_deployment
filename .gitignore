@@ -4,3 +4,4 @@ ncs-vagrant*
 *.pem
 *.box
 .vagrant
+.chef
