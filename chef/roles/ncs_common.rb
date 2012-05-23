@@ -18,5 +18,8 @@ default_attributes(
   },
   "yum" => {
     "epel_release" => 6
+  },
+  "postgresql" => {
+    "version" => "9.0"
   }
 )
