@@ -3,7 +3,7 @@
 
 RUN_LISTS = {
   :app => [
-    'role[ncs_common]'
+    'role[ncs_app]'
   ],
   :cas => [
     'role[ncs_common]',
