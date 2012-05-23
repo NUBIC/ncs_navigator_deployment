@@ -3,7 +3,6 @@ description "Common recipes for nodes in the NCS Navigator application suite"
 
 run_list(
   "recipe[ntp]",
-  "recipe[ntp::selinux]",
   "recipe[yumrepo::epel]",
   "recipe[monit]"
 )
