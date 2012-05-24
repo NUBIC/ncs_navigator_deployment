@@ -10,7 +10,8 @@ run_list(
   "recipe[passenger::apache2-rvm]",
   "recipe[tomcat]",
   "recipe[application_users]",
-  "recipe[bcdatabase]"
+  "recipe[bcdatabase]",
+  "recipe[aker::central]"
 )
 
 default_attributes(
@@ -37,5 +38,10 @@ default_attributes(
   },
   "bcdatabase" => {
     "version" => "1.2.1"
+  },
+  "aker" => {
+    "central" => {
+      "path" => "/etc/nubic/aker-prod.yml"
+    }
   }
 )
