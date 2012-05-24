@@ -15,7 +15,8 @@ default_attributes(
     "version" => "9.0"
   },
   "rvm" => {
-    "default_ruby" => "1.9.3-p194",
+    "default_ruby" => "system",
+    "rubies" => ["1.9.3-p194"],
     "global_gems" => [
         { "name" => "bundler" }
      ]
