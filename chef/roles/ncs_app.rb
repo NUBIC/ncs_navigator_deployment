@@ -7,7 +7,8 @@ run_list(
   "recipe[postgresql::client]",
   "recipe[rvm::system]",
   "recipe[apache2]",
-  "recipe[passenger::apache2-rvm]"
+  "recipe[passenger::apache2-rvm]",
+  "recipe[tomcat]"
 )
 
 default_attributes(
