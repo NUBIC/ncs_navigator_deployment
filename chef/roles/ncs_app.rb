@@ -18,7 +18,7 @@ default_attributes(
     "default_ruby" => "system",
     "rubies" => ["1.9.3-p194"],
     "global_gems" => [
-        { "name" => "bundler" }
+        { "name" => "bundler", "version" => "~> 1.1" }
      ]
   }
 )
