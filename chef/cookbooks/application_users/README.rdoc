@@ -1,0 +1,48 @@
+= DESCRIPTION:
+
+Sets up application users on application servers.
+
+An application user is a user account that is intended to be used for running
+an application.
+
+= REQUIREMENTS:
+
+Should work with pretty much any UNIX-like out there, but developed for and
+tested on RHEL 6.1.
+
+= ATTRIBUTES:
+
+* `application_users[:users]`: A map of user data objects.  Here's an example:
+
+    {
+        "sample": {                       # username
+            "authorized_keys": [          # entries for ~/.ssh/authorized_keys
+                "dwy870-sample-staging"   # references a databag; see below
+            ]
+        },
+        "sample-admin": {
+            "authorized_keys": [
+                "dwy870-sample-admin"
+            ],
+            "groups": [                   # additional groups for the user
+                "rvm"
+            ]
+        }
+    }
+
+    Defaults to `{}`.
+
+* `application_users[:group]`: The application user group; will be created if it
+   doesn't exist.  Existing members of the group will be replaced with the users
+   in `application_users[:users]`.  Defaults to `app`.
+   All users in `application_users[:users]` will be in the application user
+   group even if they also belong to other groups.
+* `application_users[:ssh_key_databag]`: The name of a databag that contains SSH
+   public keys.  Defaults to `ssh_public_keys`.
+* `application_users[:shell]`: Default shell for application users.  Defaults to
+  `/bin/sh`.
+
+= USAGE:
+
+Include the default recipe in this cookbook into a role or your node's run list.
+Fill out `application_users[:users]` on the node or in the role.
