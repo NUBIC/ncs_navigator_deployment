@@ -7,8 +7,8 @@ an application.
 
 = REQUIREMENTS:
 
-Should work with pretty much any UNIX-like out there, but developed for and
-tested on RHEL 6.1.
+Should work with pretty much any UNIX-like OS out there, but developed for
+and tested on RHEL 6.1.
 
 = ATTRIBUTES:
 
