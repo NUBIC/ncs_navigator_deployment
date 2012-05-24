@@ -6,6 +6,7 @@ run_list(
   "recipe[build-essential]",
   "recipe[postgresql::client]",
   "recipe[rvm::system]",
+  "recipe[apache2]",
   "recipe[passenger::apache2]"
 )
 
