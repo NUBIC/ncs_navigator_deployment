@@ -17,5 +17,15 @@ default_attributes(
     "users" => {
       "cas" => {}
     }
+  },
+  "passenger" => {
+    "rvm_ruby_string" => "1.9.3-p194"
+  },
+  "rvm" => {
+    "default_ruby" => "system",
+    "rubies" => ["1.9.3-p194"],
+    "global_gems" => [
+        { "name" => "bundler", "version" => "~> 1.1" }
+     ]
   }
 )
