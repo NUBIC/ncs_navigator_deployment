@@ -10,10 +10,6 @@ package "curl"
 package "git-core"
 include_recipe "build-essential"
  
-%w(libreadline-dev zlib1g-dev libssl-dev libxml2-dev libxslt1-dev libtool).each do |pkg|
-  package pkg
-end
-
 # clean up rvm stuff
 # This is mostly to save inode space
 execute "rvm-cleanup" do
