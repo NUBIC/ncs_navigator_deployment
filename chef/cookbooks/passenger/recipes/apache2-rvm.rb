@@ -24,56 +24,44 @@ rvm_gem_binary = "#{rvm_exec} gem"
 passenger_load = "#{node[:apache][:dir]}/mods-available/passenger.load"
 passenger_conf = "#{node[:apache][:dir]}/mods-available/passenger.conf"
 
-gem_package "passenger" do
-  gem_binary rvm_gem_binary
+passenger_ruby = `#{rvm_exec} which ruby`.chomp
+passenger_root = `#{rvm_exec} gem env gemdir`.chomp
+passenger_root << "/gems/passenger-#{node[:passenger][:version]}"
+module_path = "#{passenger_root}/ext/apache2/mod_passenger.so"
+
+%w(httpd-devel curl-devel apr-devel apr-util-devel).each do |pkg|
+  package pkg
 end
 
-ruby_block "set Passenger attributes" do
-  block do
-    passenger_root = `#{rvm_exec} passenger-config --root`.chomp
-    passenger_ruby = `#{rvm_exec} which ruby`.chomp
-
-    node.set[:passenger][:module_path] = "#{passenger_root}/ext/apache2/mod_passenger.so"
-    node.set[:passenger][:passenger_root] = passenger_root
-    node.set[:passenger][:passenger_ruby] = passenger_ruby
-  end
-
-  notifies :run, "execute[install_passenger_module]", :immediately
-  notifies :create, "template[#{passenger_load}]", :immediately
-  notifies :create, "template[#{passenger_conf}]", :immediately
-  notifies :restart, "service[apache2]"
+gem_package "passenger" do
+  gem_binary rvm_gem_binary
+  version node[:passenger][:version]
 end
 
 # On first run, the attributes referenced by the following resources won't
 # exist until the "set Passenger attributes" Ruby block completes.  Therefore,
 # these resources are set to action :nothing so that they do nothing in their
 # implicit positions.
+execute "install_passenger_module" do
+  command "#{rvm_exec} passenger-install-apache2-module --auto"
+  creates module_path
+end
+
 template passenger_load do
   source "passenger.load.erb"
-  variables(:module_path    => node[:passenger][:module_path],
-            :passenger_root => node[:passenger][:passenger_root],
-            :passenger_ruby => node[:passenger][:passenger_ruby])
-
   owner node[:apache][:user]
   group node[:apache][:group]
-  action :nothing
+  variables(:module_path => module_path)
 end
 
 template passenger_conf do
   source "passenger.conf.erb"
-  variables(:passenger_root => node[:passenger][:passenger_root],
-            :passenger_ruby => node[:passenger][:passenger_ruby])
-
   owner node[:apache][:user]
   group node[:apache][:group]
-  action :nothing
+  variables(:passenger_root => passenger_root,
+            :passenger_ruby => passenger_ruby)
 end
 
-execute "install_passenger_module" do
-  command "#{rvm_exec} passenger-install-apache2-module --auto"
-  creates node[:passenger][:module_path] 
-  action :nothing
-end
 
 # The apache_module definition in the apache2 cookbook will overwrite our
 # Passenger configuration, so we'll just symlink everything ourselves.

@@ -15,7 +15,8 @@ default_attributes(
     "version" => "9.0"
   },
   "passenger" => {
-    "rvm_ruby_string" => "1.9.3-p194"
+    "rvm_ruby_string" => "1.9.3-p194",
+    "version" => "3.0.12"
   },
   "rvm" => {
     "default_ruby" => "system",
