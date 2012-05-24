@@ -22,8 +22,6 @@ shell = node[:application_users][:shell]
 ssh_key_databag = node[:application_users][:ssh_key_databag]
 users = node[:application_users][:users]
 
-include_recipe "selinux"
-
 # Cache SSH keys.
 # Chef makes an API call for each `data_bag_item` invocation, so it's a good
 # idea to minimize data bag interactions.  For now, just pulling back every SSH
@@ -59,13 +57,6 @@ users.each do |username, config|
     owner username
     source "authorized_keys.erb"
     variables :keys => keys
-  end
-
-  # The SSH directory needs to have the ssh_home_t security context; otherwise,
-  # sshd won't be able to read it.  The default security context for ~/.ssh
-  # needs to be restored after we muck with it.
-  selinux_security_context ssh_dir do
-    action :restore
   end
 
   # Add the user to the specified groups.
