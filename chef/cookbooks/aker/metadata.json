@@ -1,0 +1,29 @@
+{
+  "name": "aker",
+  "description": "Installs/Configures aker",
+  "long_description": "= DESCRIPTION:\n\nProvides a recipe (aker::central) that sets up Aker central configuration files.\n\n= REQUIREMENTS:\n\n= ATTRIBUTES: \n\n* `aker[:central][:path]`: Path to the generated configuration file.  Defaults\n  to `/etc/nubic/bcsec-prod.yml`.\n* `aker[:central][:group]`: The group for the central configuration file.\n  Defaults to the node's value of `application_users[:group]`, or \"app\" if that\n  isn't defined.\n* `aker[:central][:cas][:base_url]`: The base URL of the CAS server.  Defaults to\n  the node's value of `cas[:base_url]`.\n* `aker[:central][:cas][:proxy_retrieval_url]`: The URL of the proxy ticket\n  retrieval app for CAS.  Defaults to the node's value of\n  `cas[:proxy_retrieval_url]`.\n* `aker[:central][:cas][:proxy_callback_url]`: The URL of the proxy ticket\n  callback app for CAS.  Defaults to the node's value of\n  `cas[:proxy_callback_url]`.\n* `aker[:central][:pers][:group]`: The bcdatabase group containing Pers\n  configuration.  Defaults to the node's value of `pers[:bcdatabase][:group]`.\n* `aker[:central][:pers][:entry]`: The entry in the bcdatabase group containing\n  Pers configuration.  Defaults to the node's value of\n  `pers[:bcdatabase][:entry]`.\n\n= USAGE:\n\nInclude the recipe in your run list and go.\n\nThe bcdatabase configuration for Pers needs to be supplied manually.\n",
+  "maintainer": "Northwestern University",
+  "maintainer_email": "sysadmin@bioinformatics.northwestern.edu",
+  "license": "Apache 2.0",
+  "platforms": {
+  },
+  "dependencies": {
+  },
+  "recommendations": {
+  },
+  "suggestions": {
+  },
+  "conflicting": {
+  },
+  "providing": {
+  },
+  "replacing": {
+  },
+  "attributes": {
+  },
+  "groupings": {
+  },
+  "recipes": {
+  },
+  "version": "1.0.0"
+}

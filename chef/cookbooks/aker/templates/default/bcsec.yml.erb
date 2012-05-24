@@ -1,0 +1,11 @@
+cc_pers:
+  bcdatabase:
+    group: <%= @pers_group %>
+    entry: <%= @pers_entry %>
+policy:
+  lockout-duration-seconds: 600
+  lockout-attempts: 5
+cas:
+  cas_base_url: <%= @cas_base_url %>
+  proxy_retrieval_url: <%= @cas_proxy_retrieval_url %>
+  proxy_callback_url: <%= @cas_proxy_callback_url %>

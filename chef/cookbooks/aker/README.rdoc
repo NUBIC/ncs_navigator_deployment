@@ -1,0 +1,32 @@
+= DESCRIPTION:
+
+Provides a recipe (aker::central) that sets up Aker central configuration files.
+
+= REQUIREMENTS:
+
+= ATTRIBUTES:
+
+* `aker[:central][:path]`: Path to the generated configuration file.  Defaults
+  to `/etc/nubic/bcsec-prod.yml`.
+* `aker[:central][:group]`: The group for the central configuration file.
+  Defaults to the node's value of `application_users[:group]`, or "app" if that
+  isn't defined.
+* `aker[:central][:cas][:base_url]`: The base URL of the CAS server.  Defaults to
+  the node's value of `cas[:base_url]`.
+* `aker[:central][:cas][:proxy_retrieval_url]`: The URL of the proxy ticket
+  retrieval app for CAS.  Defaults to the node's value of
+  `cas[:proxy_retrieval_url]`.
+* `aker[:central][:cas][:proxy_callback_url]`: The URL of the proxy ticket
+  callback app for CAS.  Defaults to the node's value of
+  `cas[:proxy_callback_url]`.
+* `aker[:central][:pers][:group]`: The bcdatabase group containing Pers
+  configuration.  Defaults to the node's value of `pers[:bcdatabase][:group]`.
+* `aker[:central][:pers][:entry]`: The entry in the bcdatabase group containing
+  Pers configuration.  Defaults to the node's value of
+  `pers[:bcdatabase][:entry]`.
+
+= USAGE:
+
+Include the recipe in your run list and go.
+
+The bcdatabase configuration for Pers needs to be supplied manually.
