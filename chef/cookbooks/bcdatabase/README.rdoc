@@ -1,0 +1,60 @@
+= DESCRIPTION:
+
+Sets up a bcdatabase configuration skeleton.  Also manages bcdatabase
+configuration.
+
+The default recipe:
+
+1. Installs bcdatabase using the system's Ruby installation.
+2. Creates `/etc/nubic/db` and `/var/lib/nubic`.
+3. Checks for `/var/lib/nubic/db.pass`.  If it does not exist, then executes
+   `bcdatabase gen-key` and stores the result in `/var/lib/nubic/db.pass`.
+4. Creates or updates defaults for each configured bcdatabase configuration
+   group.
+
+It does _not_ generate passwords for applications.
+
+The bcdatabase key file is set chown root:(app_group), chmod 0440.  bcdatabase
+configuration files are set similarly.
+
+= REQUIREMENTS:
+
+* RHEL 6.1.
+* A (non-RVM) Ruby installation.  (If you're running Chef, though, you probably
+  already have this...)
+
+= ATTRIBUTES:
+
+* `bcdatabase[:app_group]`: The application user group.  This group will be
+  granted read access to the bcdatabase configuration files and key.  Defaults
+  to `application_users[:group]` if that attribute is defined; otherwise,
+  defaults to `app`.
+* `bcdatabase[:groups]`: A hash mapping group names to defaults, which are
+  bcdatabase configuration hashes.  Defaults to {}.  An example:
+
+      {
+          "bcdatabase": {
+              "groups": {
+                  "pstage": {
+                      "adapter": "postgresql",
+                      "host": "pstage2.nubic.northwestern.edu",
+                      "port": 5432
+                  }
+              }
+          }
+      }
+
+  The above would generate an `/etc/nubic/db/pstage.yml` file containing
+
+      defaults:
+        adapter: postgresql
+        host: pstage2.nubic.northwestern.edu
+        port: 5432
+
+* `bcdatabase[:version]`: Specifies the version of bcdatabase to install;
+  defaults to ">= 0".  Any valid RubyGems version spec string can be used in
+  this attribute.
+
+= USAGE:
+
+Include the recipe in your node's run list, set attributes, run it.
