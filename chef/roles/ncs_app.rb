@@ -7,12 +7,15 @@ run_list(
   "recipe[postgresql::client]",
   "recipe[rvm::system]",
   "recipe[apache2]",
-  "recipe[passenger::apache2]"
+  "recipe[passenger::apache2-rvm]"
 )
 
 default_attributes(
   "postgresql" => {
     "version" => "9.0"
+  },
+  "passenger" => {
+    "rvm_ruby_string" => "1.9.3-p194"
   },
   "rvm" => {
     "default_ruby" => "system",
