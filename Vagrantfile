@@ -6,7 +6,7 @@ RUN_LISTS = {
     'role[ncs_app]'
   ],
   :cas => [
-    'role[ncs_common]',
+    'role[ncs_cas]',
   ],
   :db => [
     'role[ncs_db]'
