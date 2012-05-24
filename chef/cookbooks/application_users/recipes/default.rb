@@ -45,18 +45,20 @@ users.each do |username, config|
   end
 
   # ...and load their key set.
-  keys = config["authorized_keys"].map { |key_name| ssh_keys[key_name] }
-  ssh_dir = "#{home_dir}/.ssh"
+  if config["authorized_keys"]
+    keys = config["authorized_keys"].map { |key_name| ssh_keys[key_name] }
+    ssh_dir = "#{home_dir}/.ssh"
 
-  directory ssh_dir do
-    owner username
-  end
+    directory ssh_dir do
+      owner username
+    end
 
-  template "#{ssh_dir}/authorized_keys" do
-    mode 0400
-    owner username
-    source "authorized_keys.erb"
-    variables :keys => keys
+    template "#{ssh_dir}/authorized_keys" do
+      mode 0400
+      owner username
+      source "authorized_keys.erb"
+      variables :keys => keys
+    end
   end
 
   # Add the user to the specified groups.
