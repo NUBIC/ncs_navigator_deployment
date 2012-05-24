@@ -9,7 +9,8 @@ run_list(
   "recipe[apache2]",
   "recipe[passenger::apache2-rvm]",
   "recipe[tomcat]",
-  "recipe[application_users]"
+  "recipe[application_users]",
+  "recipe[bcdatabase]"
 )
 
 default_attributes(
@@ -33,5 +34,8 @@ default_attributes(
       "ncs_staff_portal" => {},
       "psc" => {}
     }
+  },
+  "bcdatabase" => {
+    "version" => "1.2.1"
   }
 )
