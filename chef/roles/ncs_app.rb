@@ -5,7 +5,8 @@ run_list(
   "role[ncs_common]",
   "recipe[build-essential]",
   "recipe[postgresql::client]",
-  "recipe[rvm::ruby_193]"
+  "recipe[rvm::ruby_193]",
+  "recipe[passenger::apache2]"
 )
 
 default_attributes(
