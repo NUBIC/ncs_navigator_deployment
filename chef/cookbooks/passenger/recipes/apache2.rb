@@ -51,12 +51,3 @@ include_recipe "apache2"
 if ::File.exists?(node[:passenger][:root_path])
   apache_module "passenger"
 end
-
-
-#log_path = node[:passenger][:production][:log_path]
-#
-#directory log_path do
-#  mode 0755
-#  action :create
-#end
-
