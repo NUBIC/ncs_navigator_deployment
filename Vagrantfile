@@ -13,6 +13,13 @@ RUN_LISTS = {
   ]
 }
 
+IPS = {
+  :app => '192.168.56.220',
+  :cas => '192.168.56.222',
+  :db => '192.168.56.221',
+  :chef => '192.168.56.1'
+}
+
 def base_config(role, config)
   username = ENV['USER']
   hostname = `hostname -s`.chomp
@@ -26,10 +33,21 @@ def base_config(role, config)
     config.ssh.private_key_path = "ncs-vagrant"
 
     config.vm.provision :chef_client do |chef|
-      chef.chef_server_url = "http://192.168.56.1:4000"
+      chef.chef_server_url = "http://#{IPS[:chef]}:4000"
       chef.environment = "ncs_development"
       chef.validation_key_path = "nubic-validator.pem"
       chef.run_list = RUN_LISTS[role]
+
+      chef.json = {
+        "cas" => {
+          "base_url" => "https://#{IPS[:cas]}/cas",
+          "proxy_retrieval_url" => "https://#{IPS[:cas]}/cas_proxy_callback/retrieve_pgt",
+          "proxy_callback_url" => "https://#{IPS[:cas]}/cas_proxy_callback/receive_pgt"
+        },
+        "pers" => {
+          "bcdatabase" => {}
+        }
+      }
     end
 
     yield config
@@ -38,14 +56,14 @@ end
 
 Vagrant::Config.run do |config|
   base_config(:app, config) do |app_config|
-    app_config.vm.network :hostonly, "192.168.56.220"
+    app_config.vm.network :hostonly, IPS[:app]
   end
 
   base_config(:cas, config) do |cas_config|
-    cas_config.vm.network :hostonly, "192.168.56.222"
+    cas_config.vm.network :hostonly, IPS[:cas]
   end
 
   base_config(:db, config) do |db_config|
-    db_config.vm.network :hostonly, "192.168.56.221"
+    db_config.vm.network :hostonly, IPS[:db]
   end
 end
