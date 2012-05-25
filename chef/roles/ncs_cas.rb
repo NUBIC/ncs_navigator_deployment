@@ -9,7 +9,10 @@ run_list(
   "recipe[apache2]",
   "recipe[passenger::apache2-rvm]",
   "recipe[tomcat]",
-  "recipe[application_users]"
+  "recipe[application_users]",
+  "recipe[iptables]",
+  "recipe[iptables::ssh]",
+  "recipe[iptables::https]"
 )
 
 default_attributes(

@@ -12,7 +12,10 @@ run_list(
   "recipe[application_users]",
   "recipe[bcdatabase]",
   "recipe[aker::central]",
-  "recipe[ssl_certificates]"
+  "recipe[ssl_certificates]",
+  "recipe[iptables]",
+  "recipe[iptables::ssh]",
+  "recipe[iptables::https]"
 )
 
 default_attributes(
