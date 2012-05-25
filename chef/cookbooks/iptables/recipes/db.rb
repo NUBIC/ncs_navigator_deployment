@@ -1,2 +1,2 @@
-iptables_rule "redis"
-iptables_rule "postgresql"
+iptables_rule "redis_in"
+iptables_rule "postgresql_in"
