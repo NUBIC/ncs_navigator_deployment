@@ -11,7 +11,8 @@ run_list(
   "recipe[tomcat]",
   "recipe[application_users]",
   "recipe[bcdatabase]",
-  "recipe[aker::central]"
+  "recipe[aker::central]",
+  "recipe[ssl_certificates]"
 )
 
 default_attributes(
