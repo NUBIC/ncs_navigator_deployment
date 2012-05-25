@@ -1,0 +1,17 @@
+= DESCRIPTION:
+
+Installs and trusts SSL certificates required to perform server-side validation
+of NUBIC's *.nubic.northwestern.edu SSL certificate.
+
+= REQUIREMENTS:
+
+Known to work on RHEL 6.1.
+
+= ATTRIBUTES:
+
+* `ssl_certificates[:ca_path]`: Where trusted certificates are stored.
+  Defaults to /etc/pki/tls/certs.
+
+= USAGE:
+
+Include the default recipe in your run list.
