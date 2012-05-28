@@ -24,9 +24,8 @@ rvm_gem_binary = "#{rvm_exec} gem"
 passenger_load = "#{node[:apache][:dir]}/mods-available/passenger.load"
 passenger_conf = "#{node[:apache][:dir]}/mods-available/passenger.conf"
 
-passenger_ruby = `#{rvm_exec} which ruby`.chomp
-passenger_root = `#{rvm_exec} gem env gemdir`.chomp
-passenger_root << "/gems/passenger-#{node[:passenger][:version]}"
+passenger_ruby = "#{node[:rvm][:root_path]}/rubies/#{rvm_ruby_string}/bin/ruby"
+passenger_root = "#{node[:rvm][:root_path]}/gems/#{rvm_ruby_string}/gems/passenger-#{node[:passenger][:version]}"
 module_path = "#{passenger_root}/ext/apache2/mod_passenger.so"
 
 %w(httpd-devel curl-devel apr-devel apr-util-devel).each do |pkg|
@@ -61,7 +60,6 @@ template passenger_conf do
   variables(:passenger_root => passenger_root,
             :passenger_ruby => passenger_ruby)
 end
-
 
 # The apache_module definition in the apache2 cookbook will overwrite our
 # Passenger configuration, so we'll just symlink everything ourselves.

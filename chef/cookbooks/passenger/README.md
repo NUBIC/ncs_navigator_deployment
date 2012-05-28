@@ -14,7 +14,9 @@ Attributes
 ==========
 
 * passenger[:rvm_ruby_string]: The RVM Ruby string to be used by Passenger.
-  This MUST be set; there is no default.
+  This MUST be set; there is no default.  This MUST address exactly one Ruby
+  environment, e.g. "ruby-1.9.3-p194"; loose specifications such as "1.9.3" are
+  not permitted.
 * passenger[:version]: The version of Passenger to install.
   The default is "3.0.12".
   This MUST address exactly one version of Passenger; version ranges are

@@ -23,12 +23,12 @@ default_attributes(
     "version" => "9.0"
   },
   "passenger" => {
-    "rvm_ruby_string" => "1.9.3-p194",
+    "rvm_ruby_string" => "ruby-1.9.3-p194",
     "version" => "3.0.12"
   },
   "rvm" => {
     "default_ruby" => "system",
-    "rubies" => ["1.9.3-p194"],
+    "rubies" => ["ruby-1.9.3-p194"],
     "global_gems" => [
         { "name" => "bundler", "version" => "~> 1.1" }
      ]
