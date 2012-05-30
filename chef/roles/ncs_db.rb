@@ -5,8 +5,6 @@ run_list(
   "role[ncs_common]",
   "recipe[postgresql::server]",
   "recipe[redisio::install]",
-  "recipe[iptables]",
-  "recipe[iptables::ssh]",
   "recipe[iptables::db]"
 )
 
