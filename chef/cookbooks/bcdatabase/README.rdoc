@@ -17,6 +17,28 @@ It does _not_ generate passwords for applications.
 The bcdatabase key file is set chown root:(app_group), chmod 0440.  bcdatabase
 configuration files are set similarly.
 
+This cookbook also provides a `config` LWRP for manipulating bcdatabase groups.
+A usage example:
+
+
+    bcdatabase_config "nubic_cas" do
+      action :create
+      group "local_postgresql"
+      username "nubic_cas"
+      password secure_password
+    end
+
+
+(NB: Opscode's `openssl` cookbook provides a `secure_password` method that uses
+`OpenSSL::Random#random_bytes` from OpenSSL's Ruby binding to generate
+20-character long passwords.)
+
+The create action of the LWRP does the following:
+
+1. Checks if the group exists.  If it doesn't, the group is created.
+2. Checks if the configuration exists in the given group.  If it doesn't, the
+   configuration is appended.
+
 = REQUIREMENTS:
 
 * RHEL 6.1.

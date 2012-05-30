@@ -15,7 +15,8 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-#
+
+extend Chef::Bcdatabase::GroupHelpers
 
 key_dir = "/var/lib/nubic"
 key_file = "#{key_dir}/db.pass"
@@ -57,7 +58,7 @@ end
 
 groups.each do |group, defaults|
   bcdatabase_group group do
-    action :update
+    action :create
     defaults defaults
   end
 end
