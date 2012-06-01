@@ -29,12 +29,16 @@ class Chef
       end
 
       ##
-      # Returns the contents of a group as a Ruby hash; raises if the group
-      # cannot be found.
+      # Returns the contents of a group as a Ruby hash, or {} if the group
+      # does not exist.
       def configs_in(group_name)
-        fn = filename_for_group(group_name)
+        if group_present?(group_name)
+          fn = filename_for_group(group_name)
 
-        YAML.load(File.read(fn))
+          YAML.load(File.read(fn))
+        else
+          {}
+        end
       end
 
       ##
