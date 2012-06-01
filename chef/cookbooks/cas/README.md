@@ -6,11 +6,11 @@ Installs and configures the Jasig CAS server.  Also applies a NUBIC-developed ov
 1. uses Bcsec (Aker's predecessor) for authentication, and
 2. tracks CAS activity across applications using the same CAS server.
 
-This cookbook includes two recipes:
+This cookbook includes the following recipes:
 
 1. `database`: sets up a database and database user account for the CAS server
-2. `tomcat-apache`: installs the CAS server into Tomcat 6, and configures an
-   Apache 2 server to proxy to the Tomcat instance
+2. `server`: installs the CAS server into Tomcat 6, and configures an Apache 2
+   server to proxy to the Tomcat instance
 
 Requirements
 ============
@@ -38,4 +38,4 @@ Attributes
 Usage
 =====
 
-Include the cas::tomcat-apache recipe in your run list.
+Include the cas::server recipe in your run list.
