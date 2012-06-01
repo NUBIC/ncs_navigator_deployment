@@ -24,11 +24,12 @@ Requirements
 Attributes
 ==========
 
-* `aker[:authorities]`: The list of authorities to use.  Defaults to [].  Note:
-  with the default configuration, the CAS server will not accept any
-  credentials.
-* `aker[:central]`: Path to an Aker central configuration file.
-* `cas[:log_file]`: Path to a log file.  Defaults to /var/log/cas/nubic-cas.log.
+* `cas[:log]`: Path to the CAS server's log file.  Defaults to
+  /var/log/cas/nubic-cas.log.
+* `cas[:dir]`: Path to the CAS server's configuration directory.  Defaults to
+  /etc/nubic/cas-server.
+* `cas[:bcsec]`: Path to the Aker configuration file for the CAS server.
+  Defaults to #{cas[:dir]}/bcsec.rb.
 * `cas[:database][:name]`: Name of the CAS database.  Defaults to "nubic_cas".
 * `cas[:database][:user]`: The user for the CAS database.  Defaults to "nubic_cas".
 * `cas[:database][:bcdatabase][:group]`: The bcdatabase group to use.  Defaults

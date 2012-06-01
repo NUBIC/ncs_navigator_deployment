@@ -5,6 +5,9 @@ description      "Installs/Configures cas"
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 version          "0.0.1"
 
+depends "aker"
+depends "apache2"
 depends "bcdatabase"
 depends "database"
 depends "openssl"
+depends "tomcat"
