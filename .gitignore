@@ -5,3 +5,4 @@ ncs-vagrant*
 *.box
 .vagrant
 .chef
+.local_vagrant.yml

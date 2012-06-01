@@ -1,6 +1,8 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
+require 'yaml'
+
 RUN_LISTS = {
   :app => [
     'role[ncs_app]'
@@ -19,6 +21,9 @@ IPS = {
   :db => '192.168.56.221',
   :chef => '192.168.56.1'
 }
+
+fn = File.expand_path('../.local_vagrant.yml', __FILE__)
+CUSTOMIZATIONS = File.exists?(fn) ? YAML.load(File.read(fn)) : {}
 
 def base_config(role, config)
   username = ENV['USER']
@@ -47,7 +52,7 @@ def base_config(role, config)
         "pers" => {
           "bcdatabase" => {}
         }
-      }
+      }.merge(CUSTOMIZATIONS[role.to_s] || {})
     end
 
     yield config
