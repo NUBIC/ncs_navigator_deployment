@@ -16,13 +16,6 @@ run_list(
 
 default_attributes(
   "bcdatabase" => {
-    "groups" => {
-      "local_postgresql" => {
-        "adapter" => "postgresql",
-        "host" => "localhost",
-        "port" => 5432
-      }
-    },
     "group_mode" => "0644"
   },
   "passenger" => {
