@@ -10,7 +10,7 @@ run_list(
   "recipe[passenger::apache2-rvm]",
   "recipe[tomcat]",
   "recipe[application_users]",
-  "recipe[cas::database]",
+  "recipe[cas::tomcat-apache]",
   "recipe[iptables::https]"
 )
 
