@@ -10,7 +10,7 @@ action :create do
     data = { 'defaults' => new_resource.defaults.to_hash }
 
     file filename_for_group(gn) do
-      mode 0640
+      mode node[:bcdatabase][:group_mode]
       group file_group
       content data.to_yaml
     end
@@ -25,7 +25,7 @@ action :update do
   file_group = node[:bcdatabase][:app_group]
 
   file filename_for_group(gn) do
-    mode 0640
+    mode node[:bcdatabase][:group_mode]
     group file_group
     content data.to_hash.to_yaml
   end

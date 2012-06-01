@@ -51,6 +51,8 @@ The create action of the LWRP does the following:
   granted read access to the bcdatabase configuration files and key.  Defaults
   to `application_users[:group]` if that attribute is defined; otherwise,
   defaults to `app`.
+* `bcdatabase[:group_mode]`: The mode on group files.  Defaults to "0640", i.e.
+  read-write owner and read-only group.
 * `bcdatabase[:groups]`: A hash mapping group names to defaults, which are
   bcdatabase configuration hashes.  Defaults to {}.  An example:
 
