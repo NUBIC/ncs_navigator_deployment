@@ -55,6 +55,7 @@ end
 bcdatabase_config db_name do
   action :create
   group bcdb_group
-  username db_user
   password db_pass
+  username db_user
+  url "jdbc:postgresql://localhost/#{db_name}"
 end
