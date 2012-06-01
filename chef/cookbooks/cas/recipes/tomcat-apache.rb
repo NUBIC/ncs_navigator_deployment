@@ -26,7 +26,7 @@ app_owner = node[:tomcat][:user]
 app_group = node[:application_users][:group]
 
 # Download and install the CAS server WAR.
-remote_file "#{node[:tomcat][:webapp_dir]}/nubic_cas.war" do
+remote_file "#{node[:tomcat][:webapp_dir]}/#{node[:cas][:public_path]}.war" do
   source node[:cas][:war][:source]
   checksum node[:cas][:war][:checksum]
   owner app_owner
@@ -95,7 +95,7 @@ include_recipe "apache2::mod_ssl"
 
 # Proxy node[:cas][:public_path] to the Tomcat server...
 site_config = "#{node[:apache][:dir]}/sites-available/nubic_cas.conf"
-remote = "ajp://localhost:#{node[:tomcat][:ajp_port]}/#{node[:cas][:private_path]}"
+remote = "ajp://localhost:#{node[:tomcat][:ajp_port]}/#{node[:cas][:public_path]}"
 
 template site_config do
   source "nubic_cas.conf.erb"

@@ -13,8 +13,11 @@ default[:cas][:log] = "/var/log/cas/nubic-cas.log"
 # present at this location to take effect.
 default[:cas][:properties] = "/etc/nubic/cas-server/cas.properties"
 
+# This path MUST NOT be prefixed with /, as it's also used to derive WAR
+# filenames.
 default[:cas][:public_path] = "cas"
-default[:cas][:private_path] = "nubic_cas"
+
+# Database configuration.
 default[:cas][:database][:name] = "nubic_cas"
 default[:cas][:database][:user] = "nubic_cas"
 default[:cas][:database][:bcdatabase][:group] = "local_postgresql"
