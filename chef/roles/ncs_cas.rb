@@ -15,11 +15,6 @@ run_list(
 )
 
 default_attributes(
-  "application_users" => {
-    "users" => {
-      "cas" => {}
-    }
-  },
   "bcdatabase" => {
     "groups" => {
       "local_postgresql" => {
