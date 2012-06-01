@@ -23,14 +23,12 @@ include_recipe "apache2"
 include_recipe "application_users"
 
 app_owner = node[:tomcat][:user]
-app_group = node[:application_users][:group]
 
 # Download and install the CAS server WAR.
 remote_file "#{node[:tomcat][:webapp_dir]}/#{node[:cas][:public_path]}.war" do
   source node[:cas][:war][:source]
   checksum node[:cas][:war][:checksum]
   owner app_owner
-  group app_group
 
   notifies :restart, "service[tomcat]"
 end
@@ -41,34 +39,26 @@ include_recipe "cas::database"
 # Set up configuration data for the CAS server.
 directory node[:cas][:dir] do
   action :create
-  mode 0550
   owner app_owner
-  group app_group
 end
 
 template node[:cas][:properties] do
   source "cas.properties.erb"
-  mode 0400
   owner app_owner
-  group app_group
   variables(:bcsec_path => node[:cas][:bcsec])
 end
 
 # Configure Bcsec for the CAS server.
 template node[:cas][:bcsec] do
   source "bcsec.rb.erb"
-  mode 0400
   owner app_owner
-  group app_group
   variables(:central => node[:aker][:central][:path])
 end
 
 # Make the log directory...
 directory File.dirname(node[:cas][:log]) do
   action :create
-  mode 0700
   owner app_owner
-  group app_group
   recursive true
 end
 

@@ -16,7 +16,12 @@ run_list(
 
 default_attributes(
   "bcdatabase" => {
-    "group_mode" => "0644"
+    "app_group" => "tomcat"
+  },
+  "aker" => {
+    "central" => {
+      "group" => "tomcat"
+    }
   },
   "passenger" => {
     "rvm_ruby_string" => "ruby-1.9.3-p194",
