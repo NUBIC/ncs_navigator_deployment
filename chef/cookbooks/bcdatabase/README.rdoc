@@ -9,13 +9,8 @@ The default recipe:
 2. Creates `/etc/nubic/db` and `/var/lib/nubic`.
 3. Checks for `/var/lib/nubic/db.pass`.  If it does not exist, then executes
    `bcdatabase gen-key` and stores the result in `/var/lib/nubic/db.pass`.
-4. Creates or updates defaults for each configured bcdatabase configuration
-   group.
 
 It does _not_ generate passwords for applications.
-
-The bcdatabase key file is set chown root:(app_group), chmod 0440.  bcdatabase
-configuration files are set similarly.
 
 This cookbook also provides a `config` LWRP for manipulating bcdatabase groups.
 A usage example:
@@ -26,8 +21,20 @@ A usage example:
       group "local_postgresql"
       username "nubic_cas"
       password secure_password
+      url "jdbc:postgresql://localhost/nubic_cas"
     end
 
+
+To set defaults:
+
+
+    bcdatabase_config "defaults" do
+      action :create
+      group "local_postgresql"
+      adapter "postgresql"
+      host "localhost"
+      port 12345
+    end
 
 (NB: Opscode's `openssl` cookbook provides a `secure_password` method that uses
 `OpenSSL::Random#random_bytes` from OpenSSL's Ruby binding to generate
@@ -51,30 +58,8 @@ The create action of the LWRP does the following:
   granted read access to the bcdatabase configuration files and key.  Defaults
   to `application_users[:group]` if that attribute is defined; otherwise,
   defaults to `app`.
-* `bcdatabase[:group_mode]`: The mode on group files.  Defaults to "0640", i.e.
-  read-write owner and read-only group.
-* `bcdatabase[:groups]`: A hash mapping group names to defaults, which are
-  bcdatabase configuration hashes.  Defaults to {}.  An example:
-
-      {
-          "bcdatabase": {
-              "groups": {
-                  "pstage": {
-                      "adapter": "postgresql",
-                      "host": "pstage2.nubic.northwestern.edu",
-                      "port": 5432
-                  }
-              }
-          }
-      }
-
-  The above would generate an `/etc/nubic/db/pstage.yml` file containing
-
-      defaults:
-        adapter: postgresql
-        host: pstage2.nubic.northwestern.edu
-        port: 5432
-
+* `bcdatabase[:group_mode]`: The mode on group and key files.  Defaults to
+  "0640", i.e. read-write owner and read-only group.
 * `bcdatabase[:version]`: Specifies the version of bcdatabase to install;
   defaults to ">= 0".  Any valid RubyGems version spec string can be used in
   this attribute.

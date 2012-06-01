@@ -18,23 +18,24 @@
 action :create do
   extend Chef::Bcdatabase::GroupHelpers
 
-  gn = new_resource.group
-  cn = new_resource.name
+  nr = new_resource
+  gn = nr.group
+  cn = nr.name
 
-  unless group_present?(gn)
-    bcdatabase_group gn do
-      action :create
-    end
+  bcdatabase_group gn do
+    action :create_if_missing
   end
 
   group_data = configs_in(gn)
 
-  unless group_data.has_key?(cn)
-    group_data[cn] = {
-      'username' => new_resource.username,
-      'password' => new_resource.password
-    }
-  end
+  group_data[cn] = {
+    'adapter' => nr.adapter,
+    'host' => nr.host,
+    'password' => nr.password,
+    'port' => nr.port,
+    'url' => nr.url,
+    'username' => nr.username
+  }.reject! { |_, v| v.nil? || v.empty? }
 
   bcdatabase_group gn do
     action :update

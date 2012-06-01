@@ -22,7 +22,6 @@ key_dir = "/var/lib/nubic"
 key_file = "#{key_dir}/db.pass"
 app_group = node[:bcdatabase][:app_group]
 version = node[:bcdatabase][:version]
-groups = node[:bcdatabase][:groups]
 
 script "install bcdatabase" do
   interpreter "bash"
@@ -54,11 +53,4 @@ end
 file key_file do
   mode node[:bcdatabase][:group_mode]
   group app_group
-end
-
-groups.each do |group, defaults|
-  bcdatabase_group group do
-    action :create
-    defaults defaults
-  end
 end

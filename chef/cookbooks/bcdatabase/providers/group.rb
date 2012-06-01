@@ -1,19 +1,15 @@
 require 'yaml'
 
-action :create do
+action :create_if_missing do
   extend Chef::Bcdatabase::GroupHelpers
 
   gn = new_resource.group
   file_group = node[:bcdatabase][:app_group]
 
-  unless group_present?(gn)
-    data = { 'defaults' => new_resource.defaults.to_hash }
-
-    file filename_for_group(gn) do
-      mode node[:bcdatabase][:group_mode]
-      group file_group
-      content data.to_yaml
-    end
+  file filename_for_group(gn) do
+    action :create_if_missing
+    group file_group
+    mode node[:bcdatabase][:group_mode]
   end
 end
 
@@ -25,9 +21,10 @@ action :update do
   file_group = node[:bcdatabase][:app_group]
 
   file filename_for_group(gn) do
-    mode node[:bcdatabase][:group_mode]
+    action :create
+    content data.to_yaml
     group file_group
-    content data.to_hash.to_yaml
+    mode node[:bcdatabase][:group_mode]
   end
 end
 

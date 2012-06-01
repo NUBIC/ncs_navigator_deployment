@@ -18,6 +18,10 @@
 
 actions :create
 
+attribute :adapter, :kind_of => String
 attribute :group, :kind_of => String, :required => true
-attribute :username, :kind_of => String, :required => true
-attribute :password, :kind_of => String, :required => true
+attribute :host, :kind_of => String
+attribute :password, :kind_of => String
+attribute :port, :kind_of => Integer
+attribute :url, :kind_of => String
+attribute :username, :kind_of => String
