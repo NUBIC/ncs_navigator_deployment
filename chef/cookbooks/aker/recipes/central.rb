@@ -17,6 +17,13 @@
 # limitations under the License.
 #
 
+directory File.dirname(node[:aker][:central][:path]) do
+  action :create
+  mode 0755
+  group node[:aker][:central][:group]
+  recursive true
+end
+
 template node[:aker][:central][:path] do
   source "bcsec.yml.erb"
   mode 0440
