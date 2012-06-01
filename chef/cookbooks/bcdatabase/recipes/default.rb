@@ -52,7 +52,7 @@ script "generate bcdatabase key" do
 end
 
 file key_file do
-  mode 0640
+  mode node[:bcdatabase][:group_mode]
   group app_group
 end
 
