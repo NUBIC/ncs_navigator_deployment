@@ -24,6 +24,8 @@ template node[:aker][:central][:path] do
 
   variables(:pers_group => node[:aker][:central][:pers][:group],
             :pers_entry => node[:aker][:central][:pers][:entry],
+            :netid_user => node[:aker][:central][:netid][:user],
+            :netid_password => node[:aker][:central][:netid][:password],
             :cas_base_url => node[:aker][:central][:cas][:base_url],
             :cas_proxy_retrieval_url => node[:aker][:central][:cas][:proxy_retrieval_url],
             :cas_proxy_callback_url => node[:aker][:central][:cas][:proxy_callback_url]

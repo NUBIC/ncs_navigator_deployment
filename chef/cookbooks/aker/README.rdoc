@@ -25,6 +25,17 @@ Provides a recipe (aker::central) that sets up Aker central configuration files.
   Pers configuration.  Defaults to the node's value of
   `pers[:bcdatabase][:entry]`.
 
+== NetID authority configuration
+
+NUBIC developers have access to a NetID Aker authority, which uses
+Northwestern's single-sign-on infrastructure for authentication.  To configure
+the NetID authority, you will have to provide a couple of additional attributes:
+
+* `aker[:central][:netid][:user]`: The DN of the user accessing the NetID directory.
+* `aker[:central][:netid][:password]`: Password for that user.
+
+Neither of the NetID attributes have a default.
+
 = USAGE:
 
 Include the recipe in your run list and go.
