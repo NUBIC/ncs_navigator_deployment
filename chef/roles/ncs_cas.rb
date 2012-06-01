@@ -22,7 +22,8 @@ default_attributes(
         "host" => "localhost",
         "port" => 5432
       }
-    }
+    },
+    "group_mode" => "0644"
   },
   "passenger" => {
     "rvm_ruby_string" => "ruby-1.9.3-p194",
