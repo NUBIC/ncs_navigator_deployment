@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: cas
-# Recipe:: tomcat-apache
+# Recipe:: server
 #
 # Copyright 2012, Northwestern University
 #
@@ -25,7 +25,7 @@ include_recipe "application_users"
 app_owner = node[:tomcat][:user]
 
 # Download and install the CAS server WAR.
-remote_file "#{node[:tomcat][:webapp_dir]}/#{node[:cas][:public_path]}.war" do
+remote_file "#{node[:tomcat][:webapp_dir]}/#{node[:cas][:script_name]}.war" do
   source node[:cas][:war][:source]
   checksum node[:cas][:war][:checksum]
   owner app_owner
@@ -77,27 +77,4 @@ ruby_block "set nubic.cas.logFile property" do
   # This is CentOS/RHEL-specific.  For Debian-based systems, change this to
   # /etc/default/tomcat6.
   notifies :create, "template[/etc/sysconfig/tomcat6]"
-end
-
-# Make sure mod_proxy_ajp and mod_ssl are both loaded.
-include_recipe "apache2::mod_proxy_ajp"
-include_recipe "apache2::mod_ssl"
-
-# Proxy node[:cas][:public_path] to the Tomcat server...
-site_config = "#{node[:apache][:dir]}/sites-available/nubic_cas.conf"
-remote = "ajp://localhost:#{node[:tomcat][:ajp_port]}/#{node[:cas][:public_path]}"
-
-template site_config do
-  source "nubic_cas.conf.erb"
-  variables(:public_path => node[:cas][:public_path],
-            :remote => remote)
-  owner node[:apache][:user]
-  group node[:apache][:group]
-
-  notifies :restart, "service[apache2]"
-end
-
-# ...and activate it.
-link "#{node[:apache][:dir]}/sites-enabled/nubic_cas.conf" do
-  to site_config
 end

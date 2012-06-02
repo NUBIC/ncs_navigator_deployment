@@ -1,0 +1,25 @@
+<VirtualHost *:443>
+  DocumentRoot <%= @document_root %>
+  SSLEngine on
+
+  SSLCertificateFile <%= @ssl_certificate %>
+  SSLCertificateKeyFile <%= @ssl_certificate_key %>
+
+  <Directory <%= @document_root %>>
+    Allow from all
+    Options -Indexes
+  </Directory>
+
+  RackBaseURI /<%= @callback_script_name %>
+
+  <Directory <%= @callback_app_path %>>
+    Options -MultiViews
+  </Directory>
+
+  <Location /<%= @server_script_name %>>
+    Allow from all
+    ProxyPass <%= @server_remote %>
+  </Location>
+</VirtualHost>
+
+PassengerPreStart <%= @callback_url %>

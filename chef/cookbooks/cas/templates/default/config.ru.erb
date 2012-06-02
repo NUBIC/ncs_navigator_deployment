@@ -1,0 +1,5 @@
+require 'aker'
+
+pgt_pstore_path = "#{File.expand_path('..', __FILE__)}/pgt.pstore"
+
+run Aker::Cas::RackProxyCallback.application(:store => pgt_pstore_path)

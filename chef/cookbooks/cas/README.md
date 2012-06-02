@@ -9,8 +9,9 @@ Installs and configures the Jasig CAS server.  Also applies a NUBIC-developed ov
 This cookbook includes the following recipes:
 
 1. `database`: sets up a database and database user account for the CAS server
-2. `server`: installs the CAS server into Tomcat 6, and configures an Apache 2
-   server to proxy to the Tomcat instance
+2. `server`: installs the CAS server into Tomcat 6
+3. `callback`: sets up CAS proxy callbacks for Passenger
+4. `apache`: exposes CAS components over HTTPS via Apache
 
 Requirements
 ============
@@ -21,8 +22,14 @@ Requirements
 - The `aker` cookbook.
 - The `openssl` cookbook for password generation.
 
+The apache recipe assumes that the CAS server and proxy callbacks are
+accessible via the same IP address.
+
 Attributes
 ==========
+
+Server
+------
 
 * `cas[:log]`: Path to the CAS server's log file.  Defaults to
   /var/log/cas/nubic-cas.log.
@@ -30,12 +37,35 @@ Attributes
   /etc/nubic/cas-server.
 * `cas[:bcsec]`: Path to the Aker configuration file for the CAS server.
   Defaults to #{cas[:dir]}/bcsec.rb.
+* `cas[:script_name]`: The script name of the CAS server.  Defaults to the path
+  of `node[:cas][:base_url]`; unspecified otherwise.
+
+Database
+--------
 * `cas[:database][:name]`: Name of the CAS database.  Defaults to "nubic_cas".
 * `cas[:database][:user]`: The user for the CAS database.  Defaults to "nubic_cas".
 * `cas[:database][:bcdatabase][:group]`: The bcdatabase group to use.  Defaults
   to "local_postgresql".
 
+Apache
+------
+* `cas[:apache][:document_root]`: The document root for Apache integration.
+  Defaults to `/var/www`.
+* `cas[:apache][:ssl_certificate]`: The SSL certificate to use.  No default.
+* `cas[:apache][:ssl_certificate_key]`: The SSL certificate key to use.  No
+  default.
+
+Callbacks
+---------
+* `cas[:callback][:script_name]`: The script name of the CAS proxy callbacks.
+  Defaults to the first component of the path in
+  `node[:cas][:proxy_callback_url]`; unspecified otherwise.
+* `cas[:callback][:user]`: The user that will run the proxy callback.  Defaults
+  to "cas".
+* `cas[:callback][:app_path]`: The application path for the CAS proxy callback.
+  Defaults to `#{node[:cas][:apache][:document_root]}/apps/cas_proxy_callback`.
+
 Usage
 =====
 
-Include the cas::server recipe in your run list.
+Include the cas::server, cas::callback, and cas::apache recipes in your run list.

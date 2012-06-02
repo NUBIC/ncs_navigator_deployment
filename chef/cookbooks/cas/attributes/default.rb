@@ -1,3 +1,5 @@
+require 'uri'
+
 # The source file.
 default[:cas][:war][:source] = "http://download.nubic.northwestern.edu/nubic_cas/nubic-cas-server-webapp-3.4.3.NUBIC-002.war"
 default[:cas][:war][:checksum] = "ede527851672abbfdf00cf80635c81c7bfb4bb3729733c26eae9ee116bd6a8d0"
@@ -15,9 +17,25 @@ default[:cas][:properties] = "/etc/nubic/cas-server/cas.properties"
 
 # This path MUST NOT be prefixed with /, as it's also used to derive WAR
 # filenames.
-default[:cas][:public_path] = "cas"
+if node[:cas][:base_url]
+  default[:cas][:script_name] = URI.parse(node[:cas][:base_url]).path.sub(%r{^/}, '')
+end
+
+# Ditto.
+if node[:cas][:proxy_callback_url]
+  pcu = node[:cas][:proxy_callback_url]
+
+  default[:cas][:callback][:script_name] = URI.parse(pcu).path.sub(%r{^/}, '').split('/').first
+end
 
 # Database configuration.
 default[:cas][:database][:name] = "nubic_cas"
 default[:cas][:database][:user] = "nubic_cas"
 default[:cas][:database][:bcdatabase][:group] = "local_postgresql"
+
+# Apache sans SSL certificate paths.
+default[:cas][:apache][:document_root] = "/var/www"
+
+# Proxy callback.
+default[:cas][:callback][:user] = "cas"
+default[:cas][:callback][:app_path] = "#{node[:cas][:apache][:document_root]}/apps/cas_proxy_callback"
