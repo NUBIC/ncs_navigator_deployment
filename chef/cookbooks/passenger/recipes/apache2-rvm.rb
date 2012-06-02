@@ -24,7 +24,7 @@ rvm_gem_binary = "#{rvm_exec} gem"
 passenger_load = "#{node[:apache][:dir]}/mods-available/passenger.load"
 passenger_conf = "#{node[:apache][:dir]}/mods-available/passenger.conf"
 
-passenger_ruby = "#{node[:rvm][:root_path]}/rubies/#{rvm_ruby_string}/bin/ruby"
+passenger_ruby = "#{node[:rvm][:root_path]}/bin/#{rvm_ruby_string}"
 passenger_root = "#{node[:rvm][:root_path]}/gems/#{rvm_ruby_string}/gems/passenger-#{node[:passenger][:version]}"
 module_path = "#{passenger_root}/ext/apache2/mod_passenger.so"
 
