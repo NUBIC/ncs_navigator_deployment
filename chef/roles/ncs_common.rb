@@ -6,6 +6,7 @@ run_list(
   "recipe[iptables::ssh]",
   "recipe[selinux::disabled]",
   "recipe[ntp]",
+  "recipe[screen]",
   "recipe[yumrepo::epel]",
   "recipe[monit]"
 )
