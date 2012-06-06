@@ -12,8 +12,9 @@ This cookbook includes the following recipes:
 2. `server`: installs the CAS server into Tomcat 6
 3. `callback`: sets up CAS proxy callbacks for Passenger
 4. `apache`: exposes CAS components over HTTPS via Apache
-5. `devenv`: sets up SSL certificates for development
-6. `default`: runs 1-4
+5. `monitoring`: installs Monit configuration for CAS
+6. `devenv`: sets up SSL certificates for development
+7. `default`: runs 1-5
 
 Requirements
 ============
@@ -74,5 +75,5 @@ Callbacks
 Usage
 =====
 
-At NUBIC, we dedicate one VM to running CAS, so we just use the
-default recipe.  YMMV.
+At NUBIC, we dedicate one VM to running CAS, so we just use the default recipe.
+YMMV.
