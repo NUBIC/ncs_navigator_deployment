@@ -37,10 +37,6 @@ gem_package "passenger" do
   version node[:passenger][:version]
 end
 
-# On first run, the attributes referenced by the following resources won't
-# exist until the "set Passenger attributes" Ruby block completes.  Therefore,
-# these resources are set to action :nothing so that they do nothing in their
-# implicit positions.
 execute "install_passenger_module" do
   command "#{rvm_exec} passenger-install-apache2-module --auto"
   creates module_path
