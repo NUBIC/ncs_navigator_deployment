@@ -10,6 +10,7 @@ RUN_LISTS = {
   :cas => [
     'recipe[zeroconf]',
     'role[ncs_cas]',
+    'recipe[cas::devenv]'
   ],
   :db => [
     'role[ncs_db]'
