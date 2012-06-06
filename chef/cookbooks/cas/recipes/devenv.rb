@@ -29,6 +29,8 @@ unless node.chef_environment == "ncs_development"
   END
 end
 
+app_owner = node[:tomcat][:user]
+app_group = node[:tomcat][:user]
 ssl_dir = ::File.dirname(node[:cas][:apache][:ssl_certificate])
 cert_file = "#{ssl_dir}/cas.crt"
 trust_store = node[:cas][:devenv][:trust_store][:path]
@@ -44,8 +46,8 @@ end
 
 # Build a trust store for CAS...
 bash "build_cas_trust_store" do
-  user node[:tomcat][:user]
-  group node[:tomcat][:group]
+  user app_owner
+  group app_group
   code <<-END
   rm -f #{trust_store}
   yes | #{keytool} -import -file #{cert_file} -alias devenv -keystore #{trust_store} -storepass #{trust_store_password}
@@ -65,4 +67,25 @@ ruby_block "rebuild Tomcat environment" do
 
   notifies :create, resources(:template => "/etc/sysconfig/tomcat6")
   notifies :restart, resources(:service => "tomcat")
+end
+
+# Switch bcsec into static authority mode...
+static_file = node[:cas][:devenv][:static_authority][:path]
+
+template node[:cas][:bcsec] do
+  mode 0444
+  owner app_owner
+  group app_group
+  source "bcsec_dev.rb.erb"
+  variables(:static_file => static_file)
+
+  notifies :restart, "service[tomcat]"
+end
+
+# ...and provide a default configuration file.
+cookbook_file static_file do
+  mode 0666
+  owner app_owner
+  group app_group
+  source "static.yml"
 end

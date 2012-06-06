@@ -44,3 +44,4 @@ default[:cas][:callback][:pstore_path] = "/var/db/cas/pgt.pstore"
 # Development-only configuration.
 default[:cas][:devenv][:trust_store][:path] = "#{node[:cas][:dir]}/cas.ts"
 default[:cas][:devenv][:trust_store][:password] = "password"
+default[:cas][:devenv][:static_authority][:path] = "#{node[:cas][:dir]}/static.yml"

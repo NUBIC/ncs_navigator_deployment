@@ -1,0 +1,6 @@
+users:
+  user:
+    password: user
+    portals: []
+
+groups: []
