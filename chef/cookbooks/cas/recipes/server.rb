@@ -39,25 +39,29 @@ include_recipe "cas::database"
 # Set up configuration data for the CAS server.
 directory node[:cas][:dir] do
   action :create
+  mode 0755
   owner app_owner
 end
 
 template node[:cas][:properties] do
-  source "cas.properties.erb"
+  mode 0444
   owner app_owner
+  source "cas.properties.erb"
   variables(:bcsec_path => node[:cas][:bcsec])
 end
 
 # Configure Bcsec for the CAS server.
 template node[:cas][:bcsec] do
-  source "bcsec.rb.erb"
+  mode 0444
   owner app_owner
+  source "bcsec.rb.erb"
   variables(:central => node[:aker][:central][:path])
 end
 
 # Make the log directory...
 directory File.dirname(node[:cas][:log]) do
   action :create
+  mode 0755
   owner app_owner
   recursive true
 end
