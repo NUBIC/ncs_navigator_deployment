@@ -42,3 +42,11 @@ bash "Add avahi-daemon to default runlevel" do
 end
 
 iptables_rule "zeroconf_in", :cookbook => "zeroconf"
+
+service "messagebus" do
+  action :start
+end
+
+service "avahi-daemon" do
+  action :start
+end
