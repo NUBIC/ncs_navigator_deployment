@@ -19,7 +19,7 @@ if platform?("ubuntu")
 end
 
 service "monit" do
-  action :start
+  action :nothing
   enabled true
   supports [:start, :restart, :stop]
 end
@@ -29,7 +29,7 @@ template monit_conf do
   group "root"
   mode 0700
   source 'monitrc.erb'
-  notifies :restart, resources(:service => "monit"), :immediate
+  notifies :restart, resources(:service => "monit")
 end
 
 directory "/etc/monit/conf.d/" do
