@@ -1,17 +1,26 @@
 name "ncs_cas"
 description "The CAS server for the NCS Navigator application suite"
 
-run_list(
-  "role[ncs_common]",
-  "recipe[build-essential]",
-  "recipe[application_users]",
-  "recipe[postgresql::server]",
-  "recipe[rvm::system]",
-  "recipe[apache2]",
-  "recipe[passenger::apache2-rvm]",
-  "recipe[tomcat]",
-  "recipe[cas]",
-  "recipe[iptables::https]"
+base_run_list = %w(
+  role[ncs_common]
+  recipe[build-essential]
+  recipe[application_users]
+  recipe[postgresql::server]
+  recipe[rvm::system]
+  recipe[apache2]
+  recipe[passenger::apache2-rvm]
+  recipe[tomcat]
+  recipe[cas]
+  recipe[iptables::https]
+)
+
+env_run_lists(
+  "ncs_development" => [
+    "recipe[zeroconf]",
+    base_run_list,
+    "recipe[cas::devenv]"
+  ].flatten,
+  "_default" => base_run_list
 )
 
 default_attributes(
