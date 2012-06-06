@@ -13,6 +13,7 @@ This cookbook includes the following recipes:
 3. `callback`: sets up CAS proxy callbacks for Passenger
 4. `apache`: exposes CAS components over HTTPS via Apache
 5. `devenv`: sets up SSL certificates for development
+6. `default`: runs 1-4
 
 Requirements
 ============
@@ -73,4 +74,5 @@ Callbacks
 Usage
 =====
 
-Include the cas::server, cas::callback, and cas::apache recipes in your run list.
+At NUBIC, we dedicate one VM to running CAS, so we just use the
+default recipe.  YMMV.
