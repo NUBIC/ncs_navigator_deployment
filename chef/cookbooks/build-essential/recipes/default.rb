@@ -25,7 +25,7 @@ when "ubuntu","debian"
     end
   end
 when "centos","redhat","fedora"
-  %w{gcc gcc-c++ kernel-devel make}.each do |pkg|
+  %w{gcc gcc-c++ kernel-devel make libtool}.each do |pkg|
     package pkg do
       action :install
     end
