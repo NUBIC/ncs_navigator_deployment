@@ -1,14 +1,22 @@
 name "ncs_common"
 description "Common recipes for nodes in the NCS Navigator application suite"
 
-run_list(
-  "recipe[iptables]",
-  "recipe[iptables::ssh]",
-  "recipe[selinux::disabled]",
-  "recipe[ntp]",
-  "recipe[screen]",
-  "recipe[yumrepo::epel]",
-  "recipe[monit]"
+base_run_list = %w(
+  recipe[iptables]
+  recipe[iptables::ssh]
+  recipe[selinux::disabled]
+  recipe[ntp]
+  recipe[screen]
+  recipe[yumrepo::epel]
+  recipe[monit]
+)
+
+env_run_lists(
+  "ncs_development" => [
+    "recipe[zeroconf]",
+    base_run_list
+  ].flatten,
+  "_default" => base_run_list
 )
 
 default_attributes(
