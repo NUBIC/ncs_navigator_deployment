@@ -12,6 +12,7 @@ This cookbook includes the following recipes:
 2. `server`: installs the CAS server into Tomcat 6
 3. `callback`: sets up CAS proxy callbacks for Passenger
 4. `apache`: exposes CAS components over HTTPS via Apache
+5. `devenv`: sets up SSL certificates for development
 
 Requirements
 ============
@@ -24,6 +25,10 @@ Requirements
 
 The apache recipe assumes that the CAS server and proxy callbacks are
 accessible via the same IP address.
+
+The `devenv` recipe depends on the `ssl_certificates` cookbook.  It
+also expects to find a `vagrant` key in the node's configuration,
+and will abort if no such key is found.
 
 Attributes
 ==========

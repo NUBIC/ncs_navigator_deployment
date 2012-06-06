@@ -39,3 +39,7 @@ default[:cas][:apache][:document_root] = "/var/www"
 # Proxy callback.
 default[:cas][:callback][:user] = "cas"
 default[:cas][:callback][:app_path] = "#{node[:cas][:apache][:document_root]}/apps/cas-proxy-callback"
+
+# Development-only configuration.
+default[:cas][:devenv][:trust_store][:path] = "#{node[:cas][:dir]}/cas.ts"
+default[:cas][:devenv][:trust_store][:password] = "password"

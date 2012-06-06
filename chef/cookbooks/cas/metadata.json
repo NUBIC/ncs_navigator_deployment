@@ -13,6 +13,7 @@
     "bcdatabase": ">= 0.0.0",
     "database": ">= 0.0.0",
     "openssl": ">= 0.0.0",
+    "ssl_certificates": ">= 0.0.0",
     "tomcat": ">= 0.0.0"
   },
   "recommendations": {
