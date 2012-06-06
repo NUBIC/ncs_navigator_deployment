@@ -54,7 +54,11 @@ def base_config(role, config)
         "cas" => {
           "base_url" => "https://#{cas_mdns_name}/cas",
           "proxy_retrieval_url" => "https://#{cas_mdns_name}/cas-proxy-callback/retrieve_pgt",
-          "proxy_callback_url" => "https://#{cas_mdns_name}/cas-proxy-callback/receive_pgt"
+          "proxy_callback_url" => "https://#{cas_mdns_name}/cas-proxy-callback/receive_pgt",
+          "apache" => {
+            "ssl_certificate" => "/etc/httpd/ssl/cas.crt",
+            "ssl_certificate_key" => "/etc/httpd/ssl/cas.key"
+          }
         },
         "pers" => {
           "bcdatabase" => {}
