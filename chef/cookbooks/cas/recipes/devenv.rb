@@ -23,7 +23,7 @@ include_recipe "java"
 include_recipe "ssl_certificates"
 include_recipe "tomcat"
 
-unless node[:vagrant]
+unless node.chef_environment == "ncs_development"
   raise <<-END
   This node does not appear to be used for development, so cas::devenv cannot be used in it
   END

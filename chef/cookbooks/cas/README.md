@@ -28,8 +28,8 @@ The apache recipe assumes that the CAS server and proxy callbacks are
 accessible via the same IP address.
 
 The `devenv` recipe depends on the `ssl_certificates` cookbook.  It
-also expects to find a `vagrant` key in the node's configuration,
-and will abort if no such key is found.
+also expects to be running on a node in the `ncs_development`
+environment, and will raise an error if that is not the case.
 
 Attributes
 ==========
