@@ -73,7 +73,7 @@ ruby_block "set nubic.cas.logFile property" do
     option = "-Dnubic.cas.logFile=#{node[:cas][:log]}"
 
     unless node[:tomcat][:java_options].include?(option)
-      node[:tomcat][:java_options] += (" " + option)
+      node[:tomcat][:java_options] += " " + option
       node.save unless Chef::Config[:solo]
     end
   end
