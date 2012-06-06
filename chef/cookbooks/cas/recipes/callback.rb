@@ -32,8 +32,17 @@ end
 app_path = node[:cas][:callback][:app_path]
 app_user = node[:cas][:callback][:user]
 app_group = node[:application_users][:group]
+pgt_pstore_path = node[:cas][:callback][:pstore_path]
 
 rackup_path = "#{node[:cas][:callback][:app_path]}/config.ru"
+
+# Prepare a storage location for the callback's pstore.
+directory ::File.dirname(pgt_pstore_path) do
+  action :create
+  group app_group
+  owner app_user
+  recursive true
+end
 
 # Generate Passenger-mandated bits.
 directory "#{app_path}/tmp" do
@@ -49,4 +58,9 @@ end
 template rackup_path do
   source "config.ru.erb"
   owner app_user
+  variables(:pgt_pstore_path => pgt_pstore_path)
+end
+
+link "#{node[:cas][:apache][:document_root]}/#{node[:cas][:callback][:script_name]}" do
+  to "#{app_path}/public"
 end
