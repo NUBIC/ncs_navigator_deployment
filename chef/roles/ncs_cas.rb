@@ -26,15 +26,16 @@ env_run_lists(
 default_attributes(
   "application_users" => {
     "users" => {
-      "cas" => {}
-    },
+      "cas" => {},
+      "tomcat" => {}
+    }
   },
   "bcdatabase" => {
-    "app_group" => "tomcat"
+    "app_group" => "app"
   },
   "aker" => {
     "central" => {
-      "group" => "tomcat"
+      "group" => "app"
     }
   },
   "passenger" => {
@@ -50,5 +51,11 @@ default_attributes(
     "global_gems" => [
         { "name" => "bundler", "version" => "~> 1.1" }
      ]
+  }
+)
+
+override_attributes(
+  "tomcat" => {
+    "group" => "app"
   }
 )

@@ -23,13 +23,14 @@ include_recipe "apache2"
 include_recipe "application_users"
 
 app_owner = node[:tomcat][:user]
+app_group = node[:tomcat][:group]
 
 # Download and install the CAS server WAR.
 remote_file "#{node[:tomcat][:webapp_dir]}/#{node[:cas][:script_name]}.war" do
   source node[:cas][:war][:source]
   checksum node[:cas][:war][:checksum]
   owner app_owner
-
+  group app_group
   notifies :restart, "service[tomcat]"
 end
 
