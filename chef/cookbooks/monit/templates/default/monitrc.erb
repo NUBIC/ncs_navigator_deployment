@@ -1,6 +1,10 @@
 set daemon <%= @node[:monit][:poll_period] %>
   with start delay <%= @node[:monit][:poll_start_delay] %>
 
+<% if @node[:monit][:mmonit] %>
+set mmonit <%= @node[:monit][:mmonit] %>
+<% end %>
+
 set logfile syslog facility log_daemon
 
 set httpd port 2812 and
