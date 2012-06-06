@@ -17,6 +17,8 @@
 # limitations under the License.
 #
 
+require 'uri'
+
 include_recipe "apache2"
 
 cas = node[:cas]
@@ -34,6 +36,9 @@ include_recipe "apache2::mod_proxy_ajp"
 include_recipe "apache2::mod_ssl"
 include_recipe "passenger::apache2-rvm"
 
+server_name = URI.parse(cas[:base_url]).host
+
+# Set up the site.
 template config do
   source "cas.conf.erb"
   owner node[:apache][:user]
@@ -45,6 +50,7 @@ template config do
             :callback_app_path => cas[:callback][:app_path],
             :server_script_name => cas[:script_name],
             :server_remote => remote,
+            :server_name => server_name,
             :callback_url => cas[:proxy_callback_url])
 end
 

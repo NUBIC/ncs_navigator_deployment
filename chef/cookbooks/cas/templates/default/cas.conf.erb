@@ -4,6 +4,7 @@
 
   SSLCertificateFile <%= @ssl_certificate %>
   SSLCertificateKeyFile <%= @ssl_certificate_key %>
+  ServerName <%= @server_name %>
 
   <Directory <%= @document_root %>>
     Allow from all
