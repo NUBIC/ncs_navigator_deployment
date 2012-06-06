@@ -8,6 +8,7 @@ RUN_LISTS = {
     'role[ncs_app]'
   ],
   :cas => [
+    'recipe[zeroconf]',
     'role[ncs_cas]',
   ],
   :db => [
@@ -25,15 +26,19 @@ IPS = {
 fn = File.expand_path('../.local_vagrant.yml', __FILE__)
 CUSTOMIZATIONS = File.exists?(fn) ? YAML.load(File.read(fn)) : {}
 
-def base_config(role, config)
+def make_hostname(role)
   username = ENV['USER']
   hostname = `hostname -s`.chomp
 
+  "ncs-#{role}-#{username}-#{hostname}"
+end
+
+def base_config(role, config)
   raise "No run list defined for #{role}" if RUN_LISTS[role].nil?
 
   config.vm.define role do |config|
     config.vm.box = "ncs"
-    config.vm.host_name = "ncs-#{role}-#{username}-#{hostname}"
+    config.vm.host_name = make_hostname(role)
     
     config.ssh.private_key_path = "ncs-vagrant"
 
@@ -43,11 +48,13 @@ def base_config(role, config)
       chef.validation_key_path = "nubic-validator.pem"
       chef.run_list = RUN_LISTS[role]
 
+      cas_mdns_name = "#{make_hostname('cas')}.local"
+
       chef.json = {
         "cas" => {
-          "base_url" => "https://#{IPS[:cas]}/cas",
-          "proxy_retrieval_url" => "https://#{IPS[:cas]}/cas_proxy_callback/retrieve_pgt",
-          "proxy_callback_url" => "https://#{IPS[:cas]}/cas_proxy_callback/receive_pgt"
+          "base_url" => "https://#{cas_mdns_name}/cas",
+          "proxy_retrieval_url" => "https://#{cas_mdns_name}/cas-proxy-callback/retrieve_pgt",
+          "proxy_callback_url" => "https://#{cas_mdns_name}/cas-proxy-callback/receive_pgt"
         },
         "pers" => {
           "bcdatabase" => {}

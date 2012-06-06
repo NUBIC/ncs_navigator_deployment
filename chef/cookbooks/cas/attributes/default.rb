@@ -38,4 +38,4 @@ default[:cas][:apache][:document_root] = "/var/www"
 
 # Proxy callback.
 default[:cas][:callback][:user] = "cas"
-default[:cas][:callback][:app_path] = "#{node[:cas][:apache][:document_root]}/apps/cas_proxy_callback"
+default[:cas][:callback][:app_path] = "#{node[:cas][:apache][:document_root]}/apps/cas-proxy-callback"
