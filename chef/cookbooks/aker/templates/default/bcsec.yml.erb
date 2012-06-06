@@ -1,10 +1,16 @@
+<% if @pers_group && @pers_entry %>
 cc_pers:
   bcdatabase:
     group: <%= @pers_group %>
     entry: <%= @pers_entry %>
+<% end %>
+
+<% if @netid_user && @netid_password %>
 netid:
   user: <%= @netid_user %>
   password: <%= @netid_password %>
+<% end %>
+
 policy:
   lockout-duration-seconds: 600
   lockout-attempts: 5
