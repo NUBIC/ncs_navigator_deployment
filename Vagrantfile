@@ -3,28 +3,6 @@
 
 require 'yaml'
 
-RUN_LISTS = {
-  :app => [
-    'role[ncs_app]'
-  ],
-  :cas => [
-    'role[ncs_cas]',
-  ],
-  :db => [
-    'role[ncs_db]'
-  ]
-}
-
-IPS = {
-  :app => '192.168.56.220',
-  :cas => '192.168.56.222',
-  :db => '192.168.56.221',
-  :chef => '192.168.56.1'
-}
-
-fn = File.expand_path('../.local_vagrant.yml', __FILE__)
-CUSTOMIZATIONS = File.exists?(fn) ? YAML.load(File.read(fn)) : {}
-
 def make_hostname(role)
   username = ENV['USER']
   hostname = `hostname -s`.chomp
@@ -33,52 +11,50 @@ def make_hostname(role)
 end
 
 def base_config(role, config)
-  raise "No run list defined for #{role}" if RUN_LISTS[role].nil?
-
   config.vm.define role do |config|
     config.vm.box = "ncs"
     config.vm.host_name = make_hostname(role)
-    
+
     config.ssh.private_key_path = "ncs-vagrant"
 
     config.vm.provision :chef_client do |chef|
-      chef.chef_server_url = "http://#{IPS[:chef]}:4000"
+      chef.chef_server_url = CHEF_SERVER_URL
       chef.environment = "ncs_development"
       chef.validation_key_path = "nubic-validator.pem"
-      chef.run_list = RUN_LISTS[role]
+      chef.run_list = ["role[ncs_#{role}]"]
 
-      cas_mdns_name = "#{make_hostname('cas')}.local"
+      cas_mdns_name = "#{HOSTNAMES['cas']}.local"
 
       chef.json = {
         "cas" => {
           "base_url" => "https://#{cas_mdns_name}/cas",
           "proxy_retrieval_url" => "https://#{cas_mdns_name}/cas-proxy-callback/retrieve_pgt",
-          "proxy_callback_url" => "https://#{cas_mdns_name}/cas-proxy-callback/receive_pgt",
-          "apache" => {
-            "ssl_certificate" => "/etc/httpd/ssl/cas.crt",
-            "ssl_certificate_key" => "/etc/httpd/ssl/cas.key"
-          }
-        },
-        "pers" => {
-          "bcdatabase" => {}
+          "proxy_callback_url" => "https://#{cas_mdns_name}/cas-proxy-callback/receive_pgt"
         }
-      }.merge(CUSTOMIZATIONS[role.to_s] || {})
+      }
     end
 
     yield config
   end
 end
 
+# -----------------------------------------------------------------------------
+
+# The Chef server to use.
+CHEF_SERVER_URL = "http://chef-server.nubic.northwestern.edu:4000"
+
+# Hostnames.
+HOSTNAMES = Hash[*(%w(app cas db).map { |n| [n, make_hostname(n)] }.flatten)]
 Vagrant::Config.run do |config|
   base_config(:app, config) do |app_config|
-    app_config.vm.network :hostonly, IPS[:app]
+    app_config.vm.network :hostonly, '192.168.56.220'
   end
 
   base_config(:cas, config) do |cas_config|
-    cas_config.vm.network :hostonly, IPS[:cas]
+    cas_config.vm.network :hostonly, '192.168.56.222'
   end
 
   base_config(:db, config) do |db_config|
-    db_config.vm.network :hostonly, IPS[:db]
+    db_config.vm.network :hostonly, '192.168.56.221'
   end
 end
