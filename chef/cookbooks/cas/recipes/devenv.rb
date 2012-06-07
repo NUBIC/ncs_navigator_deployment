@@ -37,11 +37,33 @@ trust_store = node[:cas][:devenv][:trust_store][:path]
 trust_store_password = node[:cas][:devenv][:trust_store][:password]
 keytool = "#{node[:java][:java_home]}/bin/keytool"
 
-ssl_certificates_development ssl_dir do
-  action :install
-  basename "cas"
-  owner node[:apache][:user]
+# Point the CAS server at the development SSL certificate and key...
+node[:cas][:apache][:ssl][:certificate] = node[:cas][:devenv][:ssl][:certificate]
+node[:cas][:apache][:ssl][:key] = node[:cas][:devenv][:ssl][:key]
+node.save unless Chef::Config[:solo]
+
+# ...and install those certificates.
+cookbook_file node[:cas][:apache][:ssl][:certificate] do
+  cookbook "ssl_certificates"
   group node[:apache][:group]
+  mode 0444
+  owner node[:apache][:user]
+  source "wildcard.local.crt"
+end
+
+cookbook_file node[:cas][:apache][:ssl][:key] do
+  cookbook "ssl_certificates"
+  group node[:apache][:group]
+  mode 0400
+  owner node[:apache][:user]
+  source "wildcard.local.key"
+end
+
+ruby_block "restart Apache" do
+  block { }
+
+  notifies :create, resources(:template => node[:cas][:apache][:configuration])
+  notifies :restart, resources(:service => "httpd")
 end
 
 # Build a trust store for CAS...

@@ -35,6 +35,7 @@ default[:cas][:database][:bcdatabase][:group] = "local_postgresql"
 
 # Apache sans SSL certificate paths.
 default[:cas][:apache][:document_root] = "/var/www"
+default[:cas][:apache][:configuration] = "#{node[:apache][:dir]}/sites-available/cas.conf"
 
 # Proxy callback.
 default[:cas][:callback][:user] = "cas"
@@ -42,6 +43,8 @@ default[:cas][:callback][:app_path] = "#{node[:cas][:apache][:document_root]}/ap
 default[:cas][:callback][:pstore_path] = "/var/db/cas/pgt.pstore"
 
 # Development-only configuration.
-default[:cas][:devenv][:trust_store][:path] = "#{node[:cas][:dir]}/cas.ts"
-default[:cas][:devenv][:trust_store][:password] = "password"
+default[:cas][:devenv][:ssl][:certificate] = "/etc/pki/tls/certs/cas.crt"
+default[:cas][:devenv][:ssl][:key] = "/etc/pki/tls/certs/cas.key"
 default[:cas][:devenv][:static_authority][:path] = "#{node[:cas][:dir]}/static.yml"
+default[:cas][:devenv][:trust_store][:password] = "password"
+default[:cas][:devenv][:trust_store][:path] = "#{node[:cas][:dir]}/cas.ts"
