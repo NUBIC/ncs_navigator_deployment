@@ -51,7 +51,7 @@ template node[:cas][:apache][:configuration] do
 end
 
 link "#{sites_enabled}/cas.conf" do
-  to config
+  to node[:cas][:apache][:configuration]
 
   notifies :restart, "service[apache2]"
 end

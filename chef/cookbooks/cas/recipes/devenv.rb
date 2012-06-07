@@ -31,8 +31,6 @@ end
 
 app_owner = node[:tomcat][:user]
 app_group = node[:tomcat][:user]
-ssl_dir = ::File.dirname(node[:cas][:apache][:ssl_certificate])
-cert_file = "#{ssl_dir}/cas.crt"
 trust_store = node[:cas][:devenv][:trust_store][:path]
 trust_store_password = node[:cas][:devenv][:trust_store][:password]
 keytool = "#{node[:java][:java_home]}/bin/keytool"
@@ -41,6 +39,9 @@ keytool = "#{node[:java][:java_home]}/bin/keytool"
 node[:cas][:apache][:ssl][:certificate] = node[:cas][:devenv][:ssl][:certificate]
 node[:cas][:apache][:ssl][:key] = node[:cas][:devenv][:ssl][:key]
 node.save unless Chef::Config[:solo]
+
+ssl_dir = ::File.dirname(node[:cas][:apache][:ssl][:certificate])
+cert_file = "#{ssl_dir}/cas.crt"
 
 # ...and install those certificates.
 cookbook_file node[:cas][:apache][:ssl][:certificate] do
@@ -63,7 +64,7 @@ ruby_block "restart Apache" do
   block { }
 
   notifies :create, resources(:template => node[:cas][:apache][:configuration])
-  notifies :restart, resources(:service => "httpd")
+  notifies :restart, resources(:service => "apache2")
 end
 
 # Build a trust store for CAS...

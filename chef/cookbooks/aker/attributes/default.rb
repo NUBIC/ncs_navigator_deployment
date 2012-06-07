@@ -1,5 +1,6 @@
 include_attribute 'application_users'
 
+default[:pers][:bcdatabase] = {}
 default[:aker][:central][:path] = "/etc/nubic/bcsec-prod.yml"
 default[:aker][:central][:group] = node[:application_users][:group] || 'app'
 default[:aker][:central][:cas][:base_url] = node[:cas][:base_url]

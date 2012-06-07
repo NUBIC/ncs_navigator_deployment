@@ -33,9 +33,11 @@ default[:cas][:database][:name] = "nubic_cas"
 default[:cas][:database][:user] = "nubic_cas"
 default[:cas][:database][:bcdatabase][:group] = "local_postgresql"
 
-# Apache sans SSL certificate paths.
+# Apache.
 default[:cas][:apache][:document_root] = "/var/www"
 default[:cas][:apache][:configuration] = "#{node[:apache][:dir]}/sites-available/cas.conf"
+default[:cas][:apache][:ssl][:certificate] = ""
+default[:cas][:apache][:ssl][:key] = ""
 
 # Proxy callback.
 default[:cas][:callback][:user] = "cas"
