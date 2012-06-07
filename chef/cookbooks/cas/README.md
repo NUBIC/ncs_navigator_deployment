@@ -12,7 +12,7 @@ This cookbook includes the following recipes:
 2. `server`: installs the CAS server into Tomcat 6
 3. `callback`: sets up CAS proxy callbacks for Passenger
 4. `apache`: exposes CAS components over HTTPS via Apache
-5. `monitoring`: installs Monit and log.io configuration for CAS
+5. `monitoring`: installs Monit configuration for CAS
 6. `devenv`: sets up SSL certificates for development
 7. `default`: runs 1-5
 
@@ -23,7 +23,6 @@ Requirements
   8.4 is the minimum version; 9.0 is preferred.
 - The `database` and `bcdatabase` cookbooks.
 - The `aker` cookbook.
-- The `monit` and `logio` cookbooks.
 - The `openssl` cookbook for password generation.
 
 The apache recipe assumes that the CAS server and proxy callbacks are

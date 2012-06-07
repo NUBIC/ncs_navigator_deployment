@@ -18,7 +18,6 @@
 #
 
 include_recipe "monit"
-include_recipe "logio"
 
 # Hardcoded by /etc/sysconfig/tomcat6.
 tomcat_pid = "/var/run/tomcat6.pid"
@@ -37,9 +36,3 @@ monitrc "cas_via_apache", :pid => apache_pid, :host => host, :port => 443, :cas_
 
 # Can we access the proxy callbacks?  If not, restart Apache.
 monitrc "cas_proxy_callbacks", :pid => apache_pid, :host => host, :port => 443, :callback_path => callback_path
-
-# Harvest the CAS server log.
-logio_harvester_path "nubic-cas" do
-  action :add
-  path node[:cas][:log]
-end
