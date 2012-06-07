@@ -11,6 +11,7 @@ base_run_list = %w(
   recipe[passenger::apache2-rvm]
   recipe[tomcat]
   recipe[cas]
+  recipe[logio::harvester]
   recipe[iptables::https]
 )
 
