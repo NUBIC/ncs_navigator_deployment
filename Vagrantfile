@@ -8,7 +8,7 @@ RUN_LISTS = {
     'role[ncs_app]'
   ],
   :cas => [
-    'role[ncs_cas]',
+    'role[ncs_cas]'
   ],
   :db => [
     'role[ncs_db]'
@@ -61,6 +61,11 @@ def base_config(role, config)
         },
         "pers" => {
           "bcdatabase" => {}
+        },
+	"logio" => {
+	  "server" => {
+            "uri" => "logio://#{IPS[:db]}:12345"
+          }
         }
       }.merge(CUSTOMIZATIONS[role.to_s] || {})
     end
