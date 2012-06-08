@@ -3,22 +3,6 @@
 Installs and trusts SSL certificates required to perform server-side validation
 of NUBIC's *.nubic.northwestern.edu SSL certificate.
 
-This cookbook also includes a `development` LWRP which installs a certificate
-for *.local to a specified location.  It does not set up any trust.
-
-Example usage:
-
-    # Installs:
-    #
-    # /etc/httpd/ssl/cas.crt apache:apache 0444
-    # /etc/httpd/ssl/cas.key apache:apache 0400
-    ssl_certificates_development "/etc/httpd/ssl" do
-      action :install
-      basename "cas"
-      owner "apache"
-      group "apache"
-    end
-
 == On trust
 
 When we write "trust", we mean "sets up trusted certificate links for the
@@ -39,7 +23,7 @@ applications.
 
 = REQUIREMENTS:
 
-Known to work on RHEL 6.1.
+Known to work on RHEL 6.1 and CentOS 6.2.
 
 It's recommended that you use `zeroconf` in conjunction with the `development`
 LWRP.
