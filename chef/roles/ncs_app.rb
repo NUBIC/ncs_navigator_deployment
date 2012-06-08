@@ -13,6 +13,7 @@ run_list(
   "recipe[bcdatabase]",
   "recipe[aker::central]",
   "recipe[ssl_certificates]",
+  "recipe[ncs_navigator::web]",
   "recipe[iptables::https]"
 )
 
