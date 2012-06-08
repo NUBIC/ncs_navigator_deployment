@@ -16,8 +16,9 @@ base_run_list = %w(
 
 env_run_lists(
   "ncs_development" => [
-    base_run_list,
-    "recipe[cas::devenv]"
+    "role[ncs_common]",
+    "recipe[cas::devenv]",
+    base_run_list
   ].flatten,
   "_default" => base_run_list
 )
