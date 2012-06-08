@@ -29,24 +29,14 @@ cookbook_file "/etc/nsswitch.conf" do
   mode 0644
 end
 
-bash "Add messagebus to default runlevel" do
-  code <<-END
-    chkconfig --level 3 messagebus on
-  END
-end
-
-bash "Add avahi-daemon to default runlevel" do
-  code <<-END
-    chkconfig --level 3 avahi-daemon on
-  END
-end
-
 iptables_rule "zeroconf_in", :cookbook => "zeroconf"
 
 service "messagebus" do
   action :start
+  enabled true
 end
 
 service "avahi-daemon" do
   action :start
+  enabled true
 end
