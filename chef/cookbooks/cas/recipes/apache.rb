@@ -50,8 +50,6 @@ template node[:cas][:apache][:configuration] do
             :callback_url => cas[:proxy_callback_url])
 end
 
-link "#{sites_enabled}/cas.conf" do
-  to node[:cas][:apache][:configuration]
-
-  notifies :restart, "service[apache2]"
+apache_site "cas" do
+  enable true
 end
