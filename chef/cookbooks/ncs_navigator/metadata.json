@@ -1,13 +1,16 @@
 {
   "name": "ncs_navigator",
   "description": "Installs/Configures ncs_navigator",
-  "long_description": "Description\n===========\n\nRecipes:\n\n* web: Exposes NCS Navigator applications via a Web server.\n\nRequirements\n============\n\nCookbook dependencies:\n\n* apache2\n\nThe web recipe currently only works with Apache.\n\nAttributes\n==========\n\nThese attributes MUST be set:\n\n* `ncs_navigator[:core][:url]`: The URL of NCS Navigator Core.\n* `ncs_navigator[:psc][:url]`: The URL of Patient Study Calendar.\n* `ncs_navigator[:staff_portal][:url]`: The URL of NCS Staff Portal.\n\nUsage\n=====\n\n",
+  "long_description": "Description\n===========\n\nRecipes:\n\n* web: Exposes NCS Navigator applications via a Web server.\n\nRequirements\n============\n\nCookbook dependencies:\n\n* apache2\n\nThe web recipe currently only works with Apache, Passenger, and Tomcat.\n\nAttributes\n==========\n\nThese attributes MUST be set:\n\n* `ncs_navigator[:core][:url]`: The URL of NCS Navigator Core.\n* `ncs_navigator[:psc][:url]`: The URL of Patient Study Calendar.\n* `ncs_navigator[:staff_portal][:url]`: The URL of NCS Staff Portal.\n* `ncs_navigator[:ssl][:certificate]`: The path to the SSL certificate used by\n  the NCS Navigator suite.\n* `ncs_navigator[:ssl][:key]`: The path to the SSL private key used by\n  the NCS Navigator suite.\n\nUsage\n=====\n",
   "maintainer": "Northwestern University",
   "maintainer_email": "YOUR_EMAIL",
   "license": "Apache 2.0",
   "platforms": {
   },
   "dependencies": {
+    "apache2": ">= 0.0.0",
+    "tomcat": ">= 0.0.0",
+    "application_users": ">= 0.0.0"
   },
   "recommendations": {
   },

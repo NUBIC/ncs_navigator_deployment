@@ -1,0 +1,12 @@
+<VirtualHost <%= @host %>:443>
+  SSLEngine on
+  SSLCertificateFile <%= @ssl_certificate %>
+  SSLCertificateKeyFile <%= @ssl_key %>
+
+  ServerName <%= @host %>
+
+  <Location />
+    Allow from all
+    ProxyPass <%= @ajp_remote %>
+  </Location>
+</VirtualHost>

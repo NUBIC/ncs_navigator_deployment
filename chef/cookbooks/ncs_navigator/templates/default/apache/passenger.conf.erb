@@ -1,4 +1,8 @@
 <VirtualHost <%= @host %>:443>
+  SSLEngine on
+  SSLCertificateFile <%= @ssl_certificate %>
+  SSLCertificateKeyFile <%= @ssl_key %>
+
   ServerName <%= @host %>
   DocumentRoot <%= @app_root %>/public
 
@@ -7,3 +11,5 @@
     Options -MultiViews
   </Directory>
 </VirtualHost>
+
+PassengerPreStart <%= @uri %>

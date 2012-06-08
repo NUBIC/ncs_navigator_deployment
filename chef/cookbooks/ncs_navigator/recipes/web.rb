@@ -20,29 +20,47 @@
 require 'uri'
 
 include_recipe "apache2"
+include_recipe "tomcat"
 include_recipe "application_users"
 
 user = node[:apache][:user]
 group = node[:apache][:group]
+app_group = node[:application_users][:group]
+ajp_remote = "ajp://localhost:#{node[:tomcat][:ajp_port]}"
 
-%w(core staff_portal).each do |app|
+include_recipe "apache2::mod_proxy_ajp"
+include_recipe "apache2::mod_ssl"
+
+node[:ncs_navigator][:apps].each do |app, strategy|
   config = node[:ncs_navigator][app][:web][:configuration]
   app_uri = URI(node[:ncs_navigator][app][:url])
   app_root = node[:ncs_navigator][app][:root]
   app_user = node[:ncs_navigator][app][:user]
-  app_group = node[:application_users][:group]
+  ssl_certificate = node[:ncs_navigator][app][:ssl][:certificate]
+  ssl_key = node[:ncs_navigator][app][:ssl][:key]
 
-  directory app_root do
-    owner app_user
-    group app_group
-    recursive true
+  if app_root
+    directory app_root do
+      owner app_user
+      group app_group
+      recursive true
+    end
   end
+
+  template_variables = {
+    :ajp_remote => ajp_remote,
+    :app_root => app_root,
+    :host => app_uri.host,
+    :ssl_certificate => ssl_certificate,
+    :ssl_key => ssl_key,
+    :uri => app_uri
+  }
 
   template config do
     owner user
     group group
-    source "apache_passenger.conf.erb"
-    variables(:host => app_uri.host, :app_root => app_root)
+    source strategy
+    variables template_variables
   end
 
   apache_site File.basename(config) do
