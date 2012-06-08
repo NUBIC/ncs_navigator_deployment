@@ -1,6 +1,7 @@
 require 'uri'
 
 include_attribute "ssl_certificates"
+include_attribute "apache2"
 
 # The source file.
 default[:cas][:war][:source] = "http://download.nubic.northwestern.edu/nubic_cas/nubic-cas-server-webapp-3.4.3.NUBIC-002.war"

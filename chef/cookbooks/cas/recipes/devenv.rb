@@ -17,20 +17,20 @@
 # limitations under the License.
 #
 
-include_recipe "apache2"
-include_recipe "passenger::apache2-rvm"
-include_recipe "java"
-include_recipe "ssl_certificates"
-include_recipe "tomcat"
-
 unless node.chef_environment == "ncs_development"
   raise <<-END
   This node does not appear to be used for development, so cas::devenv cannot be used in it
   END
 end
 
+include_recipe "application_users"
+include_recipe "apache2"
+include_recipe "java"
+include_recipe "ssl_certificates"
+include_recipe "tomcat"
+
 app_owner = node[:tomcat][:user]
-app_group = node[:tomcat][:user]
+app_group = node[:tomcat][:group]
 trust_store = node[:cas][:devenv][:trust_store][:path]
 trust_store_password = node[:cas][:devenv][:trust_store][:password]
 keytool = "#{node[:java][:java_home]}/bin/keytool"
@@ -44,13 +44,20 @@ node[:cas][:proxy_retrieval_url] = "https://#{host}/cas-proxy-callback/retrieve_
 # Point the CAS server at the development SSL certificate and key.
 node[:cas][:apache][:ssl][:certificate] = node[:cas][:devenv][:ssl][:certificate]
 node[:cas][:apache][:ssl][:key] = node[:cas][:devenv][:ssl][:key]
+
+# Reload CAS attributes.
 node.save unless Chef::Config[:solo]
 
-ssl_dir = ::File.dirname(node[:cas][:apache][:ssl][:certificate])
-cert_file = "#{ssl_dir}/cas.crt"
+ruby_block "reload CAS attributes" do
+  block do
+    node.load_attribute_by_short_filename('default', 'cas')
+  end
+end
+
+cert_file = node[:cas][:apache][:ssl][:certificate]
 
 # Install those certificates.
-cookbook_file node[:cas][:apache][:ssl][:certificate] do
+cookbook_file cert_file do
   cookbook "ssl_certificates"
   group node[:apache][:group]
   mode 0444
@@ -66,14 +73,14 @@ cookbook_file node[:cas][:apache][:ssl][:key] do
   source "wildcard.local.key"
 end
 
-ruby_block "restart Apache" do
-  block { }
-
-  notifies :create, resources(:template => node[:cas][:apache][:configuration])
-  notifies :restart, resources(:service => "apache2")
+# Build a trust store for CAS...
+directory File.dirname(trust_store) do
+  action :create
+  group app_group
+  owner app_owner
+  recursive true
 end
 
-# Build a trust store for CAS...
 bash "build_cas_trust_store" do
   user app_owner
   group app_group
@@ -97,6 +104,9 @@ ruby_block "rebuild Tomcat environment" do
   notifies :create, resources(:template => "/etc/sysconfig/tomcat6")
   notifies :restart, resources(:service => "tomcat")
 end
+
+# We have some post-CAS stuff to do, so now set up CAS.
+include_recipe "cas"
 
 # Switch bcsec into static authority mode...
 static_file = node[:cas][:devenv][:static_authority][:path]
