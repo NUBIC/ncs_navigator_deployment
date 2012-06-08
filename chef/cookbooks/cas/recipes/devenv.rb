@@ -35,7 +35,13 @@ trust_store = node[:cas][:devenv][:trust_store][:path]
 trust_store_password = node[:cas][:devenv][:trust_store][:password]
 keytool = "#{node[:java][:java_home]}/bin/keytool"
 
-# Point the CAS server at the development SSL certificate and key...
+# Calculate CAS URLs.
+host = "#{node[:hostname]}.local"
+node[:cas][:base_url] = "https://#{host}/cas"
+node[:cas][:proxy_callback_url] = "https://#{host}/cas-proxy-callback/receive_pgt"
+node[:cas][:proxy_retrieval_url] = "https://#{host}/cas-proxy-callback/retrieve_pgt"
+
+# Point the CAS server at the development SSL certificate and key.
 node[:cas][:apache][:ssl][:certificate] = node[:cas][:devenv][:ssl][:certificate]
 node[:cas][:apache][:ssl][:key] = node[:cas][:devenv][:ssl][:key]
 node.save unless Chef::Config[:solo]
@@ -43,7 +49,7 @@ node.save unless Chef::Config[:solo]
 ssl_dir = ::File.dirname(node[:cas][:apache][:ssl][:certificate])
 cert_file = "#{ssl_dir}/cas.crt"
 
-# ...and install those certificates.
+# Install those certificates.
 cookbook_file node[:cas][:apache][:ssl][:certificate] do
   cookbook "ssl_certificates"
   group node[:apache][:group]
