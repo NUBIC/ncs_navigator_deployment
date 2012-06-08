@@ -22,17 +22,6 @@ def base_config(role, config)
       chef.environment = "ncs_development"
       chef.validation_key_path = "nubic-validator.pem"
       chef.run_list = ["role[ncs_#{role}]"]
-
-      cas_mdns_name = "#{HOSTNAMES['cas']}.local"
-
-      chef.json = {
-        "ncs_navigator" => NCS_NAVIGATOR,
-        "cas" => {
-          "base_url" => "https://#{cas_mdns_name}/cas",
-          "proxy_retrieval_url" => "https://#{cas_mdns_name}/cas-proxy-callback/retrieve_pgt",
-          "proxy_callback_url" => "https://#{cas_mdns_name}/cas-proxy-callback/receive_pgt"
-        }
-      }
     end
 
     yield config
@@ -43,22 +32,6 @@ end
 
 # The Chef server to use.
 CHEF_SERVER_URL = "http://chef-server.nubic.northwestern.edu:4000"
-
-# Hostnames.
-HOSTNAMES = Hash[*(%w(app cas db).map { |n| [n, make_hostname(n)] }.flatten)]
-
-# URLs of applications in the NCS Navigator suite.
-NCS_NAVIGATOR = {
-  "core" => {
-    "url" => "https://navigator.#{HOSTNAMES['app']}.local"
-  },
-  "psc" => {
-    "url" => "https://navcal.#{HOSTNAMES['app']}.local"
-  },
-  "staff_portal" => {
-    "url" => "https://staffportal.#{HOSTNAMES['app']}.local"
-  }
-}
 
 Vagrant::Config.run do |config|
   base_config(:app, config) do |app_config|
