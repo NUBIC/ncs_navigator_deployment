@@ -26,7 +26,7 @@ def base_config(role, config)
       cas_mdns_name = "#{HOSTNAMES['cas']}.local"
 
       chef.json = {
-        "app_urls" => APP_URLS,
+        "ncs_navigator" => NCS_NAVIGATOR,
         "cas" => {
           "base_url" => "https://#{cas_mdns_name}/cas",
           "proxy_retrieval_url" => "https://#{cas_mdns_name}/cas-proxy-callback/retrieve_pgt",
@@ -47,12 +47,16 @@ CHEF_SERVER_URL = "http://chef-server.nubic.northwestern.edu:4000"
 # Hostnames.
 HOSTNAMES = Hash[*(%w(app cas db).map { |n| [n, make_hostname(n)] }.flatten)]
 
-# URLs of applications.
-APP_URLS = {
-  "ncs_navigator" => {
-    "core" => "https://navigator.#{HOSTNAMES['app']}.local",
-    "staffportal" => "https://staffportal.#{HOSTNAMES['app']}.local",
-    "psc" => "https://navcal.#{HOSTNAMES['app']}.local"
+# URLs of applications in the NCS Navigator suite.
+NCS_NAVIGATOR = {
+  "core" => {
+    "url" => "https://navigator.#{HOSTNAMES['app']}.local"
+  },
+  "psc" => {
+    "url" => "https://navcal.#{HOSTNAMES['app']}.local"
+  },
+  "staff_portal" => {
+    "url" => "https://staffportal.#{HOSTNAMES['app']}.local"
   }
 }
 
