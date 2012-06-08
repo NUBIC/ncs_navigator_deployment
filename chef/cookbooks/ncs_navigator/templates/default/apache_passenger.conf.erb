@@ -1,0 +1,9 @@
+<VirtualHost <%= @host %>:443>
+  ServerName <%= @host %>
+  DocumentRoot <%= @app_root %>/public
+
+  <Directory <%= @app_root %>/public>
+    Allow from all
+    Options -MultiViews
+  </Directory>
+</VirtualHost>
