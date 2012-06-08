@@ -48,6 +48,8 @@ LWRP.
 
 * `ssl_certificates[:ca_path]`: Where trusted certificates are stored.
   Defaults to /etc/pki/tls/certs.
+* `ssl_certificates[:key_path]`: Where private keys are stored.  Defaults to
+  /etc/pki/tls/private.
 
 = USAGE:
 

@@ -1,5 +1,7 @@
 require 'uri'
 
+include_attribute "ssl_certificates"
+
 # The source file.
 default[:cas][:war][:source] = "http://download.nubic.northwestern.edu/nubic_cas/nubic-cas-server-webapp-3.4.3.NUBIC-002.war"
 default[:cas][:war][:checksum] = "ede527851672abbfdf00cf80635c81c7bfb4bb3729733c26eae9ee116bd6a8d0"
@@ -45,8 +47,8 @@ default[:cas][:callback][:app_path] = "#{node[:cas][:apache][:document_root]}/ap
 default[:cas][:callback][:pstore_path] = "/var/db/cas/pgt.pstore"
 
 # Development-only configuration.
-default[:cas][:devenv][:ssl][:certificate] = "/etc/pki/tls/certs/cas.crt"
-default[:cas][:devenv][:ssl][:key] = "/etc/pki/tls/certs/cas.key"
+default[:cas][:devenv][:ssl][:certificate] = "#{node[:ssl_certificates][:ca_path]}/cas.crt"
+default[:cas][:devenv][:ssl][:key] = "#{node[:ssl_certificates][:key_path]}/cas.key"
 default[:cas][:devenv][:static_authority][:path] = "#{node[:cas][:dir]}/static.yml"
 default[:cas][:devenv][:trust_store][:password] = "password"
 default[:cas][:devenv][:trust_store][:path] = "#{node[:cas][:dir]}/cas.ts"
