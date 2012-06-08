@@ -1,7 +1,8 @@
 Description
 ===========
 
-Activates Zeroconf via Avahi.
+Activates Zeroconf via Avahi.  Also contains a recipe for installing files for
+developing custom code on top of avahi for e.g. publishing CNAMEs of hosts.
 
 Useful if you need to be able to address a node by name (i.e. for an SSL
 certificate).
@@ -12,6 +13,11 @@ The default recipe:
 2. modifies nsswitch.conf to use the mdns resolver
 3. adds messagebus and avahi-daemon to the default runlevel
 4. permits traffic on UDP port 5353 (Zeroconf standard port)
+
+The devel recipe:
+
+1. includes the default recipe
+2. installs avahi-devel
 
 Requirements
 ============
