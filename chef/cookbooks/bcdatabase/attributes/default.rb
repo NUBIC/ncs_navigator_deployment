@@ -1,6 +1,6 @@
-include_attribute "application_users"
+include_attribute "application_user"
 
-default[:bcdatabase][:app_group] = node[:application_users][:group] || "app"
+default[:bcdatabase][:app_group] = node[:application_user][:group] || "app"
 default[:bcdatabase][:directory] = "/etc/nubic/db"
 default[:bcdatabase][:groups] = {}
 default[:bcdatabase][:version] = ">= 0"

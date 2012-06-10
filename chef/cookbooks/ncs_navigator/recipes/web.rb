@@ -21,11 +21,11 @@ require 'uri'
 
 include_recipe "apache2"
 include_recipe "tomcat"
-include_recipe "application_users"
+include_recipe "application_user"
 
 user = node[:apache][:user]
 group = node[:apache][:group]
-app_group = node[:application_users][:group]
+app_group = node[:application_user][:group]
 ajp_remote = "ajp://localhost:#{node[:tomcat][:ajp_port]}"
 
 include_recipe "apache2::mod_proxy_ajp"
@@ -38,6 +38,10 @@ node[:ncs_navigator][:apps].each do |app, strategy|
   app_user = node[:ncs_navigator][app][:user]
   ssl_certificate = node[:ncs_navigator][app][:ssl][:certificate]
   ssl_key = node[:ncs_navigator][app][:ssl][:key]
+
+  application_user app_user do
+    action :create
+  end
 
   if app_root
     directory app_root do

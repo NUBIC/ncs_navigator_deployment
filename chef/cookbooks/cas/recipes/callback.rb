@@ -18,6 +18,7 @@
 #
 
 include_recipe "apache2"
+include_recipe "application_user"
 include_recipe "passenger::apache2-rvm"
 
 rvm_ruby_string = node[:passenger][:rvm_ruby_string]
@@ -31,10 +32,15 @@ end
 
 app_path = node[:cas][:callback][:app_path]
 app_user = node[:cas][:callback][:user]
-app_group = node[:application_users][:group]
+app_group = node[:application_user][:group]
 pgt_pstore_path = node[:cas][:callback][:pstore_path]
 
 rackup_path = "#{node[:cas][:callback][:app_path]}/config.ru"
+
+# Create a user for the callbacks.
+application_user app_user do
+  action :create
+end
 
 # Prepare a storage location for the callback's pstore.
 directory ::File.dirname(pgt_pstore_path) do

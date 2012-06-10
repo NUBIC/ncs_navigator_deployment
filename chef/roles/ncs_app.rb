@@ -9,7 +9,6 @@ base_run_list = %w(
   recipe[apache2]
   recipe[passenger::apache2-rvm]
   recipe[tomcat]
-  recipe[application_users]
   recipe[bcdatabase]
   recipe[aker::central]
   recipe[ssl_certificates]
@@ -40,13 +39,6 @@ default_attributes(
     "global_gems" => [
         { "name" => "bundler", "version" => "~> 1.1" }
      ]
-  },
-  "application_users" => {
-    "users" => {
-      "ncs_navigator_core" => {},
-      "ncs_staff_portal" => {},
-      "psc" => {}
-    }
   },
   "bcdatabase" => {
     "version" => "1.2.1"

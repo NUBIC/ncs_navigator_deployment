@@ -19,25 +19,6 @@
 
 include_recipe "apache2"
 
-# Calculate CAS URLs.
-host = "#{node[:hostname]}.local"
-node[:cas][:base_url] = "https://#{host}/cas"
-node[:cas][:proxy_callback_url] = "https://#{host}/cas-proxy-callback/receive_pgt"
-node[:cas][:proxy_retrieval_url] = "https://#{host}/cas-proxy-callback/retrieve_pgt"
-
-# Point the CAS server at the development SSL certificate and key.
-node[:cas][:apache][:ssl][:certificate] = node[:cas][:devenv][:ssl][:certificate]
-node[:cas][:apache][:ssl][:key] = node[:cas][:devenv][:ssl][:key]
-
-# Reload CAS attributes.
-node.save unless Chef::Config[:solo]
-
-ruby_block "reload CAS attributes" do
-  block do
-    node.load_attribute_by_short_filename('default', 'cas')
-  end
-end
-
 cert_file = node[:cas][:apache][:ssl][:certificate]
 key_file = node[:cas][:apache][:ssl][:key]
 

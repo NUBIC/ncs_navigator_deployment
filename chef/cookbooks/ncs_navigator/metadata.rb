@@ -7,4 +7,4 @@ version          "0.0.1"
 
 depends "apache2"
 depends "tomcat"
-depends "application_users"
+depends "application_user"

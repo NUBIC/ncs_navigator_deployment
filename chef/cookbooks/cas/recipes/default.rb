@@ -17,6 +17,10 @@
 # limitations under the License.
 #
 
+if node.chef_environment =~ /development/
+  include_recipe "cas::attribute_devenv"
+end
+
 include_recipe "cas::database"
 include_recipe "cas::server"
 include_recipe "cas::callback"

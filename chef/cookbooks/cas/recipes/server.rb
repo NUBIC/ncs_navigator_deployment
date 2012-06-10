@@ -1,4 +1,4 @@
-#
+#pp
 # Cookbook Name:: cas
 # Recipe:: server
 #
@@ -20,7 +20,6 @@
 include_recipe "aker"
 include_recipe "tomcat"
 include_recipe "apache2"
-include_recipe "application_users"
 
 app_owner = node[:tomcat][:user]
 app_group = node[:tomcat][:group]

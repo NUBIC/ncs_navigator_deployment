@@ -4,7 +4,6 @@ description "The CAS server for the NCS Navigator application suite"
 run_list(%w(
   role[ncs_common]
   recipe[build-essential]
-  recipe[application_users]
   recipe[postgresql::server]
   recipe[rvm::system]
   recipe[apache2]
@@ -15,11 +14,6 @@ run_list(%w(
 ))
 
 default_attributes(
-  "application_users" => {
-    "users" => {
-      "cas" => {}
-    }
-  },
   "bcdatabase" => {
     "app_group" => "tomcat"
   },
