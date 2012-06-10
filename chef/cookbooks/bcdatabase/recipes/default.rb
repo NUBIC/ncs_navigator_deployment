@@ -50,6 +50,10 @@ script "generate bcdatabase key" do
   not_if { File.exists?(key_file) }
 end
 
+group app_group do
+  action :create
+end
+
 file key_file do
   mode node[:bcdatabase][:group_mode]
   group app_group

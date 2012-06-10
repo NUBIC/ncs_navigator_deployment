@@ -16,11 +16,3 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-
-# This exists to accept notifications from the aker::central LWRP.
-directory ::File.dirname(node[:aker][:central][:path]) do
-  mode 0755
-  group node[:aker][:central][:group]
-  recursive true
-  action :nothing
-end

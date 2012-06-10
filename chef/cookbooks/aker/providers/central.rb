@@ -32,6 +32,16 @@ action :create do
     data[k] = node[:aker][:central][:config][k].current_normal.to_hash
   end
 
+  group node[:aker][:central][:group] do
+    action :create
+  end
+
+  directory ::File.dirname(node[:aker][:central][:path]) do
+    mode 0755
+    group node[:aker][:central][:group]
+    recursive true
+  end
+
   file node[:aker][:central][:path] do
     mode 0440
     group node[:aker][:central][:group]
