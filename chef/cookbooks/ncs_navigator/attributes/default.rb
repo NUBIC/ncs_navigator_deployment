@@ -20,8 +20,12 @@ default[:ncs_navigator][:staff_portal][:web][:configuration] = "#{node[:apache][
 default[:ncs_navigator][:core][:root] = "/var/www/apps/ncs_navigator_core"
 default[:ncs_navigator][:staff_portal][:root] = "/var/www/apps/ncs_staff_portal"
 
+# Don't add a user for PSC here.  It has one (tomcat), but the user is
+# managed by the tomcat package and cookbook.  There's a possibility that
+# the Tomcat server will be running when we attempt to set up tomcat as an
+# application user, which won't work, as usermod etc. error out when
+# processes are running as a given user.
 default[:ncs_navigator][:core][:user] = "ncs_navigator_core"
-default[:ncs_navigator][:psc][:user] = node[:tomcat][:user]
 default[:ncs_navigator][:staff_portal][:user] = "ncs_staff_portal"
 
 default[:ncs_navigator][:devenv][:urls] = {

@@ -39,8 +39,10 @@ node[:ncs_navigator][:apps].each do |app, strategy|
   ssl_certificate = node[:ncs_navigator][app][:ssl][:certificate]
   ssl_key = node[:ncs_navigator][app][:ssl][:key]
 
-  application_user app_user do
-    action :create
+  if app_user
+    application_user app_user do
+      action :create
+    end
   end
 
   if app_root
