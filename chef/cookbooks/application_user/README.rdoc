@@ -1,0 +1,42 @@
+= DESCRIPTION:
+
+Sets up application users on application servers.  An application
+user is a user account that is intended to be used for running an
+application.
+
+The default LWRP creates such users.  Usage example:
+
+    application_user "cas" do
+      authorized_keys ["dev123-cas"]
+      groups ["rvm"]
+      shell "/bin/bash"
+      ssh_key_databag "developer_keys"
+    end
+
+LWRP parameters:
+
+* `authorized_keys`: A list of keys in a databag.
+* `groups`: Additional groups for the user.  All application users are members
+  of `application_user[:group]`.
+* `shell`: The shell for the user.  Defaults to `application_user[:shell]`.
+* `ssh_key_databag`: The databag to use.  Defaults to
+  `application_user[:ssh_key_databag]`.
+
+= REQUIREMENTS:
+
+Should work with pretty much any UNIX-like OS out there, but written for and
+tested on RHEL 6.1 and CentOS 6.2.
+
+= ATTRIBUTES:
+
+* `application_user[:group]`: The application user group; will be created if it
+   doesn't exist.  Existing members of the group will be replaced with the users
+   in `application_user[:users]`.  Defaults to `app`.
+* `application_user[:ssh_key_databag]`: The name of a databag that contains SSH
+   public keys.  Defaults to `ssh_public_keys`.
+* `application_user[:shell]`: Default shell for application users.  Defaults to
+  `/bin/sh`.
+
+= USAGE:
+
+Include the recipe, use the LWRP.
