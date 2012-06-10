@@ -1,8 +1,8 @@
 #
 # Cookbook Name:: aker
-# Recipe:: selinux
+# LWRP:: central
 #
-# Copyright 2011, Northwestern University
+# Copyright 2012, Northwestern University
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,8 +17,18 @@
 # limitations under the License.
 #
 
-include_recipe "selinux"
+actions :create
 
-selinux_security_context node[:aker][:central][:path] do
-  action :restore
+def initialize(*args)
+  super
+
+  @attributes = {}
+end
+
+def attributes
+  @attributes
+end
+
+def method_missing(name, *args, &block)
+  @attributes[name] = args.first
 end

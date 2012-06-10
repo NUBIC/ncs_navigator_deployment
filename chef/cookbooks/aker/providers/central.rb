@@ -1,8 +1,8 @@
 #
 # Cookbook Name:: aker
-# Recipe:: central
+# LWRP:: central
 #
-# Copyright 2011, Northwestern University
+# Copyright 2012, Northwestern University
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,9 +17,24 @@
 # limitations under the License.
 #
 
-directory File.dirname(node[:aker][:central][:path]) do
-  action :create
-  mode 0755
-  group node[:aker][:central][:group]
-  recursive true
+require 'json'
+
+action :create do
+  section = new_resource.name
+  path = node[:aker][:central][:path]
+
+  node[:aker][:central][:config][section] = new_resource.attributes
+  node.save unless Chef::Config[:solo]
+
+  data = {}
+
+  node[:aker][:central][:config].keys.each do |k|
+    data[k] = node[:aker][:central][:config][k].current_normal.to_hash
+  end
+
+  file node[:aker][:central][:path] do
+    mode 0440
+    group node[:aker][:central][:group]
+    content data.to_yaml
+  end
 end

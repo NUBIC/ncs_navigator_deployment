@@ -1,8 +1,40 @@
 = DESCRIPTION:
 
-Provides a recipe (aker::central) that sets up Aker central configuration files.
+Provides the `aker_central` LWRP for setting up pieces of an Aker central
+configuration file.
+
+Because the Aker central configuration file can be used by multiple libraries
+(e.g. Aker and its predecessor Bcsec), this cookbook does install any
+particular library.
+
+Usage example:
+
+    aker_central "cas" do
+      base_url "https://cas.example.edu/cas"
+      proxy_callback_url "https://cas.example.edu/cas-proxy-callback/receive_pgt"
+      proxy_retrieval_url "https://cas.example.edu/cas-proxy-callback/retrieve_pgt"
+    end
+
+The `cas` block of the central configuration file would then be
+
+    base_url: https://cas.example.edu/cas
+    proxy_callback_url: https://cas.example.edu/cas-proxy-callback/receive_pgt
+    proxy_retrieval_url: https://cas.example.edu/cas-proxy-callback/retrieve_pgt
+
+and, if this were the only aker_central resource defined, the entire
+configuration file would be
+
+    cas:
+      base_url: https://cas.example.edu/cas
+      proxy_callback_url: https://cas.example.edu/cas-proxy-callback/receive_pgt
+      proxy_retrieval_url: https://cas.example.edu/cas-proxy-callback/retrieve_pgt
+
+If the `cas` block already existed in the configuration file, it would be
+replaced.
 
 = REQUIREMENTS:
+
+* `application_users`
 
 = ATTRIBUTES:
 
@@ -11,30 +43,6 @@ Provides a recipe (aker::central) that sets up Aker central configuration files.
 * `aker[:central][:group]`: The group for the central configuration file.
   Defaults to the node's value of `application_users[:group]`, or "app" if that
   isn't defined.
-* `aker[:central][:cas][:base_url]`: The base URL of the CAS server.  Defaults to
-  the node's value of `cas[:base_url]`.
-* `aker[:central][:cas][:proxy_retrieval_url]`: The URL of the proxy ticket
-  retrieval app for CAS.  Defaults to the node's value of
-  `cas[:proxy_retrieval_url]`.
-* `aker[:central][:cas][:proxy_callback_url]`: The URL of the proxy ticket
-  callback app for CAS.  Defaults to the node's value of
-  `cas[:proxy_callback_url]`.
-* `aker[:central][:pers][:group]`: The bcdatabase group containing Pers
-  configuration.  Defaults to the node's value of `pers[:bcdatabase][:group]`.
-* `aker[:central][:pers][:entry]`: The entry in the bcdatabase group containing
-  Pers configuration.  Defaults to the node's value of
-  `pers[:bcdatabase][:entry]`.
-
-== NetID authority configuration
-
-NUBIC developers have access to a NetID Aker authority, which uses
-Northwestern's single-sign-on infrastructure for authentication.  To configure
-the NetID authority, you will have to provide a couple of additional attributes:
-
-* `aker[:central][:netid][:user]`: The DN of the user accessing the NetID directory.
-* `aker[:central][:netid][:password]`: Password for that user.
-
-Neither of the NetID attributes have a default.
 
 = USAGE:
 
