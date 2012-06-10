@@ -10,7 +10,6 @@ base_run_list = %w(
   recipe[passenger::apache2-rvm]
   recipe[tomcat]
   recipe[bcdatabase]
-  recipe[aker::central]
   recipe[ssl_certificates]
   recipe[ncs_navigator::web]
   recipe[iptables::https]
