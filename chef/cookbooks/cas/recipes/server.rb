@@ -17,7 +17,7 @@
 # limitations under the License.
 #
 
-include_recipe "aker::central"
+include_recipe "aker"
 include_recipe "tomcat"
 include_recipe "apache2"
 include_recipe "application_users"
@@ -49,6 +49,13 @@ template node[:cas][:properties] do
   owner app_owner
   source "cas.properties.erb"
   variables(:bcsec_path => node[:cas][:bcsec])
+end
+
+# Use NetID authentication.
+aker_central "netid" do
+  action :create
+  user node[:netid][:user]
+  password node[:netid][:password]
 end
 
 # Configure Bcsec for the CAS server.

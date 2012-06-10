@@ -1,9 +1,10 @@
 Description 
 ===========
 
-Installs and configures the Jasig CAS server.  Also applies a NUBIC-developed overlay that
+Installs and configures the Jasig CAS server.  Also applies a NUBIC-developed
+overlay that
 
-1. uses Bcsec (Aker's predecessor) for authentication, and
+1. uses the NetID authority of Bcsec (Aker's predecessor) for authentication
 2. tracks CAS activity across applications using the same CAS server.
 
 This cookbook includes the following recipes:
@@ -30,6 +31,13 @@ accessible via the same IP address.
 
 Attributes
 ==========
+
+NetID
+-----
+
+* `netid[:user]`: A DN describing the user to log into NU's NetID directory.
+  Defaults to "".
+* `netid[:password]`: Password for that user.  Defaults to "".
 
 Server
 ------
