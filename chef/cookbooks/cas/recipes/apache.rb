@@ -31,10 +31,9 @@ sites_enabled = "#{node[:apache][:dir]}/sites-enabled"
 # The location of the CAS server over AJP.
 remote = "ajp://localhost:#{node[:tomcat][:ajp_port]}/#{cas[:script_name]}"
 
-# We need mod_proxy_ajp, Passenger, and mod_ssl.
+# We need mod_proxy_ajp and mod_ssl.
 include_recipe "apache2::mod_proxy_ajp"
 include_recipe "apache2::mod_ssl"
-include_recipe "passenger::apache2-rvm"
 
 server_name = URI.parse(cas[:base_url]).host
 
