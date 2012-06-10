@@ -13,8 +13,7 @@ This cookbook includes the following recipes:
 3. `callback`: sets up CAS proxy callbacks for Passenger
 4. `apache`: exposes CAS components over HTTPS via Apache
 5. `monitoring`: installs Monit configuration for CAS
-6. `devenv`: sets up SSL certificates for development
-7. `default`: runs 1-5
+6. `default`: runs 1-5
 
 Requirements
 ============
@@ -23,14 +22,11 @@ Requirements
   8.4 is the minimum version; 9.0 is preferred.
 - The `database` and `bcdatabase` cookbooks.
 - The `aker` cookbook.
+- The `ssl_certificates` cookbook.
 - The `openssl` cookbook for password generation.
 
 The apache recipe assumes that the CAS server and proxy callbacks are
 accessible via the same IP address.
-
-The `devenv` recipe depends on the `ssl_certificates` cookbook.  It
-also expects to be running on a node in the `ncs_development`
-environment, and will raise an error if that is not the case.
 
 Attributes
 ==========

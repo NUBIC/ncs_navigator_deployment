@@ -1,7 +1,7 @@
 name "ncs_cas"
 description "The CAS server for the NCS Navigator application suite"
 
-base_run_list = %w(
+run_list(%w(
   role[ncs_common]
   recipe[build-essential]
   recipe[application_users]
@@ -12,16 +12,7 @@ base_run_list = %w(
   recipe[tomcat]
   recipe[cas]
   recipe[iptables::https]
-)
-
-env_run_lists(
-  "ncs_development" => [
-    "role[ncs_common]",
-    "recipe[cas::devenv]",
-    base_run_list
-  ].flatten,
-  "_default" => base_run_list
-)
+))
 
 default_attributes(
   "application_users" => {

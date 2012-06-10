@@ -21,6 +21,10 @@ require 'uri'
 
 include_recipe "apache2"
 
+if node.chef_environment =~ /development/
+  include_recipe "cas::apache_devenv"
+end
+
 cas = node[:cas]
 sites_enabled = "#{node[:apache][:dir]}/sites-enabled"
 

@@ -83,3 +83,7 @@ ruby_block "set nubic.cas.logFile property" do
   # /etc/default/tomcat6.
   notifies :create, "template[/etc/sysconfig/tomcat6]"
 end
+
+if node.chef_environment =~ /development/
+  include_recipe "cas::server_devenv"
+end
