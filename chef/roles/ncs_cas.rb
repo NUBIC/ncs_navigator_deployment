@@ -17,16 +17,15 @@ run_list(%w(
 default_attributes(
   "application_users" => {
     "users" => {
-      "cas" => {},
-      "tomcat" => {}
+      "cas" => {}
     }
   },
   "bcdatabase" => {
-    "app_group" => "app"
+    "app_group" => "tomcat"
   },
   "aker" => {
     "central" => {
-      "group" => "app"
+      "group" => "tomcat"
     }
   },
   "passenger" => {
@@ -42,11 +41,5 @@ default_attributes(
     "global_gems" => [
         { "name" => "bundler", "version" => "~> 1.1" }
      ]
-  }
-)
-
-override_attributes(
-  "tomcat" => {
-    "group" => "app"
   }
 )
