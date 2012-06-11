@@ -6,7 +6,7 @@ action :create do
   names_of_keys = new_resource.authorized_keys
   username = new_resource.name
 
-  keys = names_of_keys.map { |name| data_bag_item(ssh_key_databag, name) }
+  keys = names_of_keys.map { |name| data_bag_item(ssh_key_databag, name) }.compact
   home_dir = "/home/#{username}"
   ssh_dir = "#{home_dir}/.ssh"
 
@@ -27,7 +27,7 @@ action :create do
     owner username
     source "authorized_keys.erb"
     cookbook "application_user"
-    variables :keys => keys
+    variables :keys => keys.map { |k| k['key'] }
   end
 
   groups.each do |g|

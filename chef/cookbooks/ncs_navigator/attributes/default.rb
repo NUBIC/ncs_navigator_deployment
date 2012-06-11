@@ -34,6 +34,7 @@ default[:ncs_navigator][:core][:database][:bcdatabase_group] = "ncsdb_prod"
 default[:ncs_navigator][:core][:database][:name] = "ncs_navigator_core"
 default[:ncs_navigator][:core][:database][:username] = "ncs_navigator_core"
 default[:ncs_navigator][:core][:root] = "/var/www/apps/ncs_navigator_core"
+default[:ncs_navigator][:core][:ssh_keys] = []
 default[:ncs_navigator][:core][:user] = "ncs_navigator_core"
 default[:ncs_navigator][:core][:web][:configuration] = "#{node[:apache][:dir]}/sites-available/ncs_navigator_core"
 default[:ncs_navigator][:psc][:database][:config_file] = "/etc/psc/datasource.properties"
@@ -45,6 +46,7 @@ default[:ncs_navigator][:staff_portal][:database][:bcdatabase_group] = "ncsdb_pr
 default[:ncs_navigator][:staff_portal][:database][:name] = "ncs_staff_portal"
 default[:ncs_navigator][:staff_portal][:database][:username] = "ncs_staff_portal"
 default[:ncs_navigator][:staff_portal][:root] = "/var/www/apps/ncs_staff_portal"
+default[:ncs_navigator][:staff_portal][:ssh_keys] = []
 default[:ncs_navigator][:staff_portal][:user] = "ncs_staff_portal"
 default[:ncs_navigator][:staff_portal][:web][:configuration] = "#{node[:apache][:dir]}/sites-available/ncs_staff_portal"
 
