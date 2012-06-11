@@ -94,6 +94,13 @@ def configure
       mode "0755"
       action :create
     end
+    #Create the redis pidfile directory
+    directory current['piddir'] do
+      owner current['user']
+      group current['group']
+      mode "0755"
+      action :create
+    end
     #Create the instance data directory
     directory current['datadir'] do
       owner current['user']
@@ -112,6 +119,7 @@ def configure
         :databases              => current['databases'],
         :backuptype             => current['backuptype'],
         :datadir                => current['datadir'],
+        :piddir                 => current['piddir'],
         :timeout                => current['timeout'],
         :loglevel               => current['loglevel'],
         :save                   => current['save'],
@@ -139,7 +147,8 @@ def configure
       group 'root'
       mode '0755'
       variables({
-        :port => current['port']
+        :port => current['port'],
+        :user => current['user']
       })
     end
 

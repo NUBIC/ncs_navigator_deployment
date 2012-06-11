@@ -15,8 +15,9 @@
 REDISPORT=<%= @port %>
 EXEC=/usr/local/bin/redis-server
 CLIEXEC=/usr/local/bin/redis-cli
+USER=<%= @user %>
 
-PIDFILE=/var/run/redis_${REDISPORT}.pid
+PIDFILE=/var/run/redis/redis_${REDISPORT}.pid
 CONF="/etc/redis/${REDISPORT}.conf"
 
 case "$1" in
@@ -26,7 +27,7 @@ case "$1" in
                 echo "$PIDFILE exists, process is already running or crashed"
         else
                 echo "Starting Redis server..."
-                $EXEC $CONF
+                /sbin/runuser $USER -s /bin/sh -c "$EXEC $CONF"
         fi
         ;;
     stop)
@@ -36,7 +37,7 @@ case "$1" in
         else
                 PID=$(cat $PIDFILE)
                 echo "Stopping ..."
-                $CLIEXEC -p $REDISPORT shutdown
+                /sbin/runuser $USER -s /bin/sh -c "$CLIEXEC -p $REDISPORT shutdown"
                 while [ -x /proc/${PID} ]
                 do
                     echo "Waiting for Redis to shutdown ..."

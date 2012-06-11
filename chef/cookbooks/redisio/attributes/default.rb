@@ -52,6 +52,7 @@ default['redisio']['default_settings'] = {
   'databases'              => '16',
   'backuptype'             => 'rdb',
   'datadir'                => '/var/lib/redis',
+  'piddir'                 => '/var/run/redis',
   'timeout'                => '0',
   'loglevel'               => 'verbose',
   'save'                   => ['900 1','300 10','60 10000'],
