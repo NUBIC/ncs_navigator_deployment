@@ -12,6 +12,7 @@ base_run_list = %w(
   recipe[bcdatabase]
   recipe[ssl_certificates]
   recipe[ncs_navigator::web]
+  recipe[ncs_navigator::db_client]
   recipe[iptables::https]
 )
 
