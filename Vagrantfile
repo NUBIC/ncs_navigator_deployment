@@ -68,7 +68,7 @@ end
 # -----------------------------------------------------------------------------
 
 # The Chef server to use.
-CHEF_SERVER_URL = "http://192.168.56.1:4000"
+CHEF_SERVER_URL = "http://chef-server.nubic.northwestern.edu:4000"
 
 Vagrant::Config.run do |config|
   base_config(:app, config) do |app_config|
