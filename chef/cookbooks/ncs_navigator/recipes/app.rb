@@ -89,5 +89,6 @@ node[:ncs_navigator][:apps].each do |app, strategy|
 end
 
 include_recipe "ncs_navigator::auth"
+include_recipe "ncs_navigator::app_dependencies"
 include_recipe "ncs_navigator::db_client"
 include_recipe "ncs_navigator::app_monitoring"
