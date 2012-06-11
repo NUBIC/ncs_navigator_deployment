@@ -43,12 +43,12 @@ ruby_block "rebuild iptables" do
   notifies :run, resources(:execute => "rebuild-iptables"), :immediately
 end
 
-service "messagebus" do
-  action :start
-  enabled true
-end
+%w(messagebus avahi-daemon).each do |s|
+  service s do
+    action :start
+  end
 
-service "avahi-daemon" do
-  action :start
-  enabled true
+  service s do
+    action :enable
+  end
 end
