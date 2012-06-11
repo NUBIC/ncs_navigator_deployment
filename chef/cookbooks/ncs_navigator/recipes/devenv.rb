@@ -56,19 +56,34 @@ cookbook_file "/tmp/publish_cnames.c" do
   source "publish_cnames.c"
 end
 
+cname_publisher_path = "/usr/local/bin/publish_cnames"
+cname_publisher_dir = ::File.dirname(cname_publisher_path)
+cname_publisher_pidfile = "/var/run/publish_cnames.pid"
+cname_publisher_script = "#{cname_publisher_dir}/publish_cnames.sh"
+hosts = node[:ncs_navigator][:devenv][:urls].map { |app, url| URI(url).host }
+
 bash "build publish_cnames.c" do
   code <<-END
     cd /tmp
     CONFIG=`pkg-config --cflags --libs avahi-client`
     gcc $CONFIG -Wall -o publish_cnames publish_cnames.c
-    cp publish_cnames /usr/local/bin
+    rm -f #{cname_publisher_path}
+    cp publish_cnames #{cname_publisher_path}
   END
 end
 
-# Register the tool with Monit...
+# Register the tool with Monit and run it.
+monitrc "publish_cnames", :program => cname_publisher_script, :pidfile => cname_publisher_pidfile
 
-# ...and run it.
+template cname_publisher_script do
+  mode 0755
+  source "publish_cnames.sh.erb"
+  variables(:names => hosts,
+            :publisher => cname_publisher_path,
+            :pidfile => cname_publisher_pidfile)
 
+  notifies :restart, "service[monit]", :immediately
+end
 
 node[:ncs_navigator][:devenv][:urls].each do |app, url|
   ssl_certificate = node[:ncs_navigator][app][:ssl][:certificate]

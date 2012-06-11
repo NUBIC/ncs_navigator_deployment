@@ -1,0 +1,4 @@
+check process publish_cnames with pidfile <%= @pidfile %>
+  start program = "<%= @program %> start"
+  stop program = "<%= @program %> stop"
+  group development
