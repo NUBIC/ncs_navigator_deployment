@@ -22,6 +22,11 @@ def base_config(role, config)
       chef.environment = "ncs_development"
       chef.validation_key_path = "nubic-validator.pem"
       chef.run_list = ["role[ncs_#{role}]"]
+      chef.json = {
+        "zeroconf" => {
+          "allowed_interfaces" => ["eth1"]
+        }
+      }
     end
 
     yield config
@@ -31,7 +36,7 @@ end
 # -----------------------------------------------------------------------------
 
 # The Chef server to use.
-CHEF_SERVER_URL = "http://chef-server.nubic.northwestern.edu:4000"
+CHEF_SERVER_URL = "http://192.168.56.1:4000"
 
 Vagrant::Config.run do |config|
   base_config(:app, config) do |app_config|
