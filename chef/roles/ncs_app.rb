@@ -11,8 +11,7 @@ base_run_list = %w(
   recipe[tomcat]
   recipe[bcdatabase]
   recipe[ssl_certificates]
-  recipe[ncs_navigator::web]
-  recipe[ncs_navigator::db_client]
+  recipe[ncs_navigator::app]
   recipe[iptables::https]
 )
 

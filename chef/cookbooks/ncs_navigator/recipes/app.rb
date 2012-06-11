@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: ncs_navigator
-# Recipe:: web
+# Recipe:: app
 #
 # Copyright 2012, Northwestern University
 #
@@ -73,3 +73,5 @@ node[:ncs_navigator][:apps].each do |app, strategy|
     enable true
   end
 end
+
+include_recipe "ncs_navigator::db_client"
