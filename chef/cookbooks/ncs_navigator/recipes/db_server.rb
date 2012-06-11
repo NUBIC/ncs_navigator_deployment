@@ -26,10 +26,23 @@ connection_info = {
   :password => node[:postgresql][:password][:postgres]
 }
 
+# If we're using Zeroconf, then Chef won't pick up an FQDN for us.  In that
+# case, we use hostname matching to determine whether we should build a
+# database for a given app.  Otherwise, match on FQDN.
+if node[:zeroconf]
+  def applicable?(host)
+    node[:fqdn] == host.sub(/\.local$/, '')
+  end
+else
+  def applicable?(host)
+    node[:fqdn] == host
+  end
+end
+
 node[:ncs_navigator][:apps].each do |key, _|
   db_host_for_app = node[:ncs_navigator][key][:database][:host]
 
-  next unless db_host_for_app == node[:fqdn]
+  next unless applicable?(db_host_for_app)
 
   db_user = node[:ncs_navigator][key][:database][:username]
   db_name = node[:ncs_navigator][key][:database][:name]
