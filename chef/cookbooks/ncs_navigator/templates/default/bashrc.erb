@@ -1,0 +1,7 @@
+# This file is maintained by Chef.  Manual edits will be overwritten.
+
+if [ -e /etc/bashrc ]; then
+  . /etc/bashrc
+fi
+
+rvm use <%= @ruby %> > /dev/null

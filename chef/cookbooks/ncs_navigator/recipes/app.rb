@@ -20,6 +20,7 @@
 require 'uri'
 
 include_recipe "apache2"
+include_recipe "passenger"
 include_recipe "tomcat"
 include_recipe "application_user"
 
@@ -41,12 +42,23 @@ node[:ncs_navigator][:apps].each do |app, strategy|
   ssl_key = node[:ncs_navigator][app][:ssl][:key]
 
   if app_user
+    # Make the user...
     application_user app_user do
       action :create
       authorized_keys app_keys
     end
+
+    # ..and set their Ruby environment to use the Ruby used by Passenger.
+    # We do this so that application users use the same Ruby for maintenance
+    # tasks and one-offs as they do for the main app.
+    template "#{application_user_home(app_user)}/.bashrc" do
+      source "bashrc.erb"
+      mode 0444
+      variables(:ruby => node[:passenger][:rvm_ruby_string])
+    end
   end
 
+  # Application configuration.
   if app_root
     directory app_root do
       owner app_user
