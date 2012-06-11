@@ -10,6 +10,38 @@ def make_hostname(role)
   "ncs-#{role}-#{username}-#{hostname}"
 end
 
+def ncs_navigator_configuration
+  cas = "#{make_hostname("cas")}.local"
+  db = "#{make_hostname("db")}.local"
+
+  { "ncs_navigator" => {
+      "cas" => {
+        "base_url" => "https://#{cas}/cas",
+        "proxy_callback_url" => "https://#{cas}/cas-proxy-callback/receive_pgt",
+        "proxy_retrieval_url" => "https://#{cas}/cas-proxy-callback/retrieve_pgt"
+      },
+      "core" => {
+        "database" => {
+          "host" => db,
+          "password" => "p@ssw0rd1"
+        }
+      },
+      "psc" => {
+        "database" => {
+          "host" => db,
+          "password" => "p@ssw0rd1"
+        }
+      },
+      "staff_portal" => {
+        "database" => {
+          "host" => db,
+          "password" => "p@ssword1"
+        }
+      }
+    }
+  }
+end
+
 def base_config(role, config)
   config.vm.define role do |config|
     config.vm.box = "ncs"
@@ -26,7 +58,7 @@ def base_config(role, config)
         "zeroconf" => {
           "allowed_interfaces" => ["eth1"]
         }
-      }
+      }.merge(ncs_navigator_configuration)
     end
 
     yield config
