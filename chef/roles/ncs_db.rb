@@ -15,6 +15,7 @@ default_attributes(
     'interfaces' => ['*']
   },
   'redisio' => {
-    'version' => '2.4.14'
+    'version' => '2.4.14',
+    'safe_install' => true
   }
 )
