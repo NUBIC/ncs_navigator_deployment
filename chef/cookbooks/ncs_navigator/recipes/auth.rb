@@ -22,6 +22,7 @@
 include_recipe "aker"
 
 aker_central "cas" do
+  action :create
   base_url node[:ncs_navigator][:cas][:base_url]
   proxy_callback_url node[:ncs_navigator][:cas][:proxy_callback_url]
   proxy_retrieval_url node[:ncs_navigator][:cas][:proxy_retrieval_url]
