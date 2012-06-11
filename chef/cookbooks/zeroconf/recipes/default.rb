@@ -37,6 +37,12 @@ template "/etc/avahi/avahi-daemon.conf" do
   variables(:allowed_interfaces => node[:zeroconf][:allowed_interfaces])
 end
 
+ruby_block "rebuild iptables" do
+  block { }
+
+  notifies :run, resources(:execute => "rebuild-iptables"), :immediately
+end
+
 service "messagebus" do
   action :start
   enabled true
