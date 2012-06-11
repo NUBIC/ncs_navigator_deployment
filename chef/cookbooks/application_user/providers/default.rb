@@ -1,3 +1,5 @@
+include Chef::ApplicationUser::Home
+
 action :create do
   group_name = node[:application_user][:group]
   shell = new_resource.shell || node[:application_user][:shell]
@@ -7,7 +9,7 @@ action :create do
   username = new_resource.name
 
   keys = names_of_keys.map { |name| data_bag_item(ssh_key_databag, name) }.compact
-  home_dir = "/home/#{username}"
+  home_dir = application_user_home(username)
   ssh_dir = "#{home_dir}/.ssh"
 
   user username do
