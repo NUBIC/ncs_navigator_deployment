@@ -1,0 +1,4 @@
+check process redis<%= @port %> with pidfile <%= @pid %> every 2 cycles
+  start program = "/sbin/service redis<%= @port %> start"
+  stop program = "/sbin/service redis<%= @port %> stop"
+  if failed host localhost port <%= @port %> then restart

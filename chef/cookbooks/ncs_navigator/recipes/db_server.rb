@@ -59,3 +59,5 @@ node[:ncs_navigator][:apps].each do |key, _|
     owner db_user
   end
 end
+
+include_recipe "ncs_navigator::db_monitoring"

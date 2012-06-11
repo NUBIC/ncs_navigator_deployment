@@ -13,7 +13,8 @@
     "bcdatabase": ">= 0.0.0",
     "database": ">= 0.0.0",
     "postgresql": ">= 0.0.0",
-    "tomcat": ">= 0.0.0"
+    "tomcat": ">= 0.0.0",
+    "monit": ">= 0.0.0"
   },
   "recommendations": {
   },
