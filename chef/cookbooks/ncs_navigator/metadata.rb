@@ -6,5 +6,8 @@ long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 version          "0.0.1"
 
 depends "apache2"
-depends "tomcat"
 depends "application_user"
+depends "bcdatabase"
+depends "database"
+depends "postgresql"
+depends "tomcat"
