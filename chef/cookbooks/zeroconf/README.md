@@ -30,7 +30,9 @@ This cookbook depends on the iptables cookbook for its iptables_rule definition.
 Attributes
 ==========
 
-None.
+* `zeroconf[:allowed_interfaces]`: A list of interfaces that avahi-daemon
+  should use.  Defaults to the empty list, which means that avahi-daemon will
+  use all non-loopback and non-point-to-point interfaces.
 
 Usage
 =====

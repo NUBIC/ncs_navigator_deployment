@@ -31,6 +31,12 @@ end
 
 iptables_rule "zeroconf_in", :cookbook => "zeroconf"
 
+template "/etc/avahi/avahi-daemon.conf" do
+  source "avahi-daemon.conf.erb"
+  mode 0444
+  variables(:allowed_interfaces => node[:zeroconf][:allowed_interfaces])
+end
+
 service "messagebus" do
   action :start
   enabled true
