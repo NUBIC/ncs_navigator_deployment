@@ -3,8 +3,12 @@ Description
 
 Recipes:
 
-* `web`: Exposes NCS Navigator applications via a Web server.
-* `devenv`: Configures NCS Navigator applications for development.
+* `app`: Sets up an application server for NCS Navigator.
+* `db_server`: Sets up a database server for NCS Navigator.
+* `devenv`: Configures an NCS Navigator application server for development.
+
+There are other recipes in this cookbook; however, they're intended to be used
+by the recipes listed above.  Use those private recipes at your own risk.
 
 Requirements
 ============

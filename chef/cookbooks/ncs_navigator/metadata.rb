@@ -5,6 +5,7 @@ description      "Installs/Configures ncs_navigator"
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 version          "0.0.1"
 
+depends "aker"
 depends "apache2"
 depends "application_user"
 depends "bcdatabase"
