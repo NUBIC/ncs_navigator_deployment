@@ -1,12 +1,12 @@
-<VirtualHost <%= @host %>:443>
+<VirtualHost *:443>
   SSLEngine on
   SSLCertificateFile <%= @ssl_certificate %>
   SSLCertificateKeyFile <%= @ssl_key %>
 
   ServerName <%= @host %>
-  DocumentRoot <%= @app_root %>/public
+  DocumentRoot <%= @app_root %>/current/public
 
-  <Directory <%= @app_root %>/public>
+  <Directory <%= @app_root %>/current/public>
     Allow from all
     Options -MultiViews
   </Directory>
