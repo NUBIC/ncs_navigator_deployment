@@ -71,3 +71,4 @@ else
 end
 
 default[:postgresql][:interfaces] = ['localhost']
+default[:postgresql][:hba] = []

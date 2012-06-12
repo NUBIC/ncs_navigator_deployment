@@ -60,6 +60,7 @@ template "#{node[:postgresql][:dir]}/pg_hba.conf" do
   owner "postgres"
   group "postgres"
   mode 0600
+  variables :hba => node[:postgresql][:hba]
   notifies :reload, resources(:service => "postgresql-#{version}"), :immediately
 end
 

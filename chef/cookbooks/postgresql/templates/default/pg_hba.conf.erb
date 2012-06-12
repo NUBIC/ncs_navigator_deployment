@@ -1,3 +1,5 @@
+# This file is maintained by Chef.  Manual edits will be overwritten.
+
 # PostgreSQL Client Authentication Configuration File
 # ===================================================
 #
@@ -58,8 +60,9 @@
 # on a non-local interface via the listen_addresses configuration parameter,
 # or via the -i or -h command line switches.
 #
-
-
+<%- @hba.each do |a| %>
+<%= %w(type database user cidr-address ident).map { |k| a[k] }.join("\t") %>
+<%- end %>
 
 
 # DO NOT DISABLE!
