@@ -38,37 +38,29 @@ user "postgres" do
   supports :manage_home => false
 end
 
+version = node['postgresql']['version']
+
 package "postgresql" do
   case node.platform
-  when "redhat","centos","scientific"
-    case 
-    when node.platform_version.to_f >= 6.0
-      package_name "postgresql"
-    else
-      package_name "postgresql#{node['postgresql']['version'].split('.').join}"
-    end
+  when "redhat","centos","scientific","fedora"
+    package_name "postgresql#{version.split('.').join}"
   else
     package_name "postgresql"
   end
 end
 
 case node.platform
-when "redhat","centos","scientific"
-  case
-  when node.platform_version.to_f >= 6.0
-    package "postgresql-server"
-  else
-    package "postgresql#{node['postgresql']['version'].split('.').join}-server"
-  end
-when "fedora","suse"
+when "redhat","centos","scientific","fedora"
+  package "postgresql#{version.split('.').join}-server"
+when "suse"
   package "postgresql-server"
 end
 
-execute "/sbin/service postgresql initdb" do
+execute "/sbin/service postgresql-#{version} initdb" do
   not_if { ::FileTest.exist?(File.join(node.postgresql.dir, "PG_VERSION")) }
 end
 
-service "postgresql" do
+service "postgresql-#{version}" do
   supports :restart => true, :status => true, :reload => true
   action [:enable, :start]
 end
@@ -78,5 +70,5 @@ template "#{node[:postgresql][:dir]}/postgresql.conf" do
   owner "postgres"
   group "postgres"
   mode 0600
-  notifies :restart, resources(:service => "postgresql")
+  notifies :restart, resources(:service => "postgresql-#{version}")
 end

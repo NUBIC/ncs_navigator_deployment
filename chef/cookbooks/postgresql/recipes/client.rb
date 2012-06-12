@@ -19,26 +19,34 @@
 # limitations under the License.
 #
 
+# More up-to-date packages are available for Redhat-like distributions at
+# yum.postgresql.org, so we activate that repo first.
+#
+include_recipe "yumrepo::postgresql9"
+
+case node['platform']
+when "redhat","centos","scientific","fedora"
+  include_recipe "yumrepo::postgresql9"
+end
+
+version = node['postgresql']['version']
+
 pg_packages = case node['platform']
 when "ubuntu","debian"
   %w{postgresql-client libpq-dev make}
 when "fedora","suse","amazon"
   %w{postgresql-devel}
 when "redhat","centos","scientific"
-  case
-  when node['platform_version'].to_f >= 6.0
-    %w{postgresql-devel}
-  else
-    [ "postgresql#{node['postgresql']['version'].split('.').join}-devel" ]
-  end
+  [ "postgresql#{version.split('.').join}-devel" ]
 end
 
 pg_packages.each do |pg_pack|
   package pg_pack do
-    action :nothing
-  end.run_action(:install)
+    action :install
+  end
 end
 
 gem_package "pg" do
-  action :nothing
-end.run_action(:install)
+  action :install
+  options "-- --build-flags --with-pg-config=/usr/pgsql-#{version}/bin/pg_config"
+end

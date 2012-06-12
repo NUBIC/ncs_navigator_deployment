@@ -1,4 +1,4 @@
-#/postgresql.conf.
+#
 # Cookbook Name:: postgresql
 # Recipe:: server
 #
@@ -21,13 +21,25 @@
 
 ::Chef::Recipe.send(:include, Opscode::OpenSSL::Password)
 
+case node['platform']
+when "redhat","centos","scientific","fedora"
+  include_recipe "yumrepo::postgresql9"
+end
+
 include_recipe "postgresql::client"
+
+version = node['postgresql']['version']
 
 # randomly generate postgres password
 node.set_unless[:postgresql][:password][:postgres] = secure_password
+
+# The PostgreSQL directory depends on the version, so set it once said version
+# is known to exist.
+node[:postgresql][:dir] = "/var/lib/pgsql/#{version}/data"
+
 node.save unless Chef::Config[:solo]
 
-case node[:postgresql][:version]
+case version
 when "8.3"
   node.default[:postgresql][:ssl] = "off"
 when "8.4"
@@ -48,7 +60,7 @@ template "#{node[:postgresql][:dir]}/pg_hba.conf" do
   owner "postgres"
   group "postgres"
   mode 0600
-  notifies :reload, resources(:service => "postgresql"), :immediately
+  notifies :reload, resources(:service => "postgresql-#{version}"), :immediately
 end
 
 # Default PostgreSQL install has 'ident' checking on unix user 'postgres'
@@ -60,15 +72,16 @@ bash "assign-postgres-password" do
   code <<-EOH
 echo "ALTER ROLE postgres ENCRYPTED PASSWORD '#{node[:postgresql][:password][:postgres]}';" | psql
   EOH
-  not_if do
-    begin
-      require 'rubygems'
-      Gem.clear_paths
-      require 'pg'
-      conn = PGconn.connect("localhost", 5432, nil, nil, nil, "postgres", node['postgresql']['password']['postgres'])
-    rescue PGError
-      false
-    end
-  end
+
+  not_if <<-END
+    umask 077
+    PGPASSFILE=/tmp/pgpass.$$
+    echo "localhost:5432:postgres:postgres:#{node[:postgresql][:password][:postgres]}" > $PGPASSFILE
+    psql -c "SELECT 1" -h localhost -p 5432 -U postgres > /dev/null
+    OK=$?
+    rm $PGPASSFILE
+    exit $OK
+  END
+
   action :run
 end
