@@ -5,8 +5,7 @@ base_run_list = %w(
   recipe[iptables]
   recipe[iptables::ssh]
   recipe[selinux::disabled]
-  recipe[ntp]
-  recipe[screen]
+  recipe[nubic-utils]
   recipe[yumrepo::epel]
   recipe[monit]
 )
