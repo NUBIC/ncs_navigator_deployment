@@ -30,6 +30,9 @@ default_attributes(
       "path" => "/etc/nubic/ncs/aker-prod.yml"
     }
   },
+  "application_user" => {
+    "shell" => "/bin/bash"
+  },
   "postgresql" => {
     "version" => "9.0"
   },
