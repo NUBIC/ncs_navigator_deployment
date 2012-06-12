@@ -25,6 +25,11 @@ env_run_lists(
 )
 
 default_attributes(
+  "aker" => {
+    "central" => {
+      "path" => "/etc/nubic/ncs/aker-prod.yml"
+    }
+  },
   "postgresql" => {
     "version" => "9.0"
   },
@@ -41,10 +46,5 @@ default_attributes(
   },
   "bcdatabase" => {
     "version" => "1.2.1"
-  },
-  "aker" => {
-    "central" => {
-      "path" => "/etc/nubic/aker-prod.yml"
-    }
   }
 )
