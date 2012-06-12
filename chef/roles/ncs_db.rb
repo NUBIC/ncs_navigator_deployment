@@ -11,11 +11,14 @@ run_list(
 )
 
 default_attributes(
-  'postgresql' => {
-    'interfaces' => ['*']
-  },
   'redisio' => {
     'version' => '2.4.14',
     'safe_install' => true
+  }
+)
+
+override_attributes(
+  'postgresql' => {
+    'interfaces' => ['*']
   }
 )
