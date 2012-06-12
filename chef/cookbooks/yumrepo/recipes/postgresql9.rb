@@ -23,8 +23,8 @@ yum_key node['repo']['postgresql']['key'] do
   action :add
 end
 
-yum_repository "postgresql9" do
-  description "PostgreSQL 9.0"
+yum_repository "postgresql91" do
+  description "PostgreSQL 9.1"
   key node['repo']['postgresql']['key'] 
   url node['repo']['postgresql']['url'] 
   action :add
