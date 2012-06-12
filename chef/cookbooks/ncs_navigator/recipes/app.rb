@@ -89,6 +89,9 @@ node[:ncs_navigator][:apps].each do |app, strategy|
   end
 end
 
+# Adjust Tomcat configuration for PSC.
+include_recipe "ncs_navigator::psc"
+
 # Build ncs_navigator.ini.
 include_recipe "ncs_navigator::ini"
 
