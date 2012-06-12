@@ -45,10 +45,6 @@ end
 
 %w(messagebus avahi-daemon).each do |s|
   service s do
-    action :start
-  end
-
-  service s do
-    action :enable
+    action [:start, :enable]
   end
 end
