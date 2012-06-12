@@ -31,9 +31,4 @@ node[:cas][:apache][:ssl][:key] = node[:cas][:devenv][:ssl][:key]
 
 # Reload CAS attributes.
 node.save unless Chef::Config[:solo]
-
-ruby_block "reload CAS attributes" do
-  block do
-    node.load_attribute_by_short_filename('default', 'cas')
-  end
-end
+node.load_attribute_by_short_filename('default', 'cas')
