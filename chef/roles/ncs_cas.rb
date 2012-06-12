@@ -26,9 +26,6 @@ default_attributes(
     "rvm_ruby_string" => "ruby-1.9.3-p194",
     "version" => "3.0.12"
   },
-  "postgresql" => {
-    "version" => "9.0"
-  },
   "rvm" => {
     "default_ruby" => "system",
     "rubies" => ["ruby-1.9.3-p194"],

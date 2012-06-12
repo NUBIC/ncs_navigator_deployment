@@ -33,9 +33,6 @@ default_attributes(
   "application_user" => {
     "shell" => "/bin/bash"
   },
-  "postgresql" => {
-    "version" => "9.0"
-  },
   "passenger" => {
     "rvm_ruby_string" => "ruby-1.9.3-p194",
     "version" => "3.0.12"
