@@ -21,7 +21,8 @@ include_recipe "monit"
 include_recipe "postgresql::server"
 include_recipe "redisio"
 
-monitrc "monitor_postgres", :pid => "/var/run/postmaster.5432.pid"
+pg_version = node[:postgresql][:version]
+monitrc "monitor_postgres", :pid => "/var/run/postmaster-#{pg_version}.pid", :version => pg_version
 
 node[:redisio][:servers].each do |server|
   port = server['port']

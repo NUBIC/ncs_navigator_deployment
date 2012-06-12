@@ -1,5 +1,5 @@
 check process postgresql with pidfile <%= @pid %> every 2 cycles
-  start program = "/sbin/service postgresql start"
-  stop program = "/sbin/service postgresql stop"
+  start program = "/sbin/service postgresql-<%= @version %> start"
+  stop program = "/sbin/service postgresql-<%= @version %> stop"
   if failed host localhost port 5432 protocol pgsql then restart
   
