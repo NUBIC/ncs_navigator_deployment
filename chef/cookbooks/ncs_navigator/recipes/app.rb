@@ -88,7 +88,17 @@ node[:ncs_navigator][:apps].each do |app, strategy|
   end
 end
 
+# Build ncs_navigator.ini.
+include_recipe "ncs_navigator::ini"
+
+# Set up authentication services.
 include_recipe "ncs_navigator::auth"
+
+# Install dependencies for native extensions used by gems.
 include_recipe "ncs_navigator::app_dependencies"
+
+# Database connection.
 include_recipe "ncs_navigator::db_client"
+
+# Monitoring.
 include_recipe "ncs_navigator::app_monitoring"

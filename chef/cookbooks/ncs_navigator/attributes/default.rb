@@ -29,6 +29,9 @@ set[:ncs_navigator][:apps] = {
 # --------------------------
 # The omission of bcdatabase_* keys for PSC is intentional.
 #
+
+default[:ncs_navigator][:study_center][:sampling_units_file] = "/etc/nubic/ncs/ssu.csv"
+default[:ncs_navigator][:study_center][:username] = "NetID"
 default[:ncs_navigator][:core][:database][:bcdatabase_config] = "ncs_navigator_core"
 default[:ncs_navigator][:core][:database][:bcdatabase_group] = "ncsdb_prod"
 default[:ncs_navigator][:core][:database][:name] = "ncs_navigator_core"
@@ -49,6 +52,15 @@ default[:ncs_navigator][:staff_portal][:root] = "/var/www/apps/ncs_staff_portal"
 default[:ncs_navigator][:staff_portal][:ssh_keys] = []
 default[:ncs_navigator][:staff_portal][:user] = "ncs_staff_portal"
 default[:ncs_navigator][:staff_portal][:web][:configuration] = "#{node[:apache][:dir]}/sites-available/ncs_staff_portal"
+default[:ncs_navigator][:staff_portal][:email_reminder] = false
+default[:ncs_navigator][:staff_portal][:exception_recipients] = []
+default[:ncs_navigator][:staff_portal][:google_analytics_number] = ""
+
+default[:ncs_navigator][:ini][:path] = "/etc/nubic/ncs/navigator.ini"
+
+default[:ncs_navigator][:smtp][:host] = "localhost"
+default[:ncs_navigator][:smtp][:port] = 25
+default[:ncs_navigator][:smtp][:starttls] = false
 
 default[:ncs_navigator][:devenv][:urls] = {
   "core" => "https://navigator.#{node[:hostname]}.local",

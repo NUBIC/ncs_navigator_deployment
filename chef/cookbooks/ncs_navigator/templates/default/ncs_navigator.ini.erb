@@ -1,0 +1,32 @@
+[Core]
+uri = "<%= @cr_uri %>"
+
+[PSC]
+uri = "<%= @ps_uri %>"
+
+[Study Center]
+sc_id = "<%= @sc_id %>"
+recruitment_type_id = "<%= @sc_recruitment_type_id %>"
+sampling_units_file = "<%= @sc_sampling_units_file %>"
+username = "<%= @sc_username %>"
+footer_logo_left = "<%= @sc_footer_logo_left %>"
+footer_logo_right = "<%= @sc_footer_logo_right %>"
+footer_text = "<%= @sc_footer_text %>"
+
+[SMTP]
+authentication = "<%= @smtp_authentication %>"
+domain = "<%= @smtp_domain %>"
+host = "<%= @smtp_host %>"
+password = "<%= @smtp_password %>"
+port = "<%= @smtp_port %>"
+starttls = <%= @smtp_starttls %>
+username = "<%= @smtp_username %>"
+
+[Staff Portal]
+bootstrap_user = "<%= @sp_bootstrap_user %>"
+email_reminder = <%= @sp_email_reminder %>
+exception_recipients = "<%= @sp_exception_recipients.join(', ') %>"
+google_analytics_number = "<%= @sp_google_analytics_number %>"
+mail_from = "<%= @sp_mail_from %>"
+psc_user_password = "<%= @sp_psc_user_password %>"
+uri = "<%= @sp_uri %>"
