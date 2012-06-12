@@ -46,7 +46,12 @@ pg_packages.each do |pg_pack|
   end
 end
 
+# Register pg_config with the alternatives system.
+#
+# The PostgreSQL RPMs don't do this; not having it available in the default
+# path breaks configure scripts and gem native extensions.
+execute "alternatives --install /usr/bin/pg_config pgsql-pg_config /usr/pgsql-#{version}/bin/pg_config #{(version.to_f * 100).to_i}"
+
 gem_package "pg" do
   action :install
-  options "-- --build-flags --with-pg-config=/usr/pgsql-#{version}/bin/pg_config"
 end

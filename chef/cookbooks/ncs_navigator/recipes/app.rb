@@ -56,6 +56,7 @@ node[:ncs_navigator][:apps].each do |app, strategy|
       mode 0444
       variables(:ruby => node[:passenger][:rvm_ruby_string])
     end
+
   end
 
   # Application configuration.
