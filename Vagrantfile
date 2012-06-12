@@ -40,6 +40,16 @@ def ncs_navigator_configuration
         },
 	"ssh_keys" => ["ncs-vagrant"]
       }
+    },
+    "postgresql" => {
+      "hba" => [
+        { "type" => "host",
+          "database" => "all",
+          "user" => "all",
+          "cidr-address" => "192.168.56.0/24",
+          "ident" => "md5"
+        }
+      ]
     }
   }
 end
