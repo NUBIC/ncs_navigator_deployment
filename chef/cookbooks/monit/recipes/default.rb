@@ -40,6 +40,8 @@ directory "/etc/monit/conf.d/" do
   recursive true
 end
 
+iptables_rule "monit_httpd_in", :cookbook => "monit"
+
 service "monit" do
   action :enable
 end

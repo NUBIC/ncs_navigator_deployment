@@ -1,15 +1,17 @@
 set daemon <%= @node[:monit][:poll_period] %>
   with start delay <%= @node[:monit][:poll_start_delay] %>
 
+set eventqueue basedir <%= @node[:monit][:eventqueue][:path] %> slots <%= @node[:monit][:eventqueue][:slots] %>
+
 <% if @node[:monit][:mmonit] %>
 set mmonit <%= @node[:monit][:mmonit] %>
 <% end %>
 
 set logfile syslog facility log_daemon
 
-set httpd port 2812 and
-    use address localhost
-    allow localhost
+set httpd port <%= @node[:monit][:httpd][:port] %>
+<%- @node[:monit][:httpd][:allow].each do |spec| %>
+  allow <%= spec %>
+<%- end %>
 
 include /etc/monit/conf.d/*.conf
-
