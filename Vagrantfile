@@ -25,7 +25,7 @@ def ncs_navigator_configuration
           "host" => db,
           "password" => "p@ssw0rd1"
         },
-	"ssh_keys" => ["ncs-vagrant"]
+        "ssh_keys" => ["ncs-vagrant"]
       },
       "psc" => {
         "database" => {
@@ -38,7 +38,7 @@ def ncs_navigator_configuration
           "host" => db,
           "password" => "p@ssword1"
         },
-	"ssh_keys" => ["ncs-vagrant"]
+        "ssh_keys" => ["ncs-vagrant"]
       }
     },
     "postgresql" => {
