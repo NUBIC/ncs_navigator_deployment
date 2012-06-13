@@ -14,7 +14,11 @@ def ncs_navigator_configuration
   cas = "#{make_hostname("cas")}.local"
   db = "#{make_hostname("db")}.local"
 
-  { "ncs_navigator" => {
+  {
+    "aker" => {
+      "netid" => {}
+    },
+    "ncs_navigator" => {
       "cas" => {
         "base_url" => "https://#{cas}/cas",
         "proxy_callback_url" => "https://#{cas}/cas-proxy-callback/receive_pgt",
