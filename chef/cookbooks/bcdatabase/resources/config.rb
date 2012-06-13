@@ -18,10 +18,18 @@
 
 actions :create
 
-attribute :adapter, :kind_of => String
 attribute :group, :kind_of => String, :required => true
-attribute :host, :kind_of => String
-attribute :password, :kind_of => String
-attribute :port, :kind_of => Integer
-attribute :url, :kind_of => String
-attribute :username, :kind_of => String
+
+def initialize(*args)
+  super
+
+  @attributes = {}
+end
+
+def attributes
+  @attributes
+end
+
+def method_missing(name, *args, &block)
+  @attributes[name] = args.first
+end

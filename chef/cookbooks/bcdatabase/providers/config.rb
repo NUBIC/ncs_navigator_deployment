@@ -27,19 +27,11 @@ action :create do
   end
 
   group_data = configs_in(gn)
-
-  group_data[cn] = {
-    'adapter' => nr.adapter,
-    'host' => nr.host,
-    'password' => nr.password,
-    'port' => nr.port,
-    'url' => nr.url,
-    'username' => nr.username
-  }.reject! { |_, v| v.nil? || v.empty? }
+  group_data[cn] = new_resource.attributes.reject! { |_, v| v.nil? || v.to_s.empty? }
 
   bcdatabase_group gn do
     action :update
-    
+
     data group_data
   end
 end
