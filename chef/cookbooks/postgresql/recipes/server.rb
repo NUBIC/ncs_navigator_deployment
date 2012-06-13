@@ -78,7 +78,7 @@ echo "ALTER ROLE postgres ENCRYPTED PASSWORD '#{node[:postgresql][:password][:po
     umask 077
     PGPASSFILE=/tmp/pgpass.$$
     echo "localhost:5432:postgres:postgres:#{node[:postgresql][:password][:postgres]}" > $PGPASSFILE
-    psql -c "SELECT 1" -h localhost -p 5432 -U postgres > /dev/null
+    psql -c "SELECT 1" -h localhost -p 5432 -w -U postgres > /dev/null
     OK=$?
     rm $PGPASSFILE
     exit $OK
