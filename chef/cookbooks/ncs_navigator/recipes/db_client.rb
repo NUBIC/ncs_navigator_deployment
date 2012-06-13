@@ -41,6 +41,17 @@ node[:ncs_navigator][:apps].each do |key, _|
   end
 end
 
+# Build Redis configuration for Core.
+
+bcdatabase_config node[:ncs_navigator][:core][:redis][:bcdatabase_config] do
+  action :create
+  group node[:ncs_navigator][:core][:redis][:bcdatabase_group]
+  host node[:ncs_navigator][:core][:redis][:host]
+  port node[:ncs_navigator][:core][:redis][:port]
+  password node[:ncs_navigator][:core][:redis][:password]
+  db node[:ncs_navigator][:core][:redis][:db]
+end
+
 # PSC.
 psc_db_config = node[:ncs_navigator][:psc][:database][:config_file]
 
