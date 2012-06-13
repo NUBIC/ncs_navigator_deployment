@@ -71,6 +71,7 @@ node[:ncs_navigator][:apps].each do |app, strategy|
   template_variables = {
     :ajp_remote => ajp_remote,
     :app_root => app_root,
+    :env => node[:ncs_navigator][:env],
     :host => app_uri.host,
     :ssl_certificate => ssl_certificate,
     :ssl_key => ssl_key,

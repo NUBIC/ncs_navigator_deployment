@@ -5,6 +5,7 @@
 
   ServerName <%= @host %>
   DocumentRoot <%= @app_root %>/current/public
+  RailsEnv <%= @env %>
 
   <Directory <%= @app_root %>/current/public>
     Allow from all

@@ -30,6 +30,8 @@ set[:ncs_navigator][:apps] = {
 # The omission of bcdatabase_* keys for PSC is intentional.
 #
 
+default[:ncs_navigator][:env] = "production"
+
 default[:ncs_navigator][:study_center][:sampling_units_file] = "/etc/nubic/ncs/ssu.csv"
 default[:ncs_navigator][:study_center][:username] = "NetID"
 default[:ncs_navigator][:core][:database][:bcdatabase_config] = "ncs_navigator_core"
