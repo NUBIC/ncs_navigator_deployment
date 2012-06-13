@@ -34,6 +34,7 @@ node[:ncs_navigator][:apps].each do |key, _|
   bcdatabase_config config do
     action :create
     adapter "postgresql"
+    datamapper_adapter "postgres"
     group group
     host host
     password password
