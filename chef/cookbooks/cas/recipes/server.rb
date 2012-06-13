@@ -1,4 +1,4 @@
-#pp
+#
 # Cookbook Name:: cas
 # Recipe:: server
 #
@@ -23,6 +23,11 @@ include_recipe "apache2"
 
 app_owner = node[:tomcat][:user]
 app_group = node[:tomcat][:group]
+
+# CAS attributes are affected by node configuration, which isn't applied
+# until after the role attributes have taken effect.  As such, we have to
+# reload CAS attributes here.
+node.load_attribute_by_short_filename('default', 'cas')
 
 # Download and install the CAS server WAR.
 remote_file "#{node[:tomcat][:webapp_dir]}/#{node[:cas][:script_name]}.war" do

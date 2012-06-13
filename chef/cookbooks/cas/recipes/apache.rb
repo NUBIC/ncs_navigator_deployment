@@ -21,6 +21,11 @@ require 'uri'
 
 include_recipe "apache2"
 
+# CAS attributes are affected by node configuration, which isn't applied
+# until after the role attributes have taken effect.  As such, we have to
+# reload CAS attributes here.
+node.load_attribute_by_short_filename('default', 'cas')
+
 cas = node[:cas]
 sites_enabled = "#{node[:apache][:dir]}/sites-enabled"
 
