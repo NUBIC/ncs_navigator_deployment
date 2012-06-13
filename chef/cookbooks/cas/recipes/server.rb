@@ -58,8 +58,8 @@ end
 # Use NetID authentication.
 aker_central "netid" do
   action :create
-  user node[:netid][:user]
-  password node[:netid][:password]
+  user node[:aker][:netid][:user]
+  password node[:aker][:netid][:password]
 end
 
 # Configure Bcsec for the CAS server.
