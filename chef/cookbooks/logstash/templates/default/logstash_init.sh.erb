@@ -31,15 +31,20 @@ function usage() {
 
 case "$1" in
   start)
-    touch $LOGSTASH_PIDFILE
-    chown ${LOGSTASH_USER}:${LOGSTASH_USER} $LOGSTASH_PIDFILE
-    $SU - $LOGSTASH_USER sh -c "echo \$$ > $LOGSTASH_PIDFILE && exec $LOGSTASH" &
-    RETVAL=$?
-
-    if [ "$RETVAL" -eq "0" ]; then
-      log_success_msg
+    if [ -e $LOGSTASH_PIDFILE ]; then
+      echo "Already started ($LOGSTASH_PIDFILE exists)"
+      RETVAL="0"
     else
-      log_failure_msg
+      touch $LOGSTASH_PIDFILE
+      chown ${LOGSTASH_USER}:${LOGSTASH_USER} $LOGSTASH_PIDFILE
+      $SU - $LOGSTASH_USER sh -c "echo \$$ > $LOGSTASH_PIDFILE && exec $LOGSTASH" &
+      RETVAL=$?
+
+      if [ "$RETVAL" -eq "0" ]; then
+        log_success_msg
+      else
+        log_failure_msg
+      fi
     fi
     ;;
   stop)
