@@ -29,6 +29,10 @@ def ncs_navigator_configuration
           "host" => db,
           "password" => "p@ssw0rd1"
         },
+        "redis" => {
+          "host" => db,
+          "port" => 6379
+        },
         "ssh_keys" => ["ncs-vagrant"]
       },
       "psc" => {
