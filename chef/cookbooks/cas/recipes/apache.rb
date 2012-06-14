@@ -58,6 +58,6 @@ apache_site "cas" do
   enable true
 end
 
-if node.chef_environment =~ /development/
+if node[:development]
   include_recipe "cas::apache_devenv"
 end

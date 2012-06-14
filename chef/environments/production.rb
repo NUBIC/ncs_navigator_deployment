@@ -1,2 +1,2 @@
-name "ncs_production"
+name "production"
 description "Production environment for NCS Navigator"

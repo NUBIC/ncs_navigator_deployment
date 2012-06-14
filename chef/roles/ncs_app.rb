@@ -16,7 +16,7 @@ base_run_list = %w(
 )
 
 env_run_lists(
-  "ncs_development" => [
+  "development" => [
     "role[ncs_common]",
     "recipe[ncs_navigator::devenv]",
     base_run_list

@@ -23,8 +23,8 @@ Required materials
   ncs-vagrant.  For other configurations, alter the Vagrantfile.
 
 - A Chef server.
-  The Chef server SHOULD have an environment called ncs_development.  For
-  other configurations, alter the Vagrantfile.
+  The Chef server SHOULD have an environment called development.  For other
+  configurations, alter the Vagrantfile.
 
 - The validation key for your Chef server.
   The key SHOULD be in the repository directory.  The Vagrantfile assumes a

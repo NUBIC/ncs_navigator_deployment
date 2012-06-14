@@ -67,7 +67,7 @@ def base_config(role, config)
 
     config.vm.provision :chef_client do |chef|
       chef.chef_server_url = CHEF_SERVER_URL
-      chef.environment = "ncs_development"
+      chef.environment = "development"
       chef.validation_key_path = "nubic-validator.pem"
       chef.run_list = ["role[ncs_#{role}]"]
       chef.json = {

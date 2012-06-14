@@ -17,7 +17,7 @@
 # limitations under the License.
 #
 
-if node.chef_environment =~ /development/
+if node[:development]
   include_recipe "cas::attribute_devenv"
 end
 

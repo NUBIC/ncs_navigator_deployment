@@ -11,7 +11,7 @@ base_run_list = %w(
 )
 
 env_run_lists(
-  "ncs_development" => [
+  "development" => [
     base_run_list,
     "recipe[zeroconf]"
   ].flatten,

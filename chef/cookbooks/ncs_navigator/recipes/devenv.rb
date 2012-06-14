@@ -24,7 +24,7 @@ include_recipe "build-essential"
 include_recipe "ssl_certificates"
 include_recipe "zeroconf::devel"
 
-unless node.chef_environment == "ncs_development"
+unless node[:development]
   raise <<-END
   This node does not appear to be used for development, so ncs_navigator::devenv cannot be used in it
   END

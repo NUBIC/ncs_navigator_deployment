@@ -23,8 +23,8 @@ Cookbook dependencies:
 
 The web recipe currently only works with Apache, Passenger, and Tomcat.
 
-The `devenv` recipe can only be used in the `ncs_development` environment, and
-will raise an error if run in a different environment.
+The `devenv` recipe can only be used if the node's `development` attribute is
+true, and will raise an error otherwise.
 
 Attributes
 ==========

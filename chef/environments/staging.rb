@@ -1,2 +1,2 @@
-name "ncs_staging"
+name "staging"
 description "Staging environment for NCS Navigator"
