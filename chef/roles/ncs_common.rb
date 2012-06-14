@@ -9,6 +9,7 @@ base_run_list = %w(
   recipe[yumrepo::epel]
   recipe[yumrepo::repoforge]
   recipe[monit]
+  recipe[logstash::agent]
 )
 
 env_run_lists(
