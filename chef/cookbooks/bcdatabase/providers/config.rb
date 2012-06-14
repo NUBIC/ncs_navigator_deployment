@@ -1,4 +1,5 @@
-## # Cookbook Name:: bcdatabase
+##
+# Cookbook Name:: bcdatabase
 # LWRP:: config
 #
 # Copyright 2012, Northwestern University
@@ -20,18 +21,30 @@ action :create do
 
   nr = new_resource
   gn = nr.group
-  cn = nr.name
+  cn = nr.config
 
   bcdatabase_group gn do
     action :create_if_missing
   end
 
-  group_data = configs_in(gn)
-  group_data[cn] = new_resource.attributes.reject! { |_, v| v.nil? || v.to_s.empty? }
+  configs = configs_in(gn)
+
+  # YAML differentiates between symbols and strings, but Chef permits the use
+  # of both for configuration keys.  We just want strings.
+  # Also, to keep things clean, we also omit nil attributes.
+  group_data = {}
+
+  nr.attributes.each do |k, v|
+    unless v.nil?
+      group_data[k.to_s] = v
+    end
+  end
+
+  configs[cn] = group_data
 
   bcdatabase_group gn do
     action :update
 
-    data group_data
+    data configs
   end
 end

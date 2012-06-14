@@ -19,6 +19,7 @@
 actions :create
 
 attribute :group, :kind_of => String, :required => true
+attribute :config, :kind_of => String, :required => true
 
 def initialize(*args)
   super
