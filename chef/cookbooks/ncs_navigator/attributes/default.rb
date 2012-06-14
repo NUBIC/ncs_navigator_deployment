@@ -41,7 +41,6 @@ default[:ncs_navigator][:core][:database][:name] = "ncs_navigator_core"
 default[:ncs_navigator][:core][:database][:username] = "ncs_navigator_core"
 default[:ncs_navigator][:core][:redis][:bcdatabase_config] = "ncs_navigator_core"
 default[:ncs_navigator][:core][:redis][:bcdatabase_group] = "ncsredis_prod"
-default[:ncs_navigator][:core][:redis][:password] = ""
 default[:ncs_navigator][:core][:redis][:db] = 0
 default[:ncs_navigator][:core][:root] = "/var/www/apps/ncs_navigator_core"
 default[:ncs_navigator][:core][:ssh_keys] = []
