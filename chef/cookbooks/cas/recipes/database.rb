@@ -52,8 +52,9 @@ postgresql_database db_name do
   owner db_user
 end
 
-bcdatabase_config db_name do
+bcdatabase_config "bcdatabase_cas" do
   action :create
+  config db_name
   group bcdb_group
   password db_pass
   username db_user

@@ -31,8 +31,9 @@ node[:ncs_navigator][:apps].each do |key, _|
   password = node[:ncs_navigator][key][:database][:password]
   host = node[:ncs_navigator][key][:database][:host]
 
-  bcdatabase_config config do
+  bcdatabase_config "#{group}_#{config}" do
     action :create
+    config config
     adapter "postgresql"
     datamapper_adapter "postgres"
     group group
@@ -43,13 +44,12 @@ node[:ncs_navigator][:apps].each do |key, _|
 end
 
 # Build Redis configuration for Core.
-
-bcdatabase_config node[:ncs_navigator][:core][:redis][:bcdatabase_config] do
+bcdatabase_config "redis_for_core" do
   action :create
+  config node[:ncs_navigator][:core][:redis][:bcdatabase_config]
   group node[:ncs_navigator][:core][:redis][:bcdatabase_group]
   host node[:ncs_navigator][:core][:redis][:host]
   port node[:ncs_navigator][:core][:redis][:port]
-  password node[:ncs_navigator][:core][:redis][:password]
   db node[:ncs_navigator][:core][:redis][:db]
 end
 
