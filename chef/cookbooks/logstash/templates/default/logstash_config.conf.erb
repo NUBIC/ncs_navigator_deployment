@@ -1,0 +1,29 @@
+# This file is maintained by Chef.  Manual edits will be overwritten.
+
+input {
+<%- if @input.empty? %>
+  # This is a default to get logstash up and running.
+  # To configure inputs, use the logstash_input LWRP.
+  syslog {
+    type => "syslog"
+  }
+<%- else %>
+<%- @input.each do |i| %>
+  <%= i %>
+<%- end %>
+<%- end %>
+}
+
+output {
+<%- if @output.empty? %>
+  # This is a default to get logstash up and running.
+  # To configure outputs, use the logstash_output LWRP.
+  null {
+
+  }
+<%- else %>
+<%- @output.each do |o| %>
+  <%= o %>
+<%- end %>
+<%- end %>
+}

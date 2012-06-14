@@ -1,0 +1,66 @@
+#! /bin/sh
+#
+# This file is maintained by Chef.  Manual edits will be overwritten.
+#
+# logstash      Ship log messages and events
+#
+# Author:       David Yip, <yipdw@northwestern.edu>
+# chkconfig:    2345 99 00
+# description:  logstash (http://logstash.net/) collects log messages.
+# processname:  java
+# pidfile:      <%= @pidfile %>
+# config:       <%= @config %>
+
+. /etc/rc.d/init.d/functions
+. /lib/lsb/init-functions
+
+if [ -x "/sbin/runuser" ]; then
+  SU="/sbin/runuser -s /bin/sh"
+else
+  SU="/bin/su -s /bin/sh"
+fi
+
+LOGSTASH="/usr/bin/java -jar <%= @bin %> agent -f <%= @config %>"
+LOGSTASH_USER=<%= @user %>
+LOGSTASH_PIDFILE=<%= @pidfile %>
+
+function usage() {
+  echo "Usage: $0 {start|stop|restart}"
+  exit 2
+}
+
+case "$1" in
+  start)
+    touch $LOGSTASH_PIDFILE
+    chown ${LOGSTASH_USER}:${LOGSTASH_USER} $LOGSTASH_PIDFILE
+    $SU - $LOGSTASH_USER sh -c "echo \$$ > $LOGSTASH_PIDFILE && exec $LOGSTASH" &
+    RETVAL=$?
+
+    if [ "$RETVAL" -eq "0" ]; then
+      log_success_msg
+    else
+      log_failure_msg
+    fi
+    ;;
+  stop)
+    if [ -e $LOGSTASH_PIDFILE ]; then
+      kill `cat $LOGSTASH_PIDFILE`
+      rm -f $LOGSTASH_PIDFILE
+      log_success_msg
+      RETVAL="0"
+    else
+      log_failure_msg
+      RETVAL="4"
+    fi
+    ;;
+  restart)
+    $0 stop
+    $0 start
+    RETVAL=$?
+    ;;
+  *)
+    usage
+    ;;
+esac
+
+exit $RETVAL
