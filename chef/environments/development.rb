@@ -1,5 +1,5 @@
 name "development"
-description "Development environment for NCS Navigator"
+description "Development environment"
 
 override_attributes(
   :development => true
