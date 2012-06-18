@@ -79,8 +79,9 @@ node[:ncs_navigator][:apps].each do |app, strategy|
   }
 
   template config do
-    owner user
     group group
+    mode 0444
+    owner user
     source strategy
     variables template_variables
   end

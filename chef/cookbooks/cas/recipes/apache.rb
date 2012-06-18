@@ -44,6 +44,7 @@ server_name = URI.parse(cas[:base_url]).host
 # Set up the site.
 template node[:cas][:apache][:configuration] do
   source "cas.conf.erb"
+  mode 0444
   owner node[:apache][:user]
   group node[:apache][:group]
   variables(:document_root => cas[:apache][:document_root],
