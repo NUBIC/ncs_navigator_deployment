@@ -26,6 +26,7 @@ node[:cas][:proxy_callback_url] = "https://#{host}/cas-proxy-callback/receive_pg
 node[:cas][:proxy_retrieval_url] = "https://#{host}/cas-proxy-callback/retrieve_pgt"
 
 # Point the CAS server at the development SSL certificate and key.
+node[:cas][:apache][:ssl] = Mash.new
 node[:cas][:apache][:ssl][:certificate] = node[:cas][:devenv][:ssl][:certificate]
 node[:cas][:apache][:ssl][:key] = node[:cas][:devenv][:ssl][:key]
 

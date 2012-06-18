@@ -29,6 +29,9 @@ node.load_attribute_by_short_filename('default', 'cas')
 cas = node[:cas]
 sites_enabled = "#{node[:apache][:dir]}/sites-enabled"
 
+raise "cas.apache.ssl.certificate must be set" unless cas[:apache][:ssl][:certificate]
+raise "cas.apache.ssl.key must be set" unless cas[:apache][:ssl][:key]
+
 # The location of the CAS server over AJP.
 remote = "ajp://localhost:#{node[:tomcat][:ajp_port]}/#{cas[:script_name]}"
 

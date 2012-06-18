@@ -22,9 +22,6 @@ include_recipe "apache2"
 cert_file = node[:cas][:apache][:ssl][:certificate]
 key_file = node[:cas][:apache][:ssl][:key]
 
-raise "cas.apache.ssl.certificate must be set" unless cert_file
-raise "cas.apache.ssl.key must be set" unless key_file
-
 # Install SSL material.
 cookbook_file cert_file do
   cookbook "ssl_certificates"
