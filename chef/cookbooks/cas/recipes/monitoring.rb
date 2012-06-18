@@ -17,6 +17,8 @@
 # limitations under the License.
 #
 
+require 'uri'
+
 include_recipe "monit"
 
 # Hardcoded by /etc/sysconfig/tomcat6.
@@ -24,15 +26,18 @@ tomcat_pid = "/var/run/tomcat6.pid"
 
 tomcat_port = node[:tomcat][:ajp_port]
 apache_pid = node[:apache][:pid_file]
-cas_path = "/#{node[:cas][:script_name]}/login"
-callback_path = "/#{node[:cas][:callback][:script_name]}/receive_pgt"
-host = "localhost"
+cas_uri = URI(node[:cas][:base_url])
+proxy_callback_uri = URI(node[:cas][:proxy_callback_url])
+proxy_retrieval_uri = URI(node[:cas][:proxy_retrieval_url])
 
 # Is the Tomcat process up? If not, restart Tomcat.
-monitrc "cas_via_tomcat", :pid => tomcat_pid, :host => host, :port => tomcat_port
+monitrc "cas_via_tomcat", :pid => tomcat_pid, :host => 'localhost', :port => tomcat_port
 
-# Is the Apache process up? If not, restart Apache.
-monitrc "cas_via_apache", :pid => apache_pid, :host => host, :port => 443, :cas_path => cas_path
+# Is Apache up? If not, restart Apache.
+monitrc "apache", :pid => apache_pid
 
-# Can we access the proxy callbacks?  If not, restart Apache.
-monitrc "cas_proxy_callbacks", :pid => apache_pid, :host => host, :port => 443, :callback_path => callback_path
+# Can we get to CAS via Apache?
+monitrc "cas_via_apache", :host => cas_uri.host, :port => cas_uri.port, :cas_path => "#{cas_uri.path}/login"
+
+# Can we access the proxy callbacks?
+monitrc "cas_proxy_callbacks", :proxy_callback_uri => proxy_callback_uri, :proxy_retrieval_uri => proxy_retrieval_uri

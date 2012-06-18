@@ -1,8 +1,5 @@
-# While Tomcat starts up pretty quickly, the CAS server doesn't, so
-# we'll check on it every other cycle.
-check process cas_via_tomcat with pidfile <%= @pid %> every 2 cycles
+check process cas_via_tomcat with pidfile <%= @pid %>
   start program = "/sbin/service tomcat6 start"
   stop program = "/sbin/service tomcat6 stop"
-  if failed host <%= @host %> port <%= @port %> then restart
   if 3 restarts within 3 cycles then stop
   group cas

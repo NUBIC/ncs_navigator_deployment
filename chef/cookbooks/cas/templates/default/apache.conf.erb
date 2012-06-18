@@ -1,0 +1,4 @@
+check process apache with pidfile <%= @pid %>
+  start program = "/sbin/service httpd start"
+  stop program = "/sbin/service httpd stop"
+  if 3 restarts within 3 cycles then stop

@@ -1,7 +1,13 @@
-check process cas_proxy_callbacks with pidfile <%= @pid %>
-  start program = "/sbin/service httpd start"
-  stop program = "/sbin/service httpd stop"
-  if failed host <%= @host %> port <%= @port %> type tcpssl protocol http
-    and request "<%= @callback_path %>" then restart
-  if 3 restarts within 3 cycles then stop
+# To avoid conflicts with other Web monitoring checks, these connection tests
+# should remain informational.  Active monitoring is done in the apache check
+# block.
+check host cas_proxy_callback with address <%= @proxy_callback_uri.host %>
+  if failed port <%= @proxy_callback_uri.port %> type tcpssl protocol http
+    and request "<%= @proxy_callback_uri.path %>" then alert
+  group cas
+
+# The retrieval action doesn't provide a way for us to get a 2xx response over
+# HTTP, so we'll just do connection testing.
+check host cas_proxy_retrieval with address <%= @proxy_retrieval_uri.host %>
+  if failed port <%= @proxy_retrieval_uri.port %> type tcpssl then alert
   group cas

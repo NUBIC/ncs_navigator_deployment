@@ -1,7 +1,10 @@
-check process cas_via_apache with pidfile <%= @pid %>
-  start program = "/sbin/service httpd start"
-  stop program = "/sbin/service httpd stop"
-  if failed host <%= @host %> port <%= @port %> type tcpssl protocol http
-    and request "<%= @cas_path %>" then restart
-  if 3 restarts within 3 cycles then stop
+# CAS-via-Tomcat is only checked every other cycle; the same should apply here.
+# There's no point in checking the proxy more often than the app server.
+#
+# To avoid conflicts with other Web monitoring checks, these connection tests
+# should remain informational.  Active monitoring is done in the apache check
+# block.
+check host cas_via_apache with address <%= @host %> every 2 cycles
+  if failed port <%= @port %> type tcpssl protocol http
+    and request "<%= @cas_path %>" then alert
   group cas
