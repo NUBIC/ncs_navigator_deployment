@@ -39,6 +39,6 @@ end
 # NCS MDES Warehouse.
 logrotate_app "ncs_mdes_warehouse" do
   frequency "daily"
-  path "#{node["ncs_navigator"]["warehouse"]["log_dir"]}/*.log"
   rotate 0
+  path "#{node["ncs_navigator"]["warehouse"]["log"]["dir"]}/*.log"
 end
