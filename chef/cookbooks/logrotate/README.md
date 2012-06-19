@@ -19,10 +19,11 @@ The definition takes the following params:
 
 * path: specifies a single path (string) or multiple paths (array) that should have logrotation stanzas created in the config file. No default, this must be specified.
 * enable: true/false, if true it will create the template in /etc/logrotate.d.
-* frequency: sets the frequency for rotation. Default value is 'weekly'. Valid values are: daily, weekly, monthly, yearly, see the logrotate man page for more information.
-* template: sets the template source, default is "logrotate.erb".
 * cookbook: select the template source from the specified cookbook. By default it will use the cookbook where the definition is used.
 * create: creation parameters for the logrotate "create" config, follows the form "mode owner group".
+* frequency: sets the frequency for rotation. Default value is 'weekly'. Valid values are: daily, weekly, monthly, yearly, see the logrotate man page for more information.
+* olddir: directory for old log files.
+* template: sets the template source, default is "logrotate.erb".
 
 See USAGE below.
 
