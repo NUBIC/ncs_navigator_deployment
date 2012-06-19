@@ -51,11 +51,11 @@ when "debian", "ubuntu"
   end
   package "rabbitmq-server"
 when "redhat", "centos", "scientific"
-  remote_file "/tmp/rabbitmq-server-2.6.1-1.noarch.rpm" do
-    source "https://www.rabbitmq.com/releases/rabbitmq-server/v2.6.1/rabbitmq-server-2.6.1-1.noarch.rpm"
+  remote_file "/tmp/rabbitmq-server-2.8.2-1.noarch.rpm" do
+    source "https://www.rabbitmq.com/releases/rabbitmq-server/v2.8.2/rabbitmq-server-2.8.2-1.noarch.rpm"
     action :create_if_missing
   end
-  rpm_package "/tmp/rabbitmq-server-2.6.1-1.noarch.rpm" do
+  rpm_package "/tmp/rabbitmq-server-2.8.2-1.noarch.rpm" do
     action :install
   end
 end
