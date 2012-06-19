@@ -20,22 +20,41 @@
 include_recipe "application_user"
 include_recipe "logrotate"
 
-group = node["application_user"]["group"]
-core_log_dir = "#{node["ncs_navigator"]["core"]["root"]}/current/log"
-staff_portal_log_dir = "#{node["ncs_navigator"]["staff_portal"]["root"]}/current/log"
+core_user = node["ncs_navigator"]["core"]["user"]
+staff_portal_user = node["ncs_navigator"]["staff_portal"]["user"]
+app_group = node["application_user"]["group"]
+
+core_dir = node["ncs_navigator"]["core"]["root"]
+core_log_dir = "#{core_dir}/current/log"
+core_old_log_dir = "#{core_dir}/old_logs"
+staff_portal_dir = node["ncs_navigator"]["staff_portal"]["root"]
+staff_portal_log_dir = "#{staff_portal_dir}/current/log"
+staff_portal_old_log_dir = "#{staff_portal_dir}/old_logs"
+
+directory core_old_log_dir do
+  group app_group
+  mode 0755
+  owner core_user
+end
+
+directory staff_portal_old_log_dir do
+  group app_group
+  mode 0755
+  owner staff_portal_user
+end
 
 # NCS Navigator Core.
 logrotate_app "ncs_navigator_core" do
-  create "444 #{node["ncs_navigator"]["core"]["user"]} #{group}"
-  olddir "#{core_log_dir}/old"
+  create "644 #{core_user} #{app_group}"
+  olddir core_old_log_dir
   path "#{core_log_dir}/*.log"
   rotate node["ncs_navigator"]["core"]["log"]["rotate"]
 end
 
 # NCS Staff Portal.
 logrotate_app "ncs_staff_portal" do
-  create "444 #{node["ncs_navigator"]["staff_portal"]["user"]} #{group}"
-  olddir "#{staff_portal_log_dir}/old"
+  create "644 #{staff_portal_user} #{app_group}"
+  olddir staff_portal_old_log_dir
   path "#{staff_portal_log_dir}/*.log"
   rotate node["ncs_navigator"]["staff_portal"]["log"]["rotate"]
 end
