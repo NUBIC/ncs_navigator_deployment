@@ -12,7 +12,6 @@
 # config:       <%= @config %>
 
 . /etc/rc.d/init.d/functions
-. /lib/lsb/init-functions
 
 if [ -x "/sbin/runuser" ]; then
   SU="/sbin/runuser -s /bin/sh"
@@ -39,22 +38,14 @@ case "$1" in
       chown ${LOGSTASH_USER}:${LOGSTASH_USER} $LOGSTASH_PIDFILE
       $SU - $LOGSTASH_USER sh -c "echo \$$ > $LOGSTASH_PIDFILE && exec $LOGSTASH" &
       RETVAL=$?
-
-      if [ "$RETVAL" -eq "0" ]; then
-        log_success_msg
-      else
-        log_failure_msg
-      fi
     fi
     ;;
   stop)
     if [ -e $LOGSTASH_PIDFILE ]; then
       kill `cat $LOGSTASH_PIDFILE`
       rm -f $LOGSTASH_PIDFILE
-      log_success_msg
       RETVAL="0"
     else
-      log_failure_msg
       RETVAL="4"
     fi
     ;;
