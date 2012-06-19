@@ -39,6 +39,7 @@ default[:ncs_navigator][:core][:database][:bcdatabase_config] = "ncs_navigator_c
 default[:ncs_navigator][:core][:database][:bcdatabase_group] = "ncsdb_prod"
 default[:ncs_navigator][:core][:database][:name] = "ncs_navigator_core"
 default[:ncs_navigator][:core][:database][:username] = "ncs_navigator_core"
+default[:ncs_navigator][:core][:log][:rotate] = 7
 default[:ncs_navigator][:core][:redis][:bcdatabase_config] = "ncs_navigator_core"
 default[:ncs_navigator][:core][:redis][:bcdatabase_group] = "ncsredis_prod"
 default[:ncs_navigator][:core][:redis][:db] = 0
@@ -54,6 +55,7 @@ default[:ncs_navigator][:staff_portal][:database][:bcdatabase_config] = "ncs_sta
 default[:ncs_navigator][:staff_portal][:database][:bcdatabase_group] = "ncsdb_prod"
 default[:ncs_navigator][:staff_portal][:database][:name] = "ncs_staff_portal"
 default[:ncs_navigator][:staff_portal][:database][:username] = "ncs_staff_portal"
+default[:ncs_navigator][:staff_portal][:log][:rotate] = 7
 default[:ncs_navigator][:staff_portal][:root] = "/var/www/apps/ncs_staff_portal"
 default[:ncs_navigator][:staff_portal][:ssh_keys] = []
 default[:ncs_navigator][:staff_portal][:user] = "ncs_staff_portal"
@@ -62,6 +64,7 @@ default[:ncs_navigator][:staff_portal][:email_reminder] = false
 default[:ncs_navigator][:staff_portal][:exception_recipients] = []
 default[:ncs_navigator][:staff_portal][:google_analytics_number] = ""
 default[:ncs_navigator][:warehouse][:log][:dir] = "/var/log/nubic/ncs/warehouse"
+default[:ncs_navigator][:warehouse][:log][:rotate] = 7
 
 default[:ncs_navigator][:ini][:path] = "/etc/nubic/ncs/navigator.ini"
 

@@ -27,22 +27,22 @@ staff_portal_log_dir = "#{node["ncs_navigator"]["staff_portal"]["root"]}/current
 # NCS Navigator Core.
 logrotate_app "ncs_navigator_core" do
   create "444 #{node["ncs_navigator"]["core"]["user"]} #{group}"
-  rotate 0
   olddir "#{core_log_dir}/old"
   path "#{core_log_dir}/*.log"
+  rotate node["ncs_navigator"]["core"]["log"]["rotate"]
 end
 
 # NCS Staff Portal.
 logrotate_app "ncs_staff_portal" do
   create "444 #{node["ncs_navigator"]["staff_portal"]["user"]} #{group}"
-  rotate 0
   olddir "#{staff_portal_log_dir}/old"
   path "#{staff_portal_log_dir}/*.log"
+  rotate node["ncs_navigator"]["staff_portal"]["log"]["rotate"]
 end
 
 # NCS MDES Warehouse.
 logrotate_app "ncs_mdes_warehouse" do
   frequency "daily"
-  rotate 0
   path "#{node["ncs_navigator"]["warehouse"]["log"]["dir"]}/*.log"
+  rotate node["ncs_navigator"]["warehouse"]["log"]["rotate"]
 end
