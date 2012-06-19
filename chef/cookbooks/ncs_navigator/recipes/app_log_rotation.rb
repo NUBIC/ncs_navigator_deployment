@@ -22,6 +22,7 @@ include_recipe "logrotate"
 
 core_user = node["ncs_navigator"]["core"]["user"]
 staff_portal_user = node["ncs_navigator"]["staff_portal"]["user"]
+warehouse_user = node["ncs_navigator"]["warehouse"]["user"]
 app_group = node["application_user"]["group"]
 
 core_dir = node["ncs_navigator"]["core"]["root"]
@@ -30,6 +31,7 @@ core_old_log_dir = "#{core_dir}/old_logs"
 staff_portal_dir = node["ncs_navigator"]["staff_portal"]["root"]
 staff_portal_log_dir = "#{staff_portal_dir}/current/log"
 staff_portal_old_log_dir = "#{staff_portal_dir}/old_logs"
+warehouse_log_dir = node["ncs_navigator"]["warehouse"]["log"]["dir"]
 
 directory core_old_log_dir do
   group app_group
@@ -62,6 +64,6 @@ end
 # NCS MDES Warehouse.
 logrotate_app "ncs_mdes_warehouse" do
   frequency "daily"
-  path "#{node["ncs_navigator"]["warehouse"]["log"]["dir"]}/*.log"
-  rotate node["ncs_navigator"]["warehouse"]["log"]["rotate"]
+  create "644 #{warehouse_user} #{app_group}"
+  path "#{warehouse_log_dir}/*.log"
 end
