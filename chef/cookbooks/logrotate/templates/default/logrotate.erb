@@ -9,5 +9,8 @@
   notifempty
   create <%= @create %>
   dateext
+  <%- if @olddir %>
+  olddir <%= @olddir %>
+  <%- end %>
 }
 <% end -%>
