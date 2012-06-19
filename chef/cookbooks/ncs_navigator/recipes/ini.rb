@@ -44,6 +44,7 @@ template node[:ncs_navigator][:ini][:path] do
     :smtp_port => sm[:port],
     :smtp_starttls => sm[:starttls],
     :smtp_username => sm[:username],
+    :sp_bootstrap_user => sp[:bootstrap_user],
     :sp_email_reminder => sp[:email_reminder],
     :sp_exception_recipients => sp[:exception_recipients],
     :sp_google_analytics_number => sp[:google_analytics_number],
