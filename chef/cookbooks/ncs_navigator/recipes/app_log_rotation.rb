@@ -21,19 +21,23 @@ include_recipe "application_user"
 include_recipe "logrotate"
 
 group = node["application_user"]["group"]
+core_log_dir = "#{node["ncs_navigator"]["core"]["root"]}/current/log"
+staff_portal_log_dir = "#{node["ncs_navigator"]["staff_portal"]["root"]}/current/log"
 
 # NCS Navigator Core.
 logrotate_app "ncs_navigator_core" do
-  path "#{node["ncs_navigator"]["core"]["root"]}/current/log/*.log"
   create "444 #{node["ncs_navigator"]["core"]["user"]} #{group}"
   rotate 0
+  olddir "#{core_log_dir}/old"
+  path "#{core_log_dir}/*.log"
 end
 
 # NCS Staff Portal.
 logrotate_app "ncs_staff_portal" do
-  path "#{node["ncs_navigator"]["staff_portal"]["root"]}/current/log/*.log"
   create "444 #{node["ncs_navigator"]["staff_portal"]["user"]} #{group}"
   rotate 0
+  olddir "#{staff_portal_log_dir}/old"
+  path "#{staff_portal_log_dir}/*.log"
 end
 
 # NCS MDES Warehouse.
