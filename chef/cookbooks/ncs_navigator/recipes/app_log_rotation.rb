@@ -50,7 +50,6 @@ logrotate_app "ncs_navigator_core" do
   create "644 #{core_user} #{app_group}"
   olddir core_old_log_dir
   path "#{core_log_dir}/*.log"
-  rotate node["ncs_navigator"]["core"]["log"]["rotate"]
 end
 
 # NCS Staff Portal.
@@ -58,7 +57,6 @@ logrotate_app "ncs_staff_portal" do
   create "644 #{staff_portal_user} #{app_group}"
   olddir staff_portal_old_log_dir
   path "#{staff_portal_log_dir}/*.log"
-  rotate node["ncs_navigator"]["staff_portal"]["log"]["rotate"]
 end
 
 # NCS MDES Warehouse.
