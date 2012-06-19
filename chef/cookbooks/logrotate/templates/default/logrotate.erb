@@ -2,7 +2,9 @@
 <%= p %> {
   <%= @frequency %>
   missingok
+  <%- if @rotate %>
   rotate <%= @rotate %>
+  <%- end %>
   compress
   delaycompress
   copytruncate
