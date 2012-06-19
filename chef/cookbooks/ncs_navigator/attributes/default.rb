@@ -61,6 +61,7 @@ default[:ncs_navigator][:staff_portal][:web][:configuration] = "#{node[:apache][
 default[:ncs_navigator][:staff_portal][:email_reminder] = false
 default[:ncs_navigator][:staff_portal][:exception_recipients] = []
 default[:ncs_navigator][:staff_portal][:google_analytics_number] = ""
+default[:ncs_navigator][:warehouse][:log_dir] = "/var/log/nubic/ncs/warehouse"
 
 default[:ncs_navigator][:ini][:path] = "/etc/nubic/ncs/navigator.ini"
 

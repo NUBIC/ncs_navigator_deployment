@@ -108,3 +108,6 @@ include_recipe "ncs_navigator::db_client"
 
 # Monitoring.
 include_recipe "ncs_navigator::app_monitoring"
+
+# Log rotation.
+include_recipe "ncs_navigator::app_log_rotation"
