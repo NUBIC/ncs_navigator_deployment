@@ -93,6 +93,20 @@ node[:ncs_navigator][:apps].each do |app|
   end
 end
 
+# Retrieve and deploy the sampling units file.
+ssu_src = node[:ncs_navigator][:study_center][:sampling_units][:data_bag_item]
+ssu_dst = node[:ncs_navigator][:study_center][:sampling_units][:target]
+
+ssu_data = data_bag_item("ncs_ssus", ssu_src)
+
+raise "Unable to find SSU data for #{ssu_src} in ncs_ssus data bag" unless ssu_data
+
+file ssu_dst do
+  mode 0444
+  group app_group
+  content ssu_data['data']
+end
+
 # Adjust Tomcat configuration for PSC.
 include_recipe "ncs_navigator::psc"
 

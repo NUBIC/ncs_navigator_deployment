@@ -35,7 +35,7 @@ template node[:ncs_navigator][:ini][:path] do
     :sc_footer_text => sc[:footer_text],
     :sc_id => sc[:sc_id],
     :sc_recruitment_type_id => sc[:recruitment_type_id],
-    :sc_sampling_units_file => sc[:sampling_units_file],
+    :sc_sampling_units_file => sc[:sampling_units][:target],
     :sc_username => sc[:username],
     :smtp_authentication => sm[:authentication],
     :smtp_domain => sm[:domain],
