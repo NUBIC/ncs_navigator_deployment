@@ -1,21 +1,23 @@
 include_attribute "apache2"
 include_attribute "tomcat"
 
-# Keep this in sync with the attributes below.  There should be one key-value
-# pair for each application configuration.
+# Keep this in sync with the attributes below.
 #
 # Applications that have configuration but do not appear in this map will not
 # be configured.
-set[:ncs_navigator][:apps] = {
-  # name             # deployment type
-  'core'         => 'apache/passenger.conf.erb',
-  'psc'          => 'apache/tomcat.conf.erb',
-  'staff_portal' => 'apache/passenger.conf.erb'
-}
+set[:ncs_navigator][:apps] = %w(core psc staff_portal warehouse)
 
 # Applications.
 #
 # Special notes:
+#
+# Stub out missing categories with a Mash
+# ---------------------------------------
+#
+# The NCS MDES Warehouse doesn't currently have a Web interface, and therefore
+# has no web or SSL configuration.  In situations like these, stub out the
+# missing section with a Mash.
+#
 #
 # Don't add a user for PSC
 # ------------------------
@@ -46,10 +48,12 @@ default[:ncs_navigator][:core][:redis][:db] = 0
 default[:ncs_navigator][:core][:root] = "/var/www/apps/ncs_navigator_core"
 default[:ncs_navigator][:core][:ssh_keys] = []
 default[:ncs_navigator][:core][:user] = "ncs_navigator_core"
+default[:ncs_navigator][:core][:web][:template] = "apache/passenger.conf.erb"
 default[:ncs_navigator][:core][:web][:configuration] = "#{node[:apache][:dir]}/sites-available/ncs_navigator_core"
 default[:ncs_navigator][:psc][:database][:config_file] = "/etc/psc/datasource.properties"
 default[:ncs_navigator][:psc][:database][:name] = "psc"
 default[:ncs_navigator][:psc][:database][:username] = "psc"
+default[:ncs_navigator][:psc][:web][:template] = "apache/tomcat.conf.erb"
 default[:ncs_navigator][:psc][:web][:configuration] = "#{node[:apache][:dir]}/sites-available/psc"
 default[:ncs_navigator][:staff_portal][:database][:bcdatabase_config] = "ncs_staff_portal"
 default[:ncs_navigator][:staff_portal][:database][:bcdatabase_group] = "ncsdb_prod"
@@ -59,12 +63,18 @@ default[:ncs_navigator][:staff_portal][:log][:rotate] = 7
 default[:ncs_navigator][:staff_portal][:root] = "/var/www/apps/ncs_staff_portal"
 default[:ncs_navigator][:staff_portal][:ssh_keys] = []
 default[:ncs_navigator][:staff_portal][:user] = "ncs_staff_portal"
+default[:ncs_navigator][:staff_portal][:web][:template] = "apache/passenger.conf.erb"
 default[:ncs_navigator][:staff_portal][:web][:configuration] = "#{node[:apache][:dir]}/sites-available/ncs_staff_portal"
 default[:ncs_navigator][:staff_portal][:email_reminder] = false
 default[:ncs_navigator][:staff_portal][:exception_recipients] = []
 default[:ncs_navigator][:staff_portal][:google_analytics_number] = ""
+default[:ncs_navigator][:warehouse][:database] = Mash.new
 default[:ncs_navigator][:warehouse][:log][:dir] = "/var/log/nubic/ncs/warehouse"
 default[:ncs_navigator][:warehouse][:log][:rotate] = 7
+default[:ncs_navigator][:warehouse][:ssh_keys] = []
+default[:ncs_navigator][:warehouse][:ssl] = Mash.new
+default[:ncs_navigator][:warehouse][:user] = "ncs_mdes_warehouse"
+default[:ncs_navigator][:warehouse][:web] = Mash.new
 
 default[:ncs_navigator][:ini][:path] = "/etc/nubic/ncs/navigator.ini"
 

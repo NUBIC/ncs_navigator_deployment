@@ -32,9 +32,10 @@ ajp_remote = "ajp://localhost:#{node[:tomcat][:ajp_port]}"
 include_recipe "apache2::mod_proxy_ajp"
 include_recipe "apache2::mod_ssl"
 
-node[:ncs_navigator][:apps].each do |app, strategy|
-  config = node[:ncs_navigator][app][:web][:configuration]
-  app_uri = URI(node[:ncs_navigator][app][:url])
+node[:ncs_navigator][:apps].each do |app|
+  config_src = node[:ncs_navigator][app][:web][:template]
+  config_dest = node[:ncs_navigator][app][:web][:configuration]
+  app_uri = URI(node[:ncs_navigator][app][:url]) if node[:ncs_navigator][app][:url]
   app_root = node[:ncs_navigator][app][:root]
   app_user = node[:ncs_navigator][app][:user]
   app_keys = node[:ncs_navigator][app][:ssh_keys]
@@ -56,7 +57,6 @@ node[:ncs_navigator][:apps].each do |app, strategy|
       mode 0444
       variables(:ruby => node[:passenger][:rvm_ruby_string])
     end
-
   end
 
   # Application configuration.
@@ -68,26 +68,28 @@ node[:ncs_navigator][:apps].each do |app, strategy|
     end
   end
 
-  template_variables = {
-    :ajp_remote => ajp_remote,
-    :app_root => app_root,
-    :env => node[:ncs_navigator][:env],
-    :host => app_uri.host,
-    :ssl_certificate => ssl_certificate,
-    :ssl_key => ssl_key,
-    :uri => app_uri
-  }
+  if config_src && config_dest
+    template_variables = {
+      :ajp_remote => ajp_remote,
+      :app_root => app_root,
+      :env => node[:ncs_navigator][:env],
+      :host => app_uri.host,
+      :ssl_certificate => ssl_certificate,
+      :ssl_key => ssl_key,
+      :uri => app_uri
+    }
 
-  template config do
-    group group
-    mode 0444
-    owner user
-    source strategy
-    variables template_variables
-  end
+    template config_dest do
+      group group
+      mode 0444
+      owner user
+      source config_src
+      variables template_variables
+    end
 
-  apache_site File.basename(config) do
-    enable true
+    apache_site File.basename(config_dest) do
+      enable true
+    end
   end
 end
 
