@@ -18,29 +18,9 @@
 #
 
 include_recipe "java"
-include_recipe "openssl"
 
-# Generate a keystore password for applications running in Tomcat.
-# This is not the same keystore set up in Tomcat connectors.  That keystore
-# is used to *provide* HTTPS connections to clients; this keystore is used to
-# *verify* HTTPS connections established by applications in Tomcat.
-include Opscode::OpenSSL::Password
+tomcat_pkgs = ["tomcat6"]
 
-unless node["tomcat"]["keystore"]["password"]
-  keystore_password = secure_password
-  node["tomcat"]["keystore"]["password"] = keystore_password
-  node.save unless Chef::Config[:solo]
-end
-
-tomcat_pkgs = value_for_platform(
-  ["debian","ubuntu"] => {
-    "default" => ["tomcat6","tomcat6-admin"]
-  },
-  ["centos","redhat","fedora"] => {
-    "default" => ["tomcat6","tomcat6-admin-webapps"]
-  },
-  "default" => ["tomcat6"]
-)
 tomcat_pkgs.each do |pkg|
   package pkg do
     action :install
@@ -67,7 +47,7 @@ when "centos","redhat","fedora"
     mode "0644"
     notifies :restart, resources(:service => "tomcat")
   end
-else  
+else
   template "/etc/default/tomcat6" do
     source "default_tomcat6.erb"
     owner "root"
