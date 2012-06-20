@@ -25,7 +25,7 @@ when "debian", "ubuntu"
   package erlpkg
   package "erlang-dev"
 when "redhat", "centos", "scientific"
-  include_recipe "yum::epel"
+  include_recipe "yumrepo::epel"
   yum_repository "erlang" do
     name "EPELErlangrepo"
     url "http://repos.fedorapeople.org/repos/peter/erlang/epel-5Server/$basearch"
