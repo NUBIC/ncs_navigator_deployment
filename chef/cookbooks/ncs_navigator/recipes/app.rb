@@ -27,7 +27,7 @@ include_recipe "application_user"
 user = node[:apache][:user]
 group = node[:apache][:group]
 app_group = node[:application_user][:group]
-ajp_remote = "ajp://localhost:#{node[:tomcat][:ajp_port]}"
+ajp_remote = "ajp://localhost:#{node[:tomcat][:ajp_port]}/"
 
 include_recipe "apache2::mod_proxy_ajp"
 include_recipe "apache2::mod_ssl"
