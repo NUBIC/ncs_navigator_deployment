@@ -46,6 +46,7 @@ node[:ncs_navigator][:apps].each do |app|
     # Make the user...
     application_user app_user do
       action :create
+      groups node[:ncs_navigator][app][:user_groups] || []
       authorized_keys app_keys
     end
 
