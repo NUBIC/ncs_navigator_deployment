@@ -47,6 +47,12 @@ def ncs_navigator_configuration
           "password" => "p@ssword1"
         },
         "ssh_keys" => ["ncs-vagrant"]
+      },
+      "study_center" => {
+        "sampling_units" => {
+          "data_bag_item" => "fake_development",
+          "target" => "/etc/nubic/ncs/ssu_tsu.csv"
+        }
       }
     },
     "postgresql" => {
