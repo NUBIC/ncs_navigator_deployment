@@ -13,4 +13,5 @@ end
   supports os
 end
 
+recipe "tomcat::custom_trust_store", "Sets up a custom trust store for Tomcat"
 recipe "tomcat::default", "Installs and configures Tomcat"
