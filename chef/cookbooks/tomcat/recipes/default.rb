@@ -18,6 +18,19 @@
 #
 
 include_recipe "java"
+include_recipe "openssl"
+
+# Generate a keystore password for applications running in Tomcat.
+# This is not the same keystore set up in Tomcat connectors.  That keystore
+# is used to *provide* HTTPS connections to clients; this keystore is used to
+# *verify* HTTPS connections established by applications in Tomcat.
+include Opscode::OpenSSL::Password
+
+unless node["tomcat"]["keystore"]["password"]
+  keystore_password = secure_password
+  node["tomcat"]["keystore"]["password"] = keystore_password
+  node.save unless Chef::Config[:solo]
+end
 
 tomcat_pkgs = value_for_platform(
   ["debian","ubuntu"] => {
