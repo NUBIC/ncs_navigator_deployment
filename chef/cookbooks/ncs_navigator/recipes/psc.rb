@@ -20,6 +20,9 @@
 # PSC requires larger-than-standard permgen and heaps.
 
 include_recipe "tomcat"
+include_recipe "application_user"
+
+extend Chef::ApplicationUser::Home
 
 ruby_block "adjust_tomcat_for_psc" do
   max_perm_size = "-XX:MaxPermSize=256M"
@@ -44,4 +47,27 @@ ruby_block "adjust_tomcat_for_psc" do
   not_if do
     [max_perm_size, max_heap_size].all? { |opt| node[:tomcat][:java_options].include?(opt) }
   end
+end
+
+# OSGi bundles need this.
+#
+# See https://code.bioinformatics.northwestern.edu/issues/wiki/psc/Deploying_plugins.
+psc_user = node["ncs_navigator"]["psc"]["user"]
+psc_bundle_dir = "#{application_user_home(psc_user)}/psc"
+
+%w(configurations libraries plugins).each do |dir|
+  directory "#{psc_bundle_dir}/bundles/#{dir}" do
+    recursive true
+    owner psc_user
+    owner node["ncs_navigator"]["psc"]["user"]
+    group node["tomcat"]["group"]
+    mode 0775
+  end
+end
+
+# To avoid dumping large JARs under /etc/tomcat6 (which is the target of
+# /usr/share/tomcat6/conf), we symlink /usr/share/tomcat6/conf/psc to
+# psc_bundle_dir.
+link "#{node["tomcat"]["base"]}/conf/psc" do
+  to psc_bundle_dir
 end
