@@ -18,8 +18,10 @@
 #
 
 include_recipe "aker"
-include_recipe "tomcat"
 include_recipe "apache2"
+include_recipe "java"
+include_recipe "ssl_certificates"
+include_recipe "tomcat"
 
 app_owner = node[:tomcat][:user]
 app_group = node[:tomcat][:group]
@@ -93,6 +95,25 @@ ruby_block "set nubic.cas.logFile property" do
   # This is CentOS/RHEL-specific.  For Debian-based systems, change this to
   # /etc/default/tomcat6.
   notifies :create, "template[/etc/sysconfig/tomcat6]"
+end
+
+# Point Tomcat at a custom keystore...
+include_recipe "tomcat::custom_trust_store"
+
+# ...and add our certificates' signers to it.
+keystore_path = node["tomcat"]["keystore"]["path"]
+keystore_password = node["tomcat"]["keystore"]["password"]
+ca_path = node["ssl_certificates"]["ca_path"]
+
+node["ssl_certificates"]["trust_chain"].each do |cert|
+  java_keystore "import_#{cert}_into_tomcat_keystore" do
+    action :import
+    keystore keystore_path
+    storepass keystore_password
+    cert_file "#{ca_path}/#{cert}"
+    cert_alias cert
+    user node["tomcat"]["user"]
+  end
 end
 
 if node[:development]

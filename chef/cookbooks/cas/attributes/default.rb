@@ -2,6 +2,7 @@ require 'uri'
 
 include_attribute "ssl_certificates"
 include_attribute "apache2"
+include_attribute "tomcat"
 
 # The source file.
 default[:cas][:war][:source] = "http://download.nubic.northwestern.edu/nubic_cas/nubic-cas-server-webapp-3.4.3.NUBIC-002.war"
@@ -53,5 +54,3 @@ default[:cas][:callback][:pstore_path] = "/var/db/cas/pgt.pstore"
 default[:cas][:devenv][:ssl][:certificate] = "#{node[:ssl_certificates][:ca_path]}/cas.crt"
 default[:cas][:devenv][:ssl][:key] = "#{node[:ssl_certificates][:key_path]}/cas.key"
 default[:cas][:devenv][:static_authority][:path] = "#{node[:cas][:dir]}/static.yml"
-default[:cas][:devenv][:trust_store][:password] = "password"
-default[:cas][:devenv][:trust_store][:path] = "#{node[:cas][:dir]}/cas.ts"

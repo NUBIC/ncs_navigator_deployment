@@ -18,46 +18,19 @@
 #
 
 include_recipe "cas::apache_devenv"
-include_recipe "java"
 include_recipe "tomcat"
 
 app_group = node[:tomcat][:group]
 app_owner = node[:tomcat][:user]
-cert_file = node[:cas][:apache][:ssl][:certificate]
-keytool = "#{node[:java][:java_home]}/bin/keytool"
-trust_store = node[:cas][:devenv][:trust_store][:path]
-trust_store_password = node[:cas][:devenv][:trust_store][:password]
 
-# Build a trust store for CAS...
-directory ::File.dirname(trust_store) do
-  action :create
-  group app_group
-  owner app_owner
-  recursive true
-end
-
-bash "build_cas_trust_store" do
-  user app_owner
-  group app_group
-  code <<-END
-  rm -f #{trust_store}
-  yes | #{keytool} -import -file #{cert_file} -alias devenv -keystore #{trust_store} -storepass #{trust_store_password}
-  END
-end
-
-# ...and point the Tomcat JRE at it.
-java_opts = "-Djavax.net.ssl.trustStore=#{trust_store} -Djavax.net.ssl.trustStorePassword=#{trust_store_password}"
-
-unless node[:tomcat][:java_options].include?(java_opts)
-  node[:tomcat][:java_options] += " " + java_opts
-  node.save unless Chef::Config[:solo]
-end
-
-ruby_block "rebuild Tomcat environment" do
-  block { }
-
-  notifies :create, resources(:template => "/etc/sysconfig/tomcat6")
-  notifies :restart, resources(:service => "tomcat")
+# Insert the development cert into the trusted certificates list for Tomcat.
+java_keystore "import_cas_devenv_into_tomcat_keystore" do
+  action :import
+  keystore node["tomcat"]["keystore"]["path"]
+  storepass node["tomcat"]["keystore"]["password"]
+  cert_file node["cas"]["apache"]["ssl"]["certificate"]
+  cert_alias "cas_devenv"
+  user node["tomcat"]["user"]
 end
 
 # Switch bcsec into static authority mode...
