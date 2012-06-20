@@ -102,6 +102,11 @@ ssu_data = data_bag_item("ncs_ssus", ssu_src)
 
 raise "Unable to find SSU data for #{ssu_src} in ncs_ssus data bag" unless ssu_data
 
+directory ::File.dirname(ssu_dst) do
+  recursive true
+  group app_group
+end
+
 file ssu_dst do
   mode 0444
   group app_group
