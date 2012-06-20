@@ -34,6 +34,8 @@ set[:ncs_navigator][:apps] = %w(core psc staff_portal warehouse)
 
 default[:ncs_navigator][:env] = "production"
 
+default[:ncs_navigator][:authority][:psc][:ca_file] = ""
+
 default[:ncs_navigator][:study_center][:sampling_units_file] = "/etc/nubic/ncs/ssu.csv"
 default[:ncs_navigator][:study_center][:username] = "NetID"
 

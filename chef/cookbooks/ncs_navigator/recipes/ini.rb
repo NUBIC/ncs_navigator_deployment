@@ -30,6 +30,7 @@ template node[:ncs_navigator][:ini][:path] do
   variables = {
     :cr_uri => node[:ncs_navigator][:core][:url],
     :ps_uri => node[:ncs_navigator][:psc][:url],
+    :ps_ssl_ca_file => node[:ncs_navigator][:authority][:psc][:ca_file],
     :sc_footer_logo_left => sc[:footer_logo_left],
     :sc_footer_logo_right => sc[:footer_logo_right],
     :sc_footer_text => sc[:footer_text],
