@@ -19,7 +19,7 @@ else
   SU="/bin/su -s /bin/sh"
 fi
 
-LOGSTASH="/usr/bin/java -jar <%= @bin %> agent -f <%= @config %>"
+LOGSTASH="/usr/bin/java -jar <%= @bin %> <%= @role %> -f <%= @config %>"
 LOGSTASH_USER=<%= @user %>
 LOGSTASH_PIDFILE=<%= @pidfile %>
 

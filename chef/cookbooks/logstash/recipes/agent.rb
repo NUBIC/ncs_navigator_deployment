@@ -18,53 +18,24 @@
 #
 
 include_recipe "monit"
-include_recipe "java"
+include_recipe "logstash::common"
 
-logstash_user = node["logstash"]["agent"]["user"]
-logstash_home = node["logstash"]["agent"]["home_dir"]
-logstash_group = node["logstash"]["agent"]["group"]
+extend Chef::Logstash::Paths
 
-user logstash_user do
-  system true
-  home logstash_home
-  shell node["logstash"]["agent"]["shell"]
-  supports :manage_home => true
+logstash_role = "agent"
+logstash_config = logstash_conf_path(logstash_role)
+logstash_user = node["logstash"]["user"]
+logstash_group = node["logstash"]["group"]
+
+logstash_init do
+  role logstash_role
 end
-
-group logstash_group do
-  members logstash_user
-end
-
-source = node["logstash"]["agent"]["source"]["file"]
-filename = URI(source).path.split('/').last
-target = "#{node["logstash"]["agent"]["bin_dir"]}/#{filename}"
-
-remote_file target do
-  source source
-  checksum node["logstash"]["agent"]["source"]["checksum"]
-  owner logstash_user
-  group logstash_group
-end
-
-logstash_config = node["logstash"]["agent"]["conf"]
 
 directory ::File.dirname(logstash_config) do
   mode 0755
   owner logstash_user
   group logstash_group
   recursive true
-end
-
-logstash_init = node["logstash"]["agent"]["init"]
-logstash_pidfile = node["logstash"]["agent"]["pid_file"]
-
-template node["logstash"]["agent"]["init"] do
-  source "logstash_init.sh.erb"
-  mode 0755
-  variables :pidfile => logstash_pidfile,
-            :config => logstash_config,
-            :user => logstash_user,
-            :bin => target
 end
 
 template logstash_config do
@@ -76,8 +47,9 @@ template logstash_config do
             :output => node["logstash"]["agent"]["output"]
 end
 
-monitrc "monitor_logstash", :init => logstash_init, :pidfile => logstash_pidfile
+monitrc "monitor_logstash_#{logstash_role}", :init => logstash_init_path(logstash_role),
+                                             :pidfile => logstash_pid_path(logstash_role)
 
-service "logstash" do
+service logstash_service(logstash_role) do
   action [:start, :enable]
 end
