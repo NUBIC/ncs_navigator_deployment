@@ -64,3 +64,12 @@ template "/etc/tomcat6/server.xml" do
   mode "0644"
   notifies :restart, resources(:service => "tomcat")
 end
+
+template node["tomcat"]["properties_file"] do
+  source "catalina.properties.erb"
+  owner "root"
+  group "root"
+  mode "0644"
+  notifies :restart, resources(:service => "tomcat")
+  variables(:custom_properties => node["tomcat"]["custom_properties"])
+end
