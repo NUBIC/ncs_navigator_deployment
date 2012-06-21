@@ -20,9 +20,6 @@
 # PSC requires larger-than-standard permgen and heaps.
 
 include_recipe "tomcat"
-include_recipe "application_user"
-
-extend Chef::ApplicationUser::Home
 
 ruby_block "adjust_tomcat_for_psc" do
   max_perm_size = "-XX:MaxPermSize=256M"
@@ -54,6 +51,9 @@ end
 # See https://code.bioinformatics.northwestern.edu/issues/wiki/psc/Deploying_plugins.
 psc_user = node["ncs_navigator"]["psc"]["user"]
 psc_bundle_dir = "#{application_user_home(psc_user)}/psc"
+
+include_recipe "application_user"
+extend Chef::ApplicationUser::Home
 
 %w(configurations libraries plugins).each do |dir|
   directory "#{psc_bundle_dir}/bundles/#{dir}" do
