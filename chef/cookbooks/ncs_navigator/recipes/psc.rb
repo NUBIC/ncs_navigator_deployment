@@ -71,3 +71,20 @@ end
 link "#{node["tomcat"]["base"]}/conf/psc" do
   to psc_bundle_dir
 end
+
+# PSC's CAS mechanism needs to be able to trust the CAS server, so install the
+# CAS server's certificates in a trust store and point Tomcat at it.
+include_recipe "tomcat::custom_trust_store"
+include_recipe "ssl_certificates"
+
+node["ssl_certificates"]["trust_chain"].each do |cert|
+  cf = "#{node["ssl_certificates"]["ca_path"]}/#{cert}"
+
+  java_keystore "add_nubic_certificates_for_psc" do
+    action :import
+    keystore node["tomcat"]["keystore"]["path"]
+    storepass node["tomcat"]["keystore"]["password"]
+    cert_file cf
+    cert_alias cert
+  end
+end
