@@ -40,17 +40,9 @@ end
 trust_store = node["tomcat"]["keystore"]["path"]
 trust_store_password = node["tomcat"]["keystore"]["password"]
 
-ruby_block "set_tomcat_trust_store" do
-  block do
-    # Point Tomcat's JRE at its trust store.
-    java_opts = "-Djavax.net.ssl.trustStore=#{trust_store} -Djavax.net.ssl.trustStorePassword=#{trust_store_password}"
-
-    unless node["tomcat"]["java_options"].include?(java_opts)
-      node["tomcat"]["java_options"] += " " + java_opts
-      node.save unless Chef::Config[:solo]
-    end
-  end
-
-  notifies :create, resources(:template => "/etc/sysconfig/tomcat6")
-  notifies :restart, resources(:service => "tomcat")
+tomcat_property "set_tomcat_trust_store" do
+  properties %W(
+    javax.net.ssl.trustStore=#{trust_store}
+    javax.net.ssl.trustStorePassword=#{trust_store_password}
+  )
 end
