@@ -65,6 +65,11 @@ extend Chef::ApplicationUser::Home
   end
 end
 
+# Make sure that all directories to the bundle directory are executable by
+# Tomcat.  If they aren't, then PSC's bundle installer will (silently) fail.
+execute "chgrp -R #{node["tomcat"]["group"]} #{application_user_home(psc_user)}"
+execute "chmod -R 0750 #{application_user_home(psc_user)}"
+
 # To avoid dumping large JARs under /etc/tomcat6 (which is the target of
 # /usr/share/tomcat6/conf), we symlink /usr/share/tomcat6/conf/psc to
 # psc_bundle_dir.
