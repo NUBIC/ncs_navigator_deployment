@@ -46,7 +46,7 @@ node[:ncs_navigator][:apps].each do |key, _|
   databases.values.each do |db|
     db_host_for_app = db[:host]
 
-    next unless applicable?(db_host_for_app)
+    next if !db_host_for_app || !applicable?(db_host_for_app)
 
     db_user = db[:username]
     db_name = db[:name]
@@ -55,6 +55,7 @@ node[:ncs_navigator][:apps].each do |key, _|
       action :create
       connection connection_info
       password db[:password]
+      options 'CREATEDB'
     end
 
     postgresql_database db_name do
