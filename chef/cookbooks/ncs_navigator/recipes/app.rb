@@ -94,6 +94,20 @@ node[:ncs_navigator][:apps].each do |app|
   end
 end
 
+# Rewrite HTTP URLs as HTTPS URLs.
+template "#{node[:apache][:dir]}/sites-available/https_redirect" do
+  source "https_redirect.erb"
+end
+
+apache_module "rewrite"
+
+apache_site "https_redirect"
+
+# The default site defines rules for VirtualHost *:80, so make sure it's off.
+apache_site "default" do
+  enable false
+end
+
 # Retrieve and deploy the sampling units file.
 ssu_src = node[:ncs_navigator][:study_center][:sampling_units][:data_bag_item]
 ssu_dst = node[:ncs_navigator][:study_center][:sampling_units][:target]

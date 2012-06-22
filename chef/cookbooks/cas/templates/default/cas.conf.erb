@@ -24,3 +24,8 @@
 </VirtualHost>
 
 PassengerPreStart <%= @callback_url %>
+
+<VirtualHost *:80>
+  RewriteEngine On
+  RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI}
+</VirtualHost>

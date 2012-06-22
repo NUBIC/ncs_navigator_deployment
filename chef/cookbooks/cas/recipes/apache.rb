@@ -62,6 +62,15 @@ apache_site "cas" do
   enable true
 end
 
+# The default site defines rules for VirtualHost *:80, so make sure it's off.
+apache_site "default" do
+  enable false
+end
+
+apache_module "rewrite" do
+  enable true
+end
+
 if node[:development]
   include_recipe "cas::apache_devenv"
 end
