@@ -10,6 +10,7 @@ run_list(%w(
   recipe[passenger::apache2-rvm]
   recipe[tomcat]
   recipe[cas]
+  recipe[iptables::http]
   recipe[iptables::https]
 ))
 
