@@ -71,7 +71,14 @@ default[:ncs_navigator][:staff_portal][:web][:configuration] = "#{node[:apache][
 default[:ncs_navigator][:staff_portal][:email_reminder] = false
 default[:ncs_navigator][:staff_portal][:exception_recipients] = []
 default[:ncs_navigator][:staff_portal][:google_analytics_number] = ""
-default[:ncs_navigator][:warehouse][:database] = Mash.new
+
+%w(mdes_warehouse_working mdes_warehouse_reporting mdes_import_working mdes_import_reporting).each do |warehouse_db|
+  default[:ncs_navigator][:warehouse][:databases][warehouse_db][:name] = warehouse_db
+  default[:ncs_navigator][:warehouse][:databases][warehouse_db][:username] = "ncs_mdes_warehouse"
+  default[:ncs_navigator][:warehouse][:databases][warehouse_db][:bcdatabase_config] = warehouse_db
+  default[:ncs_navigator][:warehouse][:databases][warehouse_db][:bcdatabase_group] = "ncsdb_prod"
+end
+
 default[:ncs_navigator][:warehouse][:log][:dir] = "/var/log/nubic/ncs/warehouse"
 default[:ncs_navigator][:warehouse][:ssh_keys] = []
 default[:ncs_navigator][:warehouse][:ssl] = Mash.new

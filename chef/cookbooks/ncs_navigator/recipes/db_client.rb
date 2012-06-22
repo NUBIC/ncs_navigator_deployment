@@ -22,24 +22,29 @@ include_recipe "tomcat"
 
 # Applications using bcdatabase.
 node[:ncs_navigator][:apps].each do |key, _|
-  group = node[:ncs_navigator][key][:database][:bcdatabase_group]
-  config = node[:ncs_navigator][key][:database][:bcdatabase_config]
+  app = node[:ncs_navigator][key]
+  databases = app[:databases] || { :db => app[:database] }.reject { |_, v| v.nil? }
 
-  next unless group && config
+  databases.values.each do |db|
+    group = db[:bcdatabase_group]
+    config = db[:bcdatabase_config]
 
-  username = node[:ncs_navigator][key][:database][:username]
-  password = node[:ncs_navigator][key][:database][:password]
-  host = node[:ncs_navigator][key][:database][:host]
+    next unless group && config
 
-  bcdatabase_config "#{group}_#{config}" do
-    action :create
-    config config
-    adapter "postgresql"
-    datamapper_adapter "postgres"
-    group group
-    host host
-    password password
-    username username
+    username = db[:username]
+    password = db[:password]
+    host = db[:host]
+
+    bcdatabase_config "#{group}_#{config}" do
+      action :create
+      config config
+      adapter "postgresql"
+      datamapper_adapter "postgres"
+      group group
+      host host
+      password password
+      username username
+    end
   end
 end
 

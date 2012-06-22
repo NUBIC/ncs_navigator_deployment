@@ -40,23 +40,28 @@ else
 end
 
 node[:ncs_navigator][:apps].each do |key, _|
-  db_host_for_app = node[:ncs_navigator][key][:database][:host]
+  app = node[:ncs_navigator][key]
+  databases = app[:databases] || { :db => app[:database] }.reject { |_, v| v.nil? }
 
-  next unless applicable?(db_host_for_app)
+  databases.values.each do |db|
+    db_host_for_app = db[:host]
 
-  db_user = node[:ncs_navigator][key][:database][:username]
-  db_name = node[:ncs_navigator][key][:database][:name]
+    next unless applicable?(db_host_for_app)
 
-  postgresql_database_user db_user do
-    action :create
-    connection connection_info
-    password node[:ncs_navigator][key][:database][:password]
-  end
+    db_user = db[:username]
+    db_name = db[:name]
 
-  postgresql_database db_name do
-    action :create
-    connection connection_info
-    owner db_user
+    postgresql_database_user db_user do
+      action :create
+      connection connection_info
+      password db[:password]
+    end
+
+    postgresql_database db_name do
+      action :create
+      connection connection_info
+      owner db_user
+    end
   end
 end
 
