@@ -1,2 +1,2 @@
-name "staging"
+name "ncs_staging"
 description "Staging environment"
