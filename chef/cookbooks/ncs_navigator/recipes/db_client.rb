@@ -82,3 +82,16 @@ template psc_db_config do
             :username => psc_db_username,
             :password => psc_db_password)
 end
+
+# The application suite should only have one database hostname, so pick one
+# and write it as the default.  Right now, we use Core.
+#
+# This can get confusing with multiple DB hosts, but we'll deal with that
+# when the time comes.
+db_host = node[:ncs_navigator][:core][:database][:host]
+
+template "/etc/profile.d/postgresql.sh" do
+  source "postgresql.sh.erb"
+  variables :host => db_host
+  mode 0644
+end

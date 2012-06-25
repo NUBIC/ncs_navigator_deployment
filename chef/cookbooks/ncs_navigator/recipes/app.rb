@@ -94,6 +94,13 @@ node[:ncs_navigator][:apps].each do |app|
   end
 end
 
+# Set the default NCS Navigator environment.
+template "/etc/profile.d/ncs_navigator.sh" do
+  source "ncs_navigator.sh.erb"
+  variables :env => node[:ncs_navigator][:env]
+  mode 0644
+end
+
 # Rewrite HTTP URLs as HTTPS URLs.
 template "#{node[:apache][:dir]}/sites-available/https_redirect" do
   source "https_redirect.erb"
@@ -126,6 +133,9 @@ file ssu_dst do
   group app_group
   content ssu_data['data']
 end
+
+# Warehouse setup.
+include_recipe "ncs_navigator::warehouse"
 
 # Adjust Tomcat configuration for PSC.
 include_recipe "ncs_navigator::psc"

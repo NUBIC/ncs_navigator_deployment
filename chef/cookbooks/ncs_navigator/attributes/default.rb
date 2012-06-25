@@ -80,6 +80,7 @@ default[:ncs_navigator][:staff_portal][:google_analytics_number] = ""
 end
 
 default[:ncs_navigator][:warehouse][:log][:dir] = "/var/log/nubic/ncs/warehouse"
+default[:ncs_navigator][:warehouse][:config][:dir] = "/etc/nubic/ncs/warehouse"
 default[:ncs_navigator][:warehouse][:ssh_keys] = []
 default[:ncs_navigator][:warehouse][:ssl] = Mash.new
 default[:ncs_navigator][:warehouse][:user] = "ncs_mdes_warehouse"
