@@ -140,6 +140,9 @@ include_recipe "ncs_navigator::warehouse"
 # Adjust Tomcat configuration for PSC.
 include_recipe "ncs_navigator::psc"
 
+# Deploy application logos.
+include_recipe "ncs_navigator::logos"
+
 # Build ncs_navigator.ini.
 include_recipe "ncs_navigator::ini"
 

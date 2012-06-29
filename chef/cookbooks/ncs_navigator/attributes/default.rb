@@ -38,6 +38,12 @@ default[:ncs_navigator][:authority][:psc][:ca_file] = ""
 
 default[:ncs_navigator][:study_center][:sampling_units_file] = "/etc/nubic/ncs/ssu.csv"
 default[:ncs_navigator][:study_center][:username] = "NetID"
+default[:ncs_navigator][:study_center][:footer_logo_left][:checksum] = "2d288345f95e90c25a59068b6eab776c82ff6c555a80d41322ba203bccc9d524"
+default[:ncs_navigator][:study_center][:footer_logo_left][:path] = "/var/www/apps/ncs_shared/footer_logo_left.png"
+default[:ncs_navigator][:study_center][:footer_logo_left][:source] = "https://github.com/NUBIC/ncs_navigator_deployment/raw/51d699dd797fc0deb3371af25f5c49b9dce6a38b/logos/footer_left.png"
+default[:ncs_navigator][:study_center][:footer_logo_right][:checksum] = "7583e308a380440b4cd47c0fcb7599113d81e499ccb78f50e303eaf34e8c5d2f"
+default[:ncs_navigator][:study_center][:footer_logo_right][:path] = "/var/www/apps/ncs_shared/footer_logo_right.png"
+default[:ncs_navigator][:study_center][:footer_logo_right][:source] = "https://github.com/NUBIC/ncs_navigator_deployment/raw/51d699dd797fc0deb3371af25f5c49b9dce6a38b/logos/footer_right.png"
 
 default[:ncs_navigator][:core][:database][:bcdatabase_config] = "ncs_navigator_core"
 default[:ncs_navigator][:core][:database][:bcdatabase_group] = "ncsdb_prod"
