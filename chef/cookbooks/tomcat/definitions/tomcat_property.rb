@@ -14,6 +14,5 @@ define :tomcat_property, :action => :enable do
     end
 
     notifies :create, resources(:template => node["tomcat"]["properties_file"])
-    notifies :restart, resources(:service => "tomcat")
   end
 end
