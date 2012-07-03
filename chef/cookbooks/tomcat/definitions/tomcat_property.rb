@@ -10,7 +10,9 @@ define :tomcat_property, :action => :enable do
     end
 
     not_if do
-      properties.all? { |p| node["tomcat"]["custom_properties"].include?(p) }
+      current = node["tomcat"]["custom_properties"]
+
+      current | properties == current
     end
 
     notifies :create, resources(:template => node["tomcat"]["properties_file"])
