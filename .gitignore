@@ -6,3 +6,4 @@ ncs-vagrant*
 .vagrant
 .chef
 .local_vagrant.yml
+metadata.json
