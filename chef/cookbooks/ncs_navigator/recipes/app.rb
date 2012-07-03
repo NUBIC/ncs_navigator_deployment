@@ -115,23 +115,9 @@ apache_site "default" do
   enable false
 end
 
-# Retrieve and deploy the sampling units file.
-ssu_src = node[:ncs_navigator][:study_center][:sampling_units][:data_bag_item]
-ssu_dst = node[:ncs_navigator][:study_center][:sampling_units][:target]
-
-ssu_data = data_bag_item("ncs_ssus", ssu_src)
-
-raise "Unable to find SSU data for #{ssu_src} in ncs_ssus data bag" unless ssu_data
-
-directory ::File.dirname(ssu_dst) do
-  recursive true
-  group app_group
-end
-
-file ssu_dst do
-  mode 0444
-  group app_group
-  content ssu_data['data']
+# If we have a sampling units file, retrieve and deploy it.
+if node[:ncs_navigator][:study_center][:sampling_units]
+  include_recipe "ncs_navigator::sampling_units"
 end
 
 # Warehouse setup.
