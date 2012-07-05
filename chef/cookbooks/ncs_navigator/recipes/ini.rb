@@ -29,6 +29,7 @@ template node[:ncs_navigator][:ini][:path] do
 
   variables = {
     :cr_uri => node[:ncs_navigator][:core][:url],
+    :cr_mail_from => node[:ncs_navigator][:core][:mail_from],
     :ps_uri => node[:ncs_navigator][:psc][:url],
     :ps_ssl_ca_file => node[:ncs_navigator][:authority][:psc][:ca_file],
     :sc_footer_logo_left => sc[:footer_logo_left][:path],
@@ -38,6 +39,8 @@ template node[:ncs_navigator][:ini][:path] do
     :sc_recruitment_type_id => sc[:recruitment_type_id],
     :sc_sampling_units_file => sc[:sampling_units][:target],
     :sc_username => sc[:username],
+    :sc_short_name => sc[:short_name],
+    :sc_exception_email_recipients => sc[:exception_email_recipients],
     :smtp_authentication => sm[:authentication],
     :smtp_domain => sm[:domain],
     :smtp_host => sm[:host],
