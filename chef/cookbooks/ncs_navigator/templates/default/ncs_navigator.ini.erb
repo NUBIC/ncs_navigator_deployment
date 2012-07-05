@@ -7,6 +7,7 @@
 
 [Core]
 <%= n "uri", @cr_uri %>
+<%= n "mail_from", @cr_mail_from %>
 
 [PSC]
 <%= n "uri", @ps_uri %>
@@ -17,9 +18,11 @@
 <%= n "recruitment_type_id", @sc_recruitment_type_id %>
 <%= n "sampling_units_file", @sc_sampling_units_file %>
 <%= n "username", @sc_username %>
+<%= n "short_name", @sc_short_name %>
 <%= n "footer_logo_left", @sc_footer_logo_left %>
 <%= n "footer_logo_right", @sc_footer_logo_right %>
 <%= n "footer_text", @sc_footer_text %>
+<%= n "exception_email_recipients", @sc_exception_email_recipients %>
 
 [SMTP]
 <%= n "authentication", @smtp_authentication %>
