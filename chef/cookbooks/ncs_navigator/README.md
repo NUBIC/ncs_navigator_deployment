@@ -57,6 +57,22 @@ URLs
 * `ncs_navigator[:cas][:proxy_retrieval_url]`: The URL of the PGT retrieval
   service to use.
 
+Naming
+------
+
+* `ncs_navigator[:study_center][:short_name]`: A short, human-readable name or
+  abbreviation for the StudyCenter.
+
+Email
+-----
+
+* `ncs_navigator[:staff_portal][:mail_from]`: The address from which mail sent
+  by Staff Portal will appear to come.
+* `ncs_navigator[:core][:mail_from]`: The address from which mail sent
+  by Core will appear to come.
+* `ncs_navigator[:core][:exception_email_recipients]`: The email address(es) to which
+  exception notification messages will be sent.
+
 Database
 --------
 * `ncs_navigator[:core][:database][:bcdatabase_group]`: The bcdatabase group for NCS
