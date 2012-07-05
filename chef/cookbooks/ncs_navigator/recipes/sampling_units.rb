@@ -17,6 +17,9 @@
 # limitations under the License.
 #
 
+include_recipe "application_user"
+
+app_group = node[:application_user][:group]
 ssu_src = node[:ncs_navigator][:study_center][:sampling_units][:data_bag_item]
 ssu_dst = node[:ncs_navigator][:study_center][:sampling_units][:target]
 

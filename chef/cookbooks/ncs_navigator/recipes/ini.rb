@@ -58,7 +58,6 @@ template node[:ncs_navigator][:ini][:path] do
   }
 
   source "ncs_navigator.ini.erb"
-  group group
   mode 0444
   variables variables
 end
