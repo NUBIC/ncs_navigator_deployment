@@ -61,17 +61,16 @@ Naming
 ------
 
 * `ncs_navigator[:study_center][:short_name]`: A short, human-readable name or
-  abbreviation for the StudyCenter.
+  abbreviation for the study center.
 
 Email
 -----
 
-* `ncs_navigator[:staff_portal][:mail_from]`: The address from which mail sent
-  by Staff Portal will appear to come.
-* `ncs_navigator[:core][:mail_from]`: The address from which mail sent
-  by Core will appear to come.
-* `ncs_navigator[:core][:exception_email_recipients]`: The email address(es) to which
-  exception notification messages will be sent.
+* `ncs_navigator[:staff_portal][:mail_from]`: The from-address for mail sent by Staff
+  Portal.
+* `ncs_navigator[:core][:mail_from]`: The from-address for mail sent by Core.
+* `ncs_navigator[:core][:exception_email_recipients]`: Recipients of exceptio
+  notification messages sent by Core.
 
 Database
 --------
