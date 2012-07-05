@@ -37,6 +37,7 @@ default[:ncs_navigator][:env] = "production"
 default[:ncs_navigator][:authority][:psc][:ca_file] = ""
 
 default[:ncs_navigator][:study_center][:username] = "NetID"
+default[:ncs_navigator][:study_center][:exception_email_recipients] = []
 default[:ncs_navigator][:study_center][:footer_logo_left][:checksum] = "2d288345f95e90c25a59068b6eab776c82ff6c555a80d41322ba203bccc9d524"
 default[:ncs_navigator][:study_center][:footer_logo_left][:path] = "/var/www/apps/ncs_shared/footer_logo_left.png"
 default[:ncs_navigator][:study_center][:footer_logo_left][:source] = "https://github.com/NUBIC/ncs_navigator_deployment/raw/51d699dd797fc0deb3371af25f5c49b9dce6a38b/logos/footer_left.png"

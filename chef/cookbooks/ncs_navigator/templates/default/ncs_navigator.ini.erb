@@ -22,7 +22,7 @@
 <%= n "footer_logo_left", @sc_footer_logo_left %>
 <%= n "footer_logo_right", @sc_footer_logo_right %>
 <%= n "footer_text", @sc_footer_text %>
-<%= n "exception_email_recipients", @sc_exception_email_recipients %>
+<%= n "exception_email_recipients", @sc_exception_email_recipients.join(", ") %>
 
 [SMTP]
 <%= n "authentication", @smtp_authentication %>
