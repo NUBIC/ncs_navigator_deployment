@@ -6,6 +6,7 @@
   ServerName <%= @host %>
   DocumentRoot <%= @app_root %>/current/public
   RailsEnv <%= @env %>
+  SetEnv <%= @session_token_name %> "<%= @session_token %>"
 
   <Directory <%= @app_root %>/current/public>
     Allow from all

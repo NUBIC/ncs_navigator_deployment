@@ -23,6 +23,7 @@ include_recipe "apache2"
 include_recipe "passenger"
 include_recipe "tomcat"
 include_recipe "application_user"
+include_recipe "openssl"
 
 user = node[:apache][:user]
 group = node[:apache][:group]
@@ -31,6 +32,19 @@ ajp_remote = "ajp://localhost:#{node[:tomcat][:ajp_port]}/"
 
 include_recipe "apache2::mod_proxy_ajp"
 include_recipe "apache2::mod_ssl"
+
+extend Opscode::OpenSSL::Password
+
+# Generate session secrets for Core and Staff Portal.
+%w(core staff_portal).each do |app|
+  unless node[:ncs_navigator][app][:secret]
+    node[:ncs_navigator][app][:secret] = secure_password(128)
+  end
+end
+
+# Reload.
+node.save unless Chef::Config[:solo]
+node.load_attribute_by_short_filename('default', 'ncs_navigator')
 
 node[:ncs_navigator][:apps].each do |app|
   config_src = node[:ncs_navigator][app][:web][:template]
@@ -41,6 +55,7 @@ node[:ncs_navigator][:apps].each do |app|
   app_keys = node[:ncs_navigator][app][:ssh_keys]
   ssl_certificate = node[:ncs_navigator][app][:ssl][:certificate]
   ssl_key = node[:ncs_navigator][app][:ssl][:key]
+  token = node[:ncs_navigator][app][:secret]
 
   if app_user
     # Make the user...
@@ -77,7 +92,9 @@ node[:ncs_navigator][:apps].each do |app|
       :host => app_uri.host,
       :ssl_certificate => ssl_certificate,
       :ssl_key => ssl_key,
-      :uri => app_uri
+      :uri => app_uri,
+      :session_token_name => "#{app}_SECRET".upcase,
+      :session_token => token
     }
 
     template config_dest do
