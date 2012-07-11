@@ -1,2 +1,3 @@
-actions :install, :uninstall
-attribute :certificate_paths, :kind_of => Array, :name_attribute => true
+actions :trust, :untrust
+
+attribute :path, :kind_of => String, :name_attribute => true
