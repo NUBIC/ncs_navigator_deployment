@@ -1,6 +1,8 @@
 include_attribute "apache2"
 include_attribute "tomcat"
 
+default[:ncs_navigator][:diagnostic_users] = []
+
 # Keep this in sync with the attributes below.
 #
 # Applications that have configuration but do not appear in this map will not
