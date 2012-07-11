@@ -6,6 +6,8 @@ Recipes:
 * `app`: Sets up an application server for NCS Navigator.
 * `db_server`: Sets up a database server for NCS Navigator.
 * `devenv`: Configures an NCS Navigator application server for development.
+* `diagnostic_users`: Sets up existing users on a node with a Ruby environment
+  similar to the app environment.
 
 There are other recipes in this cookbook; however, they're intended to be used
 by the recipes listed above.  Use those private recipes at your own risk.
@@ -16,10 +18,11 @@ Requirements
 Cookbook dependencies:
 
 * `apache2`
-* `tomcat`
 * `bcdatabase`
 * `build-essential` (for `devenv`)
+* fnichol's `rvm`
 * `ssl_certificates`
+* `tomcat`
 
 The web recipe currently only works with Apache, Passenger, and Tomcat.
 
@@ -31,6 +34,14 @@ Attributes
 
 Unless a default is specified, all attributes in this list do NOT have a
 default.
+
+Diagnostic users
+----------------
+
+* `ncs_navigator[:diagnostic_users]`: A list of users for the
+  `diagnostic_users` recipe.  Defaults to [].
+  The users in this list MUST exist prior to execution of the diagnostic_users
+  recipe.
 
 SSL
 ---
