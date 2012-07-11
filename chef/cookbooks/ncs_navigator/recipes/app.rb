@@ -55,7 +55,6 @@ node[:ncs_navigator][:apps].each do |app|
   app_keys = node[:ncs_navigator][app][:ssh_keys]
   ssl_certificate = node[:ncs_navigator][app][:ssl][:certificate]
   ssl_key = node[:ncs_navigator][app][:ssl][:key]
-  token = node[:ncs_navigator][app][:secret]
 
   if app_user
     # Make the user...
@@ -92,9 +91,7 @@ node[:ncs_navigator][:apps].each do |app|
       :host => app_uri.host,
       :ssl_certificate => ssl_certificate,
       :ssl_key => ssl_key,
-      :uri => app_uri,
-      :session_token_name => "#{app}_SECRET".upcase,
-      :session_token => token
+      :uri => app_uri
     }
 
     template config_dest do
@@ -112,10 +109,18 @@ node[:ncs_navigator][:apps].each do |app|
 end
 
 # Set the default NCS Navigator environment.
+#
+# Secrets are set in this file (not in the Apache configuration) because they
+# need to be present for things like Rake tasks in applications that initialize
+# the application.
+#
+# We could use fake secret data here, but that gets confusing.
 template "/etc/profile.d/ncs_navigator.sh" do
-  source "ncs_navigator.sh.erb"
-  variables :env => node[:ncs_navigator][:env]
   mode 0644
+  source "ncs_navigator.sh.erb"
+  variables :env => node[:ncs_navigator][:env],
+            :core_secret => node[:ncs_navigator][:core][:secret],
+            :staff_portal_secret => node[:ncs_navigator][:staff_portal][:secret]
 end
 
 # Rewrite HTTP URLs as HTTPS URLs.
