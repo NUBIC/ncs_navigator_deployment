@@ -55,6 +55,7 @@ node[:ncs_navigator][:apps].each do |app|
   app_keys = node[:ncs_navigator][app][:ssh_keys]
   ssl_certificate = node[:ncs_navigator][app][:ssl][:certificate]
   ssl_key = node[:ncs_navigator][app][:ssl][:key]
+  secret = node[:ncs_navigator][app][:secret]
 
   if app_user
     # Make the user...
@@ -91,7 +92,9 @@ node[:ncs_navigator][:apps].each do |app|
       :host => app_uri.host,
       :ssl_certificate => ssl_certificate,
       :ssl_key => ssl_key,
-      :uri => app_uri
+      :uri => app_uri,
+      :secret_token_env_var => "#{app}_SECRET".upcase,
+      :secret_token => secret
     }
 
     template config_dest do
