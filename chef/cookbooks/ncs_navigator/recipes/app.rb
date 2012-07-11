@@ -168,3 +168,6 @@ include_recipe "ncs_navigator::app_monitoring"
 
 # Log rotation.
 include_recipe "ncs_navigator::app_log_rotation"
+
+# NCS instruments setup.
+include_recipe "ncs_navigator::instruments"
