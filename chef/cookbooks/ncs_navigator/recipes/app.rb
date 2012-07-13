@@ -35,6 +35,11 @@ include_recipe "apache2::mod_ssl"
 
 extend Opscode::OpenSSL::Password
 
+# The Rails apps need mod_xsendfile for asset pipeline support.
+yum_package "mod_xsendfile"
+
+apache_module "xsendfile"
+
 # Generate session secrets for Core and Staff Portal.
 %w(core staff_portal).each do |app|
   unless node[:ncs_navigator][app][:secret]

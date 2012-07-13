@@ -11,6 +11,8 @@
   <Directory <%= @app_root %>/current/public>
     Allow from all
     Options -MultiViews
+    XSendFile on
+    XSendFilePath <%= @app_root %>
   </Directory>
 </VirtualHost>
 
