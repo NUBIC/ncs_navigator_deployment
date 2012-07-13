@@ -36,7 +36,14 @@ include_recipe "apache2::mod_ssl"
 extend Opscode::OpenSSL::Password
 
 # The Rails apps need mod_xsendfile for asset pipeline support.
+#
+# The package-provided configuration file is removed because all it does is
+# load the module, which is the job of the apache_module definition.
 yum_package "mod_xsendfile"
+
+file "#{node[:apache][:dir]}/conf.d/xsendfile.conf" do
+  action :delete
+end
 
 apache_module "xsendfile"
 
