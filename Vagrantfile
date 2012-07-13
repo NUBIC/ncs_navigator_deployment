@@ -19,6 +19,9 @@ def ncs_navigator_configuration
       "netid" => {}
     },
     "ncs_navigator" => {
+      "diagnostic_users" => [
+        "vagrant"
+      ],
       "cas" => {
         "base_url" => "https://#{cas}/cas",
         "proxy_callback_url" => "https://#{cas}/cas-proxy-callback/receive_pgt",
