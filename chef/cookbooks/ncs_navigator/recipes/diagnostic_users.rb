@@ -23,7 +23,10 @@ include_recipe "rvm"
 app_ruby = node["passenger"]["rvm_ruby_string"]
 
 node["ncs_navigator"]["diagnostic_users"].each do |username|
-  rvm_default_ruby app_ruby do
-    user username
+  template "/home/#{username}/.bashrc" do
+    mode 0644
+    owner username
+    source "bashrc.erb"
+    variables(:ruby => app_ruby)
   end
 end
