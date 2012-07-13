@@ -50,7 +50,18 @@ default[:cas][:callback][:user] = "cas"
 default[:cas][:callback][:app_path] = "#{node[:cas][:apache][:document_root]}/apps/cas-proxy-callback"
 default[:cas][:callback][:pstore_path] = "/var/db/cas/pgt.pstore"
 
+# Static configuration.
+default[:cas][:static_authority][:config] = ""
+
 # Development-only configuration.
 default[:cas][:devenv][:ssl][:certificate] = "#{node[:ssl_certificates][:ca_path]}/cas.crt"
 default[:cas][:devenv][:ssl][:key] = "#{node[:ssl_certificates][:key_path]}/cas.key"
 default[:cas][:devenv][:static_authority][:path] = "#{node[:cas][:dir]}/static.yml"
+default[:cas][:devenv][:static_authority][:config] = %Q{
+users:
+  user:
+    password: user
+    portals: []
+
+groups: []
+}
