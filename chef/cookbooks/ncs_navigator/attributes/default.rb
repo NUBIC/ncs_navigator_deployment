@@ -53,6 +53,7 @@ default[:ncs_navigator][:core][:database][:bcdatabase_config] = "ncs_navigator_c
 default[:ncs_navigator][:core][:database][:bcdatabase_group] = "ncsdb_prod"
 default[:ncs_navigator][:core][:database][:name] = "ncs_navigator_core"
 default[:ncs_navigator][:core][:database][:username] = "ncs_navigator_core"
+default[:ncs_navigator][:core][:with_specimens] = false
 default[:ncs_navigator][:core][:redis][:bcdatabase_config] = "ncs_navigator_core"
 default[:ncs_navigator][:core][:redis][:bcdatabase_group] = "ncsredis_prod"
 default[:ncs_navigator][:core][:redis][:db] = 0
