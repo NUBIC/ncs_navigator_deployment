@@ -1,7 +1,14 @@
+# This file is automatically maintained by Chef.  Manual edits will be
+# overwritten.
+
 <%- node[:ncs_navigator][:apps].each do |app| %>
-<%- if (url = node[:ncs_navigator][app][:url]) %>
+<%- url = node[:ncs_navigator][app][:url] %>
+<%- endpoint = node[:ncs_navigator][app][:status_endpoint] %>
+<%- if url && endpoint %>
 <%- uri = URI(url) %>
+<%- endpoint = node[:ncs_navigator][app][:status_endpoint] %>
 check host <%= app %> with address <%= uri.host %>
-  if failed url <%= uri.to_s %> then alert
+  if failed url <%= uri.to_s %><%= endpoint %> then alert
+
 <%- end %>
 <%- end %>
