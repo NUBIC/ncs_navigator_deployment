@@ -1,0 +1,5 @@
+<%- node[:ncs_navigator][:apps].each do |app| %>
+<%- uri = URI(node[:ncs_navigator][app][:url] %>
+check host <%= app %> with address <%= uri.host %>
+  if failed url <%= uri.to_s %> then alert
+<%- end %>

@@ -17,9 +17,12 @@
 # limitations under the License.
 #
 
+require 'uri'
+
 include_recipe "apache2"
 include_recipe "monit"
 include_recipe "tomcat"
 
 monitrc "monitor_apache2", :pid => node[:apache][:pid_file]
 monitrc "monitor_tomcat", :pid => "/var/run/tomcat6.pid"
+monitrc "monitor_ncs_apps"
