@@ -50,6 +50,7 @@ template node[:cas][:apache][:configuration] do
   variables(:document_root => cas[:apache][:document_root],
             :ssl_certificate => cas[:apache][:ssl][:certificate],
             :ssl_certificate_key => cas[:apache][:ssl][:key],
+            :ssl_certificate_chain => cas[:apache][:ssl][:chain],
             :callback_script_name => cas[:callback][:script_name],
             :callback_app_path => cas[:callback][:app_path],
             :server_script_name => cas[:script_name],
