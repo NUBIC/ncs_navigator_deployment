@@ -57,6 +57,8 @@ template node[:cas][:apache][:configuration] do
             :server_remote => remote,
             :server_name => server_name,
             :callback_url => cas[:proxy_callback_url])
+
+  notifies :restart, resources(:service => "apache2")
 end
 
 apache_site "cas" do
