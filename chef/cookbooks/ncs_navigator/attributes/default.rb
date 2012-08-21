@@ -37,6 +37,7 @@ set[:ncs_navigator][:apps] = %w(core psc staff_portal warehouse)
 default[:ncs_navigator][:env] = "production"
 
 default[:ncs_navigator][:instruments][:dir] = "/var/www/apps/ncs_instruments"
+default[:ncs_navigator][:hosted_data][:dir] = "/var/www/apps/ncs_navigator_hosted_data"
 
 default[:ncs_navigator][:authority][:psc][:ca_file] = ""
 

@@ -186,3 +186,6 @@ include_recipe "ncs_navigator::app_log_rotation"
 
 # NCS instruments setup.
 include_recipe "ncs_navigator::instruments"
+
+# Hosted data maintenance scripts setup.
+include_recipe "ncs_navigator::hosted_data_scripts"
