@@ -90,6 +90,9 @@ def base_config(role, config)
       }.merge(ncs_navigator_configuration)
     end
 
+    config.vm.customize ['modifyvm', :id, '--memory', ENV['MEM']] if ENV['MEM']
+    config.vm.customize ['modifyvm', :id, '--cpus', ENV['CPUS']] if ENV['CPUS']
+
     yield config
   end
 end
