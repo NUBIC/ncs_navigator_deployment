@@ -18,6 +18,7 @@
 #
 
 include_recipe "cas::apache_devenv"
+include_recipe "java"
 include_recipe "tomcat"
 
 # Insert the development cert into the trusted certificates list for Tomcat.
