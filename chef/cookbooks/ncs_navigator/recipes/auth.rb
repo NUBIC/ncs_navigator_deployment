@@ -1,4 +1,4 @@
-# # Cookbook Name:: ncs_navigator
+# Cookbook Name:: ncs_navigator
 # Recipe:: auth
 #
 # Copyright 2012, Northwestern University
