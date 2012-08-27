@@ -1,3 +1,5 @@
+require 'yaml'
+
 include_attribute "apache2"
 include_attribute "tomcat"
 
@@ -8,6 +10,14 @@ default[:ncs_navigator][:diagnostic_users] = []
 # Applications that have configuration but do not appear in this map will not
 # be configured.
 set[:ncs_navigator][:apps] = %w(core psc staff_portal warehouse)
+
+# Machine accounts.
+
+# The location of the machine accounts file.
+default[:ncs_navigator][:machine_accounts][:file] = "/etc/nubic/ncs/machine_accounts.yml"
+
+# More sensible defaults are set by the ncs_machine_accounts role.
+default[:ncs_navigator][:machine_accounts][:data] = {}
 
 # Applications.
 #

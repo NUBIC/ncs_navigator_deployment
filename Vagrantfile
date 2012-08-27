@@ -19,6 +19,18 @@ def ncs_navigator_configuration
       "netid" => {}
     },
     "ncs_navigator" => {
+      "machine_accounts" => {
+        "data" => {
+          "users" => {
+            "cases_merge" => {
+              "password" => "cases_merge"
+            },
+            "psc_application" => {
+              "password" => "psc_application"
+            }
+          }
+        }
+      },
       "diagnostic_users" => [
         "vagrant"
       ],

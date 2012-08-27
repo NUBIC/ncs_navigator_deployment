@@ -3,6 +3,8 @@ description "The CAS server for the NCS Navigator application suite"
 
 run_list(%w(
   role[ncs_common]
+  role[ncs_machine_accounts]
+  recipe[ncs_navigator::machine_accounts]
   recipe[build-essential]
   recipe[postgresql::server]
   recipe[rvm::system]

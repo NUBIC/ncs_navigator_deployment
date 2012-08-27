@@ -3,6 +3,7 @@ description "Application server nodes for the NCS Navigator application suite"
 
 base_run_list = %w(
   role[ncs_common]
+  role[ncs_machine_accounts]
   recipe[build-essential]
   recipe[postgresql::client]
   recipe[rvm::system]
