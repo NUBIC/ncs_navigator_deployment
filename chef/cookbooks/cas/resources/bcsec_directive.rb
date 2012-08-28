@@ -22,3 +22,4 @@ actions :create, :send_notification
 
 attribute :key, :kind_of => String
 attribute :value, :kind_of => String
+attribute :configuration, :kind_of => String
