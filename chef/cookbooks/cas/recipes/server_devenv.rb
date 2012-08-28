@@ -31,18 +31,32 @@ java_keystore "import_cas_devenv_into_tomcat_keystore" do
   user node["tomcat"]["user"]
 end
 
-# Switch bcsec into static authority mode.
-if node[:cas][:static_authority][:config].empty?
-  node[:cas][:static_authority][:config] = node[:cas][:devenv][:static_authority][:config]
-  node.save unless Chef::Config.solo
-  node.load_attribute_by_short_filename('default', 'cas')
+default_auth_config = %Q{
+users:
+  user:
+    password: user
+}
+
+# If we have no YAML configuration, add a default.
+#
+# World-writable configuration is usually a horrible idea, but developers
+# should be able to freely edit this file, and the bad habits taught by
+# prepending "sudo" to every command are even worse.
+#
+# TODO: pass in a list of users authorized to edit this file.  (Under Vagrant,
+# it's just ["vagrant"].)
+file node[:cas][:devenv][:static_authority][:path] do
+  action :create_if_missing
+  content default_auth_config
+  mode 0777
 end
 
-include_recipe "cas::static_auth"
+# Add a development authority.
+cas_authority "development_cas_authority" do
+  action :create
+  authority :static
+  configuration node[:cas][:bcsec]
+  static_file node[:cas][:devenv][:static_authority][:path]
 
-# Make the static auth file writable by developers.
-static_file = node[:cas][:devenv][:static_authority][:path]
-
-file static_file do
-  mode 0666
+  notifies :restart, :service => 'tomcat'
 end

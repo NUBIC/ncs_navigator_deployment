@@ -43,11 +43,11 @@ end
 # Do database configuration for the CAS server.
 include_recipe "cas::database"
 
-# Set up configuration data for the CAS server.
-directory node[:cas][:dir] do
+# The configuration base.
+cas_bcsec_configuration node[:cas][:bcsec] do
   action :create
-  mode 0755
-  owner app_owner
+  file_mode 0444
+  file_owner app_owner
 end
 
 template node[:cas][:properties] do
@@ -57,19 +57,26 @@ template node[:cas][:properties] do
   variables(:bcsec_path => node[:cas][:bcsec])
 end
 
-# Use NetID authentication.
-aker_central "netid" do
-  action :create
-  user node[:aker][:netid][:user]
-  password node[:aker][:netid][:password]
-end
+# Use NetID authentication in non-development scenarios.
+unless node["development"]
+  aker_central "netid" do
+    action :create
+    user node[:aker][:netid][:user]
+    password node[:aker][:netid][:password]
+  end
 
-# Configure Bcsec for the CAS server.
-template node[:cas][:bcsec] do
-  mode 0444
-  owner app_owner
-  source "bcsec.rb.erb"
-  variables(:central => node[:aker][:central][:path])
+  cas_bcsec_directive "cas_central" do
+    action :create
+    configuration node[:cas][:bcsec]
+    key "central"
+    value node[:aker][:central][:path]
+  end
+
+  cas_authority "cas_netid" do
+    action :create
+    authority :netid
+    configuration node[:cas][:bcsec]
+  end
 end
 
 # Make the log directory...
