@@ -53,7 +53,7 @@ default[:cas][:callback][:pstore_path] = "/var/db/cas/pgt.pstore"
 # Development-only configuration.
 default[:cas][:devenv][:ssl][:certificate] = "#{node[:ssl_certificates][:ca_path]}/cas.crt"
 default[:cas][:devenv][:ssl][:key] = "#{node[:ssl_certificates][:key_path]}/cas.key"
-default[:cas][:devenv][:static_authority][:path] = "#{node[:cas][:dir]}/static.yml"
+default[:cas][:devenv][:static_authority][:path] = "#{node[:cas][:dir]}/static-devel.yml"
 default[:cas][:devenv][:static_authority][:config] = %Q{
 users:
   user:
@@ -62,3 +62,6 @@ users:
 
 groups: []
 }
+
+# Defaults for cas::static_auth.
+default[:cas][:static_authority][:path] = "#{node[:cas][:dir]}/static.yml"
