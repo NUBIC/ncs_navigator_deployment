@@ -30,7 +30,6 @@ action :create do
     mode 0400
     content value
     
-    notifies :rebuild, resources(:cas_bcsec_configuration => fn)
-    notifies :send_notification, new_resource, :immediately
+    notifies :rebuild, resources(:cas_bcsec_configuration => configuration)
   end
 end

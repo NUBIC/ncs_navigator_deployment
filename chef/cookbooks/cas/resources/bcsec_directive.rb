@@ -17,8 +17,7 @@
 # limitations under the License.
 #
 
-# The send_notification action is internal to this LWRP.
-actions :create, :send_notification
+actions :create
 
 attribute :key, :kind_of => String
 attribute :value, :kind_of => String

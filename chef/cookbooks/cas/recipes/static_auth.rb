@@ -22,8 +22,8 @@ include_recipe "tomcat"
 cas_owner = node["tomcat"]["user"]
 
 # Do we have a desired static authority configuration? If so, load it in.
-config = node["ncs_navigator"]["cas"]["static_authority"]["config"]
-path = node["ncs_navigator"]["cas"]["static_authority"]["path"]
+config = node["cas"]["static_authority"]["config"]
+path = node["cas"]["static_authority"]["path"]
 
 if config
   file path do
