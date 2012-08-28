@@ -14,6 +14,7 @@ run_list(%w(
   recipe[cas]
   recipe[iptables::http]
   recipe[iptables::https]
+  recipe[ncs_navigator::cas_machine_accounts]
 ))
 
 default_attributes(

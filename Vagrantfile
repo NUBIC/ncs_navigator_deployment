@@ -24,9 +24,6 @@ def ncs_navigator_configuration
           "users" => {
             "cases_merge" => {
               "password" => "cases_merge"
-            },
-            "psc_application" => {
-              "password" => "psc_application"
             }
           }
         }

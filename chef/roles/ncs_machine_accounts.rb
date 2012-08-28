@@ -27,11 +27,6 @@ users:
   cases_merge:
     portals:
       - NCSNavigator: []
-  psc_application:
-    portals:
-      - NCSNavigator:
-        - Staff Supervisor
-        - User Administrator
 })
 
 default_attributes(
