@@ -38,6 +38,11 @@ action :create do
     owner file_owner
     recursive true
   end
+
+  log "Checking for existence of #{fn}" do
+    notifies :rebuild, new_resource
+    not_if { ::File.exists?(fn) }
+  end
 end
 
 # The rebuild action is intended to be used only by cas_* resources.  If you
