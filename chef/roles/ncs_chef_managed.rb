@@ -4,6 +4,7 @@ description "Sets the Chef client to our preferred mode of operation; also does 
 run_list(%w(
   recipe[chef-client]
   recipe[chef-client::delete_validation]
+  recipe[chef-client::monitoring]
 ))
 
 default_attributes(
@@ -11,4 +12,3 @@ default_attributes(
     "interval" => 1800
   }
 )
-
