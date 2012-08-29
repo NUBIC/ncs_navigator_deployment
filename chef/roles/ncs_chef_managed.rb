@@ -7,7 +7,7 @@ run_list(%w(
 ))
 
 default_attributes(
-  "chef-client" => {
+  "chef_client" => {
     "interval" => 1800
   }
 )
