@@ -20,6 +20,9 @@ env_run_lists(
 )
 
 default_attributes(
+  "chef-client" => {
+    "interval" => 1800
+  },
   "ntp" => {
     "servers" => ["time.northwestern.edu"]
   },

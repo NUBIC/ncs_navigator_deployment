@@ -1,14 +1,15 @@
 name "ncs_db"
 description "Database server nodes for the NCS Navigator application suite"
 
-run_list(
-  "role[ncs_common]",
-  "recipe[postgresql::server]",
-  "recipe[redisio::install]",
-  "recipe[redisio::enable]",
-  "recipe[ncs_navigator::db_server]",
-  "recipe[iptables::db]"
-)
+run_list(%w(
+  role[ncs_common]
+  recipe[postgresql::server]
+  recipe[redisio::install]
+  recipe[redisio::enable]
+  recipe[ncs_navigator::db_server]
+  recipe[iptables::db]
+  role[ncs_chef_managed]
+))
 
 default_attributes(
   'redisio' => {

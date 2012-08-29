@@ -15,6 +15,7 @@ run_list(%w(
   recipe[iptables::http]
   recipe[iptables::https]
   recipe[ncs_navigator::cas_machine_accounts]
+  role[ncs_chef_managed]
 ))
 
 default_attributes(

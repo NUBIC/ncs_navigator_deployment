@@ -16,6 +16,7 @@ base_run_list = %w(
   recipe[ncs_navigator::diagnostic_users]
   recipe[iptables::http]
   recipe[iptables::https]
+  role[ncs_chef_managed]
 )
 
 env_run_lists(
