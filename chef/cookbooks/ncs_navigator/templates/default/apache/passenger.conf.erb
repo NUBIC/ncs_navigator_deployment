@@ -8,6 +8,17 @@
   RailsEnv <%= @env %>
   SetEnv <%= @secret_token_env_var %> "<%= @secret_token %>"
 
+  ErrorDocument 503 /maintenance.html
+
+  RewriteEngine on
+
+  # If tmp/stop.txt exists ...
+  RewriteCond %{DOCUMENT_ROOT}/../tmp/stop.txt -f
+  # ... and the request is not for an existing static file ...
+  RewriteCond %{DOCUMENT_ROOT}/%{REQUEST_FILENAME} !-f
+  # ... send a 503 status for the requested page.
+  RewriteRule ^(.*)$ /$1 [R=503,L]
+
   <Directory <%= @app_root %>/current/public>
     Allow from all
     Options -MultiViews
