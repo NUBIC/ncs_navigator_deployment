@@ -9,7 +9,7 @@ default[:ssl_certificates][:key_path] = "/etc/pki/tls/private"
 # SHA1 Fingerprint=73:59:75:5C:6D:F9:A0:AB:C3:06:0B:CE:36:95:64:C8:EC:45:42:A3
 # MD5 Fingerprint=2E:7D:B2:A3:1D:0E:3D:A4:B2:5F:49:B9:54:2A:2E:1A
 
-default[:ssl_certificates][:trust_chain] = %W(
+set[:ssl_certificates][:trust_chain] = %W(
   rapidssl.crt
   geotrust.crt
 )
