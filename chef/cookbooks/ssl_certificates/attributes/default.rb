@@ -1,6 +1,6 @@
 default[:ssl_certificates][:ca_path] = "/etc/pki/tls/certs"
 default[:ssl_certificates][:key_path] = "/etc/pki/tls/private"
-default[:ssl_certificates][:ca_bundle] = node[:ssl_certificates][:ca_path] + "/ca_bundle.crt"
+default[:ssl_certificates][:trust_chain_bundle] = node[:ssl_certificates][:ca_path] + "/trust_chain_bundle.crt"
 
 set[:ssl_certificates][:trust_chain] = %W(
   Equifax_Secure_Certificate_Authority.pem

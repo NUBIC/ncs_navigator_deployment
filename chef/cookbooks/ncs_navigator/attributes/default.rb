@@ -48,7 +48,7 @@ default[:ncs_navigator][:machine_accounts][:data] = {}
 # TODO: Used by per-app attributes below.  For now, all applications have the
 # same chain, but SSL certificate and key is already a per-app setting, so
 # might as well go along with the flow.  We can simplify later.
-default_cert_chain_file = node[:ssl_certificates][:ca_bundle]
+default_cert_chain_file = node[:ssl_certificates][:trust_chain_bundle]
 
 default[:ncs_navigator][:env] = "production"
 

@@ -26,9 +26,9 @@ end
 # We need both of these to occur because we want to present a certificate chain
 # to HTTP clients, but we want to use the same certificates in Java trust
 # stores and keytool will not read multiple certificates out of a single file.
-bash "build CA bundle" do
+bash "build trust chain bundle" do
   code <<-END
   umask 0333
-  cat #{paths.join(' ')} > #{node[:ssl_certificates][:ca_bundle]}
+  cat #{paths.join(' ')} > #{node[:ssl_certificates][:trust_chain_bundle]}
   END
 end
