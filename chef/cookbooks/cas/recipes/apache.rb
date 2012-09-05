@@ -20,6 +20,7 @@
 require 'uri'
 
 include_recipe "apache2"
+include_recipe "ssl_certificates"
 
 # CAS attributes are affected by node configuration, which isn't applied
 # until after the role attributes have taken effect.  As such, we have to

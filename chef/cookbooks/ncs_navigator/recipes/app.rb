@@ -21,6 +21,7 @@ require 'uri'
 
 include_recipe "apache2"
 include_recipe "passenger"
+include_recipe "ssl_certificates"
 include_recipe "tomcat"
 include_recipe "application_user"
 include_recipe "openssl"
@@ -66,6 +67,7 @@ node[:ncs_navigator][:apps].each do |app|
   app_user = node[:ncs_navigator][app][:user]
   app_keys = node[:ncs_navigator][app][:ssh_keys]
   ssl_certificate = node[:ncs_navigator][app][:ssl][:certificate]
+  ssl_certificate_chain = node[:ncs_navigator][app][:ssl][:certificate_chain]
   ssl_key = node[:ncs_navigator][app][:ssl][:key]
   secret = node[:ncs_navigator][app][:secret]
 
@@ -103,6 +105,7 @@ node[:ncs_navigator][:apps].each do |app|
       :env => node[:ncs_navigator][:env],
       :host => app_uri.host,
       :ssl_certificate => ssl_certificate,
+      :ssl_certificate_chain => ssl_certificate_chain,
       :ssl_key => ssl_key,
       :uri => app_uri,
       :secret_token_env_var => "#{app}_SECRET".upcase,

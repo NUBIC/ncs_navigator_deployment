@@ -3,6 +3,10 @@
   SSLCertificateFile <%= @ssl_certificate %>
   SSLCertificateKeyFile <%= @ssl_key %>
 
+  <% if @ssl_certificate_chain %>
+  SSLCertificateChainFile <%= @ssl_certificate_chain %>
+  <% end %>
+
   ServerName <%= @host %>
 
   <Location />

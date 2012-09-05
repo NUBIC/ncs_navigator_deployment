@@ -1,6 +1,7 @@
 require 'yaml'
 
 include_attribute "apache2"
+include_attribute "ssl_certificates"
 include_attribute "tomcat"
 
 default[:ncs_navigator][:diagnostic_users] = []
@@ -44,6 +45,11 @@ default[:ncs_navigator][:machine_accounts][:data] = {}
 # The omission of bcdatabase_* keys for PSC is intentional.
 #
 
+# TODO: Used by per-app attributes below.  For now, all applications have the
+# same chain, but SSL certificate and key is already a per-app setting, so
+# might as well go along with the flow.  We can simplify later.
+default_cert_chain_file = node[:ssl_certificates][:ca_bundle]
+
 default[:ncs_navigator][:env] = "production"
 
 default[:ncs_navigator][:instruments][:dir] = "/var/www/apps/ncs_instruments"
@@ -70,6 +76,7 @@ default[:ncs_navigator][:core][:redis][:bcdatabase_group] = "ncsredis_prod"
 default[:ncs_navigator][:core][:redis][:db] = 0
 default[:ncs_navigator][:core][:root] = "/var/www/apps/ncs_navigator_core"
 default[:ncs_navigator][:core][:ssh_keys] = []
+default[:ncs_navigator][:core][:ssl][:certificate_chain] = default_cert_chain_file
 default[:ncs_navigator][:core][:status_endpoint] = "/api/v1/system-status"
 default[:ncs_navigator][:core][:user] = "ncs_navigator_core"
 default[:ncs_navigator][:core][:web][:template] = "apache/passenger.conf.erb"
@@ -80,6 +87,7 @@ default[:ncs_navigator][:psc][:database][:username] = "psc"
 default[:ncs_navigator][:psc][:user] = "psc_deployer"
 default[:ncs_navigator][:psc][:user_groups] = [node[:tomcat][:group]]
 default[:ncs_navigator][:psc][:ssh_keys] = []
+default[:ncs_navigator][:psc][:ssl][:certificate_chain] = default_cert_chain_file
 default[:ncs_navigator][:psc][:status_endpoint] = "/api/v1/system-status"
 default[:ncs_navigator][:psc][:web][:configuration] = "#{node[:apache][:dir]}/sites-available/psc"
 default[:ncs_navigator][:psc][:web][:template] = "apache/tomcat.conf.erb"
@@ -89,6 +97,7 @@ default[:ncs_navigator][:staff_portal][:database][:name] = "ncs_staff_portal"
 default[:ncs_navigator][:staff_portal][:database][:username] = "ncs_staff_portal"
 default[:ncs_navigator][:staff_portal][:root] = "/var/www/apps/ncs_staff_portal"
 default[:ncs_navigator][:staff_portal][:ssh_keys] = []
+default[:ncs_navigator][:staff_portal][:ssl][:certificate_chain] = default_cert_chain_file
 default[:ncs_navigator][:staff_portal][:status_endpoint] = "/"
 default[:ncs_navigator][:staff_portal][:user] = "ncs_staff_portal"
 default[:ncs_navigator][:staff_portal][:web][:template] = "apache/passenger.conf.erb"

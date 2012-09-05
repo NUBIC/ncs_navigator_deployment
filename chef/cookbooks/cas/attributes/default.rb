@@ -44,6 +44,7 @@ default[:cas][:database][:bcdatabase][:group] = "local_postgresql"
 # Apache.
 default[:cas][:apache][:document_root] = "/var/www"
 default[:cas][:apache][:configuration] = "#{node[:apache][:dir]}/sites-available/cas"
+default[:cas][:apache][:ssl][:chain] = node[:ssl_certificates][:ca_bundle]
 
 # Proxy callback.
 default[:cas][:callback][:user] = "cas"
