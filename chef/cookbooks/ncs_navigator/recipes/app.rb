@@ -126,6 +126,14 @@ node[:ncs_navigator][:apps].each do |app|
   end
 end
 
+# Listens for trust store changes and restarts Apache if necessary.
+service "restart_app_httpd_on_trust_store_change" do
+  service_name "httpd"
+  action :nothing
+
+  subscribes :restart, resources(:script => "build_trust_chain_bundle")
+end
+
 # Set the default NCS Navigator environment.
 #
 # Secrets are set in this file (not in the Apache configuration) because they

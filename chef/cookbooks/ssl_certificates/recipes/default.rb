@@ -35,7 +35,7 @@ paths.each do |cert_path|
   cookbook_file cert_path do
     action :create
     mode 0444
-    notifies :execute, resource(:script => "build_trust_chain_bundle]")
+    notifies :run, resources(:script => "build_trust_chain_bundle")
   end
 
   # ...and install lookup links for OpenSSL.
@@ -49,5 +49,5 @@ file node[:ssl_certificates][:trust_chain_bundle] do
   action :create_if_missing
   mode 0444
 
-  notifies :execute, resource(:script => "build_trust_chain_bundle]")
+  notifies :run, resources(:script => "build_trust_chain_bundle")
 end

@@ -75,6 +75,14 @@ apache_module "rewrite" do
   enable true
 end
 
+# Listens for trust store changes and restarts Apache if necessary.
+service "restart_cas_httpd_on_trust_store_change" do
+  service_name "httpd"
+  action :nothing
+
+  subscribes :restart, resources(:script => "build_trust_chain_bundle")
+end
+
 if node[:development]
   include_recipe "cas::apache_devenv"
 end
