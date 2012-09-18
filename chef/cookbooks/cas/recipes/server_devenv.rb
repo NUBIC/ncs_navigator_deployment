@@ -29,6 +29,8 @@ java_keystore "import_cas_devenv_into_tomcat_keystore" do
   cert_file node["cas"]["apache"]["ssl"]["certificate"]
   cert_alias "cas_devenv"
   user node["tomcat"]["user"]
+
+  notifies :restart, resources(:service => 'tomcat')
 end
 
 default_auth_config = %Q{

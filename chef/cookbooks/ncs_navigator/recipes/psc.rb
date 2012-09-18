@@ -91,5 +91,7 @@ node["ssl_certificates"]["trust_chain"].each do |cert|
     storepass node["tomcat"]["keystore"]["password"]
     cert_file cf
     cert_alias cert
+
+    notifies :restart, resources(:service => 'tomcat')
   end
 end

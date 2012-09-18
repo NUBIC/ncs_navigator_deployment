@@ -28,5 +28,10 @@ action :import do
   execute import_command do
     user user
     not_if already_has_cert_command
+    notifies :send_notification, new_resource, :immediately
   end
+end
+
+action :send_notification do
+  new_resource.updated_by_last_action(true)
 end

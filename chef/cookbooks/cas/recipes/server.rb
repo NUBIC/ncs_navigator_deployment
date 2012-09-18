@@ -120,6 +120,8 @@ node["ssl_certificates"]["trust_chain"].each do |cert|
     cert_file "#{ca_path}/#{cert}"
     cert_alias cert
     user node["tomcat"]["user"]
+
+    notifies :restart, resources(:service => 'tomcat')
   end
 end
 
