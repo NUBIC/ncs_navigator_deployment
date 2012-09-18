@@ -210,7 +210,3 @@ node['apache']['default_modules'].each do |mod|
   recipe_name = mod =~ /^mod_/ ? mod : "mod_#{mod}"
   include_recipe "apache2::#{recipe_name}"
 end
-
-service "apache2" do
-  action :start
-end
