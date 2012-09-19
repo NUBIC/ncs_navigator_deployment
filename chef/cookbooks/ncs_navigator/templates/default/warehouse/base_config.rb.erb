@@ -48,9 +48,3 @@ c.add_transformer VdrXml.from_most_recent_file(c,
 # Loads instrument data from surveys in Core (does not accept filters)
 c.add_transformer NcsNavigator::Core::Warehouse::InstrumentEnumerator.
   create_transformer(c)
-
-# Loads instrument data for imported instruments that are not available in Core
-c.add_transformer VdrXml.from_most_recent_file(c,
-  NCS_NAVIGATOR_CORE_PATH + '/shared/importer_passthrough/instruments*.xml',
-  :filters => shared_filters(c)
-)
