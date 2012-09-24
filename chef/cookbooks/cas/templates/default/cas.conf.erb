@@ -22,6 +22,8 @@
     Options -MultiViews
   </Directory>
 
+  Redirect seeother / /<%= @server_script_name %>
+
   <Location /<%= @server_script_name %>>
     Allow from all
     ProxyPass <%= @server_remote %>
