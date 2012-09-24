@@ -40,7 +40,7 @@ end
 trust_store = node["tomcat"]["keystore"]["path"]
 trust_store_password = node["tomcat"]["keystore"]["password"]
 
-tomcat_property "set_tomcat_trust_store" do
+tomcat_properties "set_tomcat_trust_store" do
   properties %W(
     javax.net.ssl.trustStore=#{trust_store}
     javax.net.ssl.trustStorePassword=#{trust_store_password}

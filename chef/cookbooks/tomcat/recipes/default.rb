@@ -65,11 +65,24 @@ template "/etc/tomcat6/server.xml" do
   notifies :restart, resources(:service => "tomcat")
 end
 
-template node["tomcat"]["properties_file"] do
-  source "catalina.properties.erb"
-  owner "root"
-  group "root"
-  mode "0644"
-  notifies :restart, resources(:service => "tomcat")
-  variables(:custom_properties => node["tomcat"]["custom_properties"])
+# Receives rebuild notifications, triggers Tomcat restart if run.
+properties_defs = node["tomcat"]["catalina_properties"]["defs"]
+properties_file = node["tomcat"]["catalina_properties"]["file"]
+
+script "rebuild_tomcat_properties" do
+  action :nothing
+  code <<-END
+    find '#{properties_defs}' -type f | xargs cat > '#{properties_file}'
+  END
+  interpreter "bash"
+
+  notifies :restart, resources(:service => 'tomcat')
 end
+
+# Set default Tomcat properties
+tomcat_properties "default_tomcat_properties" do
+  source "default_tomcat_properties.erb"
+end
+
+# node["tomcat"]["custom_properties"] is deprecated, so remove it if it exists.
+node["tomcat"].delete "custom_properties"

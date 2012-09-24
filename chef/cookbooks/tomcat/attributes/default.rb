@@ -59,5 +59,5 @@ else
 end
 
 default["tomcat"]["keystore"]["path"] = "#{node["tomcat"]["home"]}/.keystore"
-default["tomcat"]["custom_properties"] = []
-default["tomcat"]["properties_file"] = "#{tomcat["config_dir"]}/catalina.properties"
+default["tomcat"]["catalina_properties"]["defs"] = "#{node["tomcat"]["config_dir"]}/catalina.properties.d"
+default["tomcat"]["catalina_properties"]["file"] = "#{node["tomcat"]["config_dir"]}/catalina.properties"
