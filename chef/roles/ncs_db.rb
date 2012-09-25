@@ -3,6 +3,7 @@ description "Database server nodes for the NCS Navigator application suite"
 
 run_list(%w(
   role[ncs_common]
+  recipe[build-essential]
   recipe[postgresql::server]
   recipe[redisio::install]
   recipe[redisio::enable]
