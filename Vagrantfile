@@ -87,12 +87,13 @@ def base_config(role, config)
 
     config.ssh.private_key_path = "ncs-vagrant"
 
-    config.vm.provision :chef_client do |chef|
-      chef.chef_server_url = CHEF_SERVER_URL
-      chef.environment = "ncs_development"
-      chef.validation_key_path = "nubic-validator.pem"
+    config.vm.provision :chef_solo do |chef|
       chef.run_list = ["role[ncs_#{role}]"]
+      chef.cookbooks_path = "chef/cookbooks"
+      chef.roles_path = "chef/roles"
+      chef.data_bags_path = "chef/data_bags"
       chef.json = {
+	"development" => true,
         "zeroconf" => {
           "allowed_interfaces" => ["eth1"]
         }
@@ -107,9 +108,6 @@ def base_config(role, config)
 end
 
 # -----------------------------------------------------------------------------
-
-# The Chef server to use.
-CHEF_SERVER_URL = "http://chef-server.nubic.northwestern.edu:4000"
 
 Vagrant::Config.run do |config|
   base_config(:app, config) do |app_config|
