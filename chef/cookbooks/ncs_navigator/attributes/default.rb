@@ -127,7 +127,7 @@ default[:ncs_navigator][:smtp][:port] = 25
 default[:ncs_navigator][:smtp][:starttls] = false
 
 default[:ncs_navigator][:devenv][:urls] = {
-  "core" => "https://navigator.#{node[:hostname]}.local",
+  "core" => "https://navcases.#{node[:hostname]}.local",
   "psc" => "https://navcal.#{node[:hostname]}.local",
-  "staff_portal" => "https://staffportal.#{node[:hostname]}.local"
+  "staff_portal" => "https://navops.#{node[:hostname]}.local"
 }
