@@ -1,7 +1,7 @@
 name "ncs_app"
 description "Application server nodes for the NCS Navigator application suite"
 
-base_run_list = %w(
+run_list %w(
   role[ncs_common]
   role[ncs_machine_accounts]
   recipe[build-essential]
@@ -12,20 +12,10 @@ base_run_list = %w(
   recipe[tomcat]
   recipe[bcdatabase]
   recipe[ssl_certificates]
-  recipe[ncs_navigator::app]
-  recipe[ncs_navigator::diagnostic_users]
+  recipe[ncs_navigator]
   recipe[iptables::http]
   recipe[iptables::https]
   role[ncs_chef_managed]
-)
-
-env_run_lists(
-  "ncs_development" => [
-    "role[ncs_common]",
-    "recipe[ncs_navigator::devenv]",
-    base_run_list
-  ].flatten,
-  "_default" => base_run_list
 )
 
 default_attributes(

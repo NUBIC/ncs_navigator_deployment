@@ -36,8 +36,7 @@ key_path = node[:ssl_certificates][:key_path]
 group = node[:apache][:group]
 owner = node[:apache][:user]
 
-# We only want to save the node once, as doing so requires us to talk to the
-# Chef server.
+# Self-configure.
 node[:ncs_navigator][:devenv][:urls].each do |app, url|
   host = URI(url).host
   ssl_certificate = "#{cert_path}/#{host}.crt"

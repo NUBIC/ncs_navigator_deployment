@@ -16,3 +16,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+
+# If we're running in development, set up a development environment.
+# We do this using node attributes, not environments, because Chef Solo doesn't
+# do environments, and it's convenient to not have developer machines depend on
+# a Chef server.
+if node["development"]
+  include_recipe "ncs_navigator::devenv"
+end
+
+include_recipe "ncs_navigator::app"
+include_recipe "ncs_navigator::diagnostic_users"
