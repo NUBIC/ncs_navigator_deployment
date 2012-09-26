@@ -93,7 +93,7 @@ def base_config(role, config)
       chef.roles_path = "chef/roles"
       chef.data_bags_path = "chef/data_bags"
       chef.json = {
-	"development" => true,
+        "development" => true,
         "zeroconf" => {
           "allowed_interfaces" => ["eth1"]
         }
