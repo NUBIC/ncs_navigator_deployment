@@ -98,7 +98,7 @@ def base_config(role, config)
     config.ssh.private_key_path = "ncs-vagrant"
 
     config.vm.provision :chef_solo do |chef|
-      chef.run_list = ["role[ncs_#{role}]"]
+      chef.run_list = ["recipe[zeroconf]", "role[ncs_#{role}]"]
       chef.cookbooks_path = "chef/cookbooks"
       chef.roles_path = "chef/roles"
       chef.data_bags_path = "chef/data_bags"
