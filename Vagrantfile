@@ -18,6 +18,11 @@ def ncs_navigator_configuration
     "aker" => {
       "netid" => {}
     },
+    "cas" => {
+      "database" => {
+        "password" => "CAS#pass"
+      }
+    },
     "ncs_navigator" => {
       "machine_accounts" => {
         "data" => {
@@ -76,6 +81,11 @@ def ncs_navigator_configuration
           "ident" => "md5"
         }
       ]
+    },
+    "tomcat" => {
+      "keystore" => {
+        "password" => 'keypass'
+      }
     }
   }
 end
