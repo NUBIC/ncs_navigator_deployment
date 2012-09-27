@@ -3,6 +3,8 @@
 
 require 'yaml'
 
+CODE_SHARE_PATH = ENV['CODE_SHARE_PATH'] || File.dirname(__FILE__) + '/shared/code'
+
 def make_hostname(role)
   username = ENV['USER']
   hostname = `hostname -s`.chomp
@@ -129,6 +131,8 @@ end
 Vagrant::Config.run do |config|
   base_config(:app, config) do |app_config|
     app_config.vm.network :hostonly, '192.168.56.220'
+
+    app_config.vm.share_folder 'code', '/home/vagrant/code', CODE_SHARE_PATH
   end
 
   base_config(:cas, config) do |cas_config|
