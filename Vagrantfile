@@ -18,6 +18,9 @@ def ncs_navigator_configuration
     "aker" => {
       "netid" => {}
     },
+    "application_user" => {
+      "ssh_key_databag" => "vagrant_public_keys"
+    },
     "cas" => {
       "database" => {
         "password" => "CAS#pass"

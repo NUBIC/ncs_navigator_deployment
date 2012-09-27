@@ -1,6 +1,5 @@
 *.sw?
 .rbx
-ncs-vagrant*
 *.pem
 *.box
 .vagrant
