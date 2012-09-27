@@ -6,3 +6,4 @@
 .chef
 .local_vagrant.yml
 metadata.json
+shared
