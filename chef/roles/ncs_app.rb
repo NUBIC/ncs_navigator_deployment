@@ -39,7 +39,9 @@ default_attributes(
      ],
      "rvmrc" => {
         'rvm_project_rvmrc' => '0'
-     }
+     },
+     "branch" => "none",
+     "version" => "1.14.2"
   },
   "bcdatabase" => {
     "version" => "1.2.1"
