@@ -20,6 +20,9 @@
 # install rvm api gem during chef compile phase
 gem_package 'rvm' do
   action :nothing
+  # 1.11.3.5 enumerates installed rubies incorrectly, resulting an error like this:
+  #   Ruby nil@global is not installed.
+  version '1.11.3.3'
 end.run_action(:install)
 
 require 'rubygems'
