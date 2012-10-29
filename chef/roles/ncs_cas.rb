@@ -36,6 +36,11 @@ default_attributes(
     "rubies" => ["ruby-1.9.3-p194"],
     "global_gems" => [
         { "name" => "bundler", "version" => "~> 1.1" }
-     ]
+     ],
+     "rvmrc" => {
+        'rvm_project_rvmrc' => '0'
+     },
+     "branch" => "none",
+     "version" => "1.14.2"
   }
 )
