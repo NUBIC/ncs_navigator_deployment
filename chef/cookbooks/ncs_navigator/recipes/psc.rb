@@ -22,8 +22,11 @@
 include_recipe "tomcat"
 
 ruby_block "adjust_tomcat_for_psc" do
-  max_perm_size = "-XX:MaxPermSize=256M"
-  max_heap_size = "-Xmx512M"
+  max_perm_size = node["ncs_navigator"]["psc"]["tomcat"]["max_perm_size"]
+  max_heap_size = node["ncs_navigator"]["psc"]["tomcat"]["max_heap_size"]
+
+  max_perm_size_opt = "-XX:MaxPermSize=#{max_perm_size}"
+  max_heap_size_opt = "-Xmx#{max_heap_size}"
 
   block do
     # Strip existing -XX:MaxPermSize and -Xmx directives, and add in the
@@ -32,8 +35,8 @@ ruby_block "adjust_tomcat_for_psc" do
       opt =~ /-XX:MaxPermSize=/ || opt =~ /-Xmx/
     end
 
-    cur_opts << max_perm_size
-    cur_opts << max_heap_size
+    cur_opts << max_perm_size_opt
+    cur_opts << max_heap_size_opt
 
     node[:tomcat][:java_options] = cur_opts.join(' ')
     node.save unless Chef::Config[:solo]
@@ -42,7 +45,7 @@ ruby_block "adjust_tomcat_for_psc" do
   notifies :create, resources(:template => "/etc/sysconfig/tomcat6")
 
   not_if do
-    [max_perm_size, max_heap_size].all? { |opt| node[:tomcat][:java_options].include?(opt) }
+    [max_perm_size_opt, max_heap_size_opt].all? { |opt| node[:tomcat][:java_options].include?(opt) }
   end
 end
 
