@@ -28,12 +28,12 @@ default_attributes(
     "shell" => "/bin/bash"
   },
   "passenger" => {
-    "rvm_ruby_string" => "ruby-1.9.3-p194",
+    "rvm_ruby_string" => "ruby-1.9.3-p327",
     "version" => "3.0.12"
   },
   "rvm" => {
     "default_ruby" => "system",
-    "rubies" => ["ruby-1.9.3-p194"],
+    "rubies" => ["ruby-1.9.3-p327"],
     "global_gems" => [
         { "name" => "bundler", "version" => "~> 1.1" }
      ],
