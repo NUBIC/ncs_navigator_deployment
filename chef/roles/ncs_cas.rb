@@ -41,6 +41,7 @@ default_attributes(
         'rvm_project_rvmrc' => '0'
      },
      "branch" => "none",
-     "version" => "1.16.20"
+     "version" => "1.16.20",
+     "upgrade_strategy" => "1.16.20"
   }
 )
