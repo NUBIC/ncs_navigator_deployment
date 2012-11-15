@@ -42,7 +42,7 @@ default_attributes(
      },
      "branch" => "none",
      "version" => "1.16.20",
-     "upgrade_strategy" => "1.16.20"
+     "upgrade" => "1.16.20"
   },
   "bcdatabase" => {
     "version" => "1.2.1"
