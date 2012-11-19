@@ -78,6 +78,7 @@ default[:ncs_navigator][:core][:root] = "/var/www/apps/ncs_navigator_core"
 default[:ncs_navigator][:core][:ssh_keys] = []
 default[:ncs_navigator][:core][:ssl][:certificate_chain] = default_cert_chain_file
 default[:ncs_navigator][:core][:status_endpoint] = "/api/v1/system-status"
+default[:ncs_navigator][:core][:sync_log_level] = "DEBUG"
 default[:ncs_navigator][:core][:user] = "ncs_navigator_core"
 default[:ncs_navigator][:core][:web][:template] = "apache/passenger.conf.erb"
 default[:ncs_navigator][:core][:web][:configuration] = "#{node[:apache][:dir]}/sites-available/ncs_navigator_core"

@@ -28,8 +28,9 @@ template node[:ncs_navigator][:ini][:path] do
   sm = node[:ncs_navigator][:smtp]
 
   variables = {
-    :cr_uri => node[:ncs_navigator][:core][:url],
     :cr_mail_from => node[:ncs_navigator][:core][:mail_from],
+    :cr_sync_log_level => node[:ncs_navigator][:core][:sync_log_level],
+    :cr_uri => node[:ncs_navigator][:core][:url],
     :cr_with_specimens => node[:ncs_navigator][:core][:with_specimens],
     :ps_uri => node[:ncs_navigator][:psc][:url],
     :ps_ssl_ca_file => node[:ncs_navigator][:authority][:psc][:ca_file],
