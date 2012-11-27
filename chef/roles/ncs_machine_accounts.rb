@@ -14,7 +14,7 @@ run_list(%w(
 #         "machine_accounts" => {
 #           "data" => {
 #             "users" => {
-#               "cases_merge" => {
+#               "ncs_navigator_cases" => {
 #                 "password" => "supersecret"
 #               }
 #             }
@@ -24,7 +24,7 @@ run_list(%w(
 #     })
 account_data = YAML.load(%q{
 users:
-  cases_merge:
+  ncs_navigator_cases:
     portals:
       - NCSNavigator: []
 })
