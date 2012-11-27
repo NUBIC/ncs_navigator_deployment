@@ -32,6 +32,7 @@ template node[:ncs_navigator][:ini][:path] do
     :cr_sync_log_level => node[:ncs_navigator][:core][:sync_log_level],
     :cr_uri => node[:ncs_navigator][:core][:url],
     :cr_with_specimens => node[:ncs_navigator][:core][:with_specimens],
+    :cr_machine_account_password => node[:ncs_navigator][:machine_accounts][:data][:users][:ncs_navigator_cases][:password],
     :ps_uri => node[:ncs_navigator][:psc][:url],
     :ps_ssl_ca_file => node[:ncs_navigator][:authority][:psc][:ca_file],
     :sc_footer_logo_left => sc[:footer_logo_left][:path],
