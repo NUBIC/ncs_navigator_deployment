@@ -23,6 +23,7 @@ include_recipe "screen"
 %w(
   bind-utils
   mlocate
+  multitail
   nano
   openssh-clients
   sysstat
