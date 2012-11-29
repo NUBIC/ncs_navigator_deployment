@@ -37,12 +37,3 @@ directory config_dir do
   owner node[:ncs_navigator][:warehouse][:user]
   recursive true
 end
-
-template "#{config_dir}/#{env}.rb" do
-  group node[:application_user][:group]
-  mode 0444
-  owner node[:ncs_navigator][:warehouse][:user]
-  source "warehouse/base_config.rb.erb"
-  variables(:sp_root => node[:ncs_navigator][:staff_portal][:root],
-            :cr_root => node[:ncs_navigator][:core][:root])
-end
