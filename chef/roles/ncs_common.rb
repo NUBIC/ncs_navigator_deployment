@@ -5,9 +5,9 @@ run_list %w(
   recipe[iptables]
   recipe[iptables::ssh]
   recipe[selinux::disabled]
-  recipe[nubic-utils]
   recipe[yumrepo::epel]
   recipe[yumrepo::repoforge]
+  recipe[nubic-utils]
   recipe[monit]
 )
 
