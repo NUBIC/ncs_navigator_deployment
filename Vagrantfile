@@ -32,8 +32,8 @@ def ncs_navigator_configuration
       "machine_accounts" => {
         "data" => {
           "users" => {
-            "cases_merge" => {
-              "password" => "cases_merge"
+            "ncs_navigator_core_development" => {
+              "password" => "ncs_navigator_core_development"
             }
           }
         }
@@ -51,6 +51,10 @@ def ncs_navigator_configuration
           "host" => db,
           "password" => "p@ssw0rd1"
         },
+	"machine_account" => {
+	  "username" => "ncs_navigator_core_development",
+	  "password" => "ncs_navigator_core_development"
+	},
         "redis" => {
           "host" => db,
           "port" => 6379
