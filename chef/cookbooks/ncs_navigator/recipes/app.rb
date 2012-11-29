@@ -201,9 +201,6 @@ include_recipe "ncs_navigator::instruments"
 # Hosted data maintenance scripts setup.
 include_recipe "ncs_navigator::hosted_data_scripts"
 
-# Machine accounts.
-include_recipe "ncs_navigator::machine_accounts"
-
 # Applications need to be able to read the machine accounts file.
 file node[:ncs_navigator][:machine_accounts][:file] do
   mode 0440

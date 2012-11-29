@@ -17,16 +17,34 @@
 # limitations under the License.
 #
 
+require 'json'
+require 'yaml'
+
 include_recipe "cas::server"
 include_recipe "tomcat"
 
-account_file = node["ncs_navigator"]["machine_accounts"]["file"]
+accounts = node["ncs_navigator"]["machine_accounts"]
+account_file = accounts["file"]
+
+directory ::File.dirname(account_file) do
+  mode 0755
+  recursive true
+end
+
+# We don't want Mash type tags showing up in our Aker configuration file, as
+# applications loading said file will have no idea what a Mash is.  This is an
+# extremely cheesy yet effective way to get down to YAML maps and lists and
+# force all keys to a single type.
+#
+# If there's a recursive variant of Mash#to_hash, I'd love to know about it.
+account_data = JSON.parse(accounts['data'].to_hash.to_json).to_yaml
 
 # The CAS server needs to be able to read the machine account file.
 file account_file do
   mode 0400
   owner node["tomcat"]["user"]
   group node["tomcat"]["group"]
+  content account_data
 end
 
 # Augments the CAS configuration with a static authority for machine accounts.
