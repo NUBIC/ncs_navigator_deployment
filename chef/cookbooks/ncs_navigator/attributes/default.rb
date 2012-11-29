@@ -70,6 +70,14 @@ default[:ncs_navigator][:core][:database][:bcdatabase_config] = "ncs_navigator_c
 default[:ncs_navigator][:core][:database][:bcdatabase_group] = "ncsdb_prod"
 default[:ncs_navigator][:core][:database][:name] = "ncs_navigator_core"
 default[:ncs_navigator][:core][:database][:username] = "ncs_navigator_core"
+
+# The default machine account username for NCS Navigator Cases is
+# "ncs_navigator_cases".  This is fine for development or isolated
+# installations; change it if you're sharing a single authentication source for
+# multiple study locations.
+default[:ncs_navigator][:core][:machine_account][:username] = "ncs_navigator_cases"
+default[:ncs_navigator][:core][:machine_account][:password] = ""
+
 default[:ncs_navigator][:core][:with_specimens] = false
 default[:ncs_navigator][:core][:redis][:bcdatabase_config] = "ncs_navigator_core"
 default[:ncs_navigator][:core][:redis][:bcdatabase_group] = "ncsredis_prod"
