@@ -22,6 +22,7 @@ include_recipe "screen"
 
 %w(
   bind-utils
+  lsof
   mlocate
   multitail
   nano
