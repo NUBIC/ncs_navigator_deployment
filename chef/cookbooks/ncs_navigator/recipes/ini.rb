@@ -17,6 +17,8 @@
 # limitations under the License.
 #
 
+include_recipe "application_user"
+
 directory ::File.dirname(node[:ncs_navigator][:ini][:path]) do
   action :create
   recursive true
@@ -61,7 +63,8 @@ template node[:ncs_navigator][:ini][:path] do
     :sp_uri => node[:ncs_navigator][:staff_portal][:url]
   }
 
+  group node[:application_user][:group]
+  mode 0440
   source "ncs_navigator.ini.erb"
-  mode 0444
   variables variables
 end
