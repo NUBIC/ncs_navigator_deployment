@@ -1,0 +1,12 @@
+check directory cases_sidekiq_location path <%= @current_path %>
+  if changed timestamp
+  then exec "<%= @current_path %>/script/sidekiq.sh restart <%= @env %> '<%= @pid %>' '<%= @log %>'"
+    as uid <%= @uid %> and gid <%= @gid %>
+  group ncs_navigator_core
+
+check process cases_sidekiq
+  with pidfile <%= @pid %>
+  start program = "<%= @current_path %>/script/sidekiq.sh start <%= @env %> '<%= @pid %>' '<%= @log %>'"
+    as uid <%= @uid %> and gid <%= @gid %>
+  stop program = "<%= @current_path %>/script/sidekiq.sh stop <%= @env %> '<%= @pid %>' '<%= @log %>'"
+  group ncs_navigator_core

@@ -20,8 +20,17 @@
 require 'uri'
 
 include_recipe "apache2"
+include_recipe "application_user"
 include_recipe "monit"
 include_recipe "tomcat"
+
+monitrc "monitor_cases_sidekiq",
+  :pid => node[:ncs_navigator][:core][:worker][:pid],
+  :log => node[:ncs_navigator][:core][:worker][:log],
+  :env => node[:ncs_navigator][:env],
+  :current_path => node[:ncs_navigator][:core][:current_path],
+  :uid => node[:ncs_navigator][:core][:user],
+  :gid => node[:application_user][:group]
 
 monitrc "monitor_apache2", :pid => node[:apache][:pid_file]
 monitrc "monitor_tomcat", :pid => "/var/run/tomcat6.pid"
