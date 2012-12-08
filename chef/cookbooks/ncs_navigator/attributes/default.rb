@@ -70,6 +70,7 @@ default[:ncs_navigator][:core][:database][:bcdatabase_config] = "ncs_navigator_c
 default[:ncs_navigator][:core][:database][:bcdatabase_group] = "ncsdb_prod"
 default[:ncs_navigator][:core][:database][:name] = "ncs_navigator_core"
 default[:ncs_navigator][:core][:database][:username] = "ncs_navigator_core"
+default[:ncs_navigator][:core][:database][:pool] = 5
 
 # The default machine account username for NCS Navigator Cases is
 # "ncs_navigator_cases".  This is fine for development or isolated
@@ -87,6 +88,7 @@ default[:ncs_navigator][:core][:current_path] = "#{node[:ncs_navigator][:core][:
 default[:ncs_navigator][:core][:shared_path] = "#{node[:ncs_navigator][:core][:root]}/shared"
 default[:ncs_navigator][:core][:worker][:pid] = "#{node[:ncs_navigator][:core][:shared_path]}/pids/sidekiq.pid"
 default[:ncs_navigator][:core][:worker][:log] = "#{node[:ncs_navigator][:core][:shared_path]}/log/sidekiq.log"
+default[:ncs_navigator][:core][:worker][:concurrency] = node[:ncs_navigator][:core][:database][:pool]
 default[:ncs_navigator][:core][:ssh_keys] = []
 default[:ncs_navigator][:core][:ssl][:certificate_chain] = default_cert_chain_file
 default[:ncs_navigator][:core][:status_endpoint] = "/api/v1/system-status"

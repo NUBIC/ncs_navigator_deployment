@@ -27,6 +27,7 @@ include_recipe "tomcat"
 monitrc "monitor_cases_sidekiq",
   :pid => node[:ncs_navigator][:core][:worker][:pid],
   :log => node[:ncs_navigator][:core][:worker][:log],
+  :concurrency => node[:ncs_navigator][:core][:worker][:concurrency],
   :env => node[:ncs_navigator][:env],
   :current_path => node[:ncs_navigator][:core][:current_path],
   :uid => node[:ncs_navigator][:core][:user],

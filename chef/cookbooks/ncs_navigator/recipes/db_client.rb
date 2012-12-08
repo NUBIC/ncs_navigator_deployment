@@ -34,6 +34,7 @@ node[:ncs_navigator][:apps].each do |key, _|
     username = db[:username]
     password = db[:password]
     host = db[:host]
+    pool_size = db[:pool]
 
     bcdatabase_config "#{group}_#{config}" do
       action :create
@@ -44,6 +45,10 @@ node[:ncs_navigator][:apps].each do |key, _|
       host host
       password password
       username username
+
+      if pool_size
+        pool pool_size
+      end
     end
   end
 end
