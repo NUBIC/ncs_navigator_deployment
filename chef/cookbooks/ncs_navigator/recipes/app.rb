@@ -66,6 +66,7 @@ node[:ncs_navigator][:apps].each do |app|
   app_root = node[:ncs_navigator][app][:root]
   app_user = node[:ncs_navigator][app][:user]
   app_keys = node[:ncs_navigator][app][:ssh_keys]
+  min_instances = node[:ncs_navigator][app][:passenger][:min_instances] if node[:ncs_navigator][app][:passenger]
   ssl_certificate = node[:ncs_navigator][app][:ssl][:certificate]
   ssl_certificate_chain = node[:ncs_navigator][app][:ssl][:certificate_chain]
   ssl_key = node[:ncs_navigator][app][:ssl][:key]
@@ -104,6 +105,7 @@ node[:ncs_navigator][:apps].each do |app|
       :app_root => app_root,
       :env => node[:ncs_navigator][:env],
       :host => app_uri.host,
+      :min_instances => min_instances,
       :ssl_certificate => ssl_certificate,
       :ssl_certificate_chain => ssl_certificate_chain,
       :ssl_key => ssl_key,

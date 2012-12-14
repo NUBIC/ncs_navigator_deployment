@@ -11,6 +11,9 @@
   DocumentRoot <%= @app_root %>/current/public
   RailsEnv <%= @env %>
   SetEnv <%= @secret_token_env_var %> "<%= @secret_token %>"
+  <% if @min_instances %>
+  PassengerMinInstances <%= @min_instances %>
+  <% end %>
 
   ErrorDocument 503 /maintenance.html
 
