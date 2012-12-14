@@ -114,12 +114,35 @@ node[:ncs_navigator][:apps].each do |app|
       :secret_token => secret
     }
 
+    current_path = node[:ncs_navigator][app][:current_path]
+
     template config_dest do
       group group
       mode 0444
       owner user
       source config_src
       variables template_variables
+    end
+
+    if current_path
+      directory "#{current_path}/tmp" do
+        action :nothing
+        group group
+        mode 0700
+        owner user
+        recursive true
+
+        subscribes :create, resources(:template => config_dest)
+      end
+
+      file "#{current_path}/tmp/restart.txt" do
+        action :nothing
+        group group
+        mode 0700
+        owner user
+
+        subscribes :touch, resources(:template => config_dest)
+      end
     end
 
     apache_site File.basename(config_dest) do
