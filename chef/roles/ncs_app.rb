@@ -7,7 +7,6 @@ run_list %w(
   recipe[postgresql::client]
   recipe[rvm::system]
   recipe[apache2]
-  recipe[passenger::apache2-rvm]
   recipe[tomcat]
   recipe[bcdatabase]
   recipe[ssl_certificates]
@@ -25,10 +24,6 @@ default_attributes(
   },
   "application_user" => {
     "shell" => "/bin/bash"
-  },
-  "passenger" => {
-    "rvm_ruby_string" => "ruby-1.9.3-p327",
-    "version" => "3.0.12"
   },
   "rvm" => {
     "default_ruby" => "system",
