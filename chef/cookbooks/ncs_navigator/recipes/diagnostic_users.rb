@@ -17,10 +17,9 @@
 # limitations under the License.
 #
 
-include_recipe "passenger"
 include_recipe "rvm"
 
-app_ruby = node["passenger"]["rvm_ruby_string"]
+app_ruby = node["ncs_navigator"]["rvm"]["ruby"]
 
 node["ncs_navigator"]["diagnostic_users"].each do |username|
   template "/home/#{username}/.bashrc" do

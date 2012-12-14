@@ -8,9 +8,6 @@
   <% end %>
 
   ServerName <%= @host %>
-  DocumentRoot <%= @app_root %>/current/public
-  RailsEnv <%= @env %>
-  SetEnv <%= @secret_token_env_var %> "<%= @secret_token %>"
 
   ErrorDocument 503 /maintenance.html
 
@@ -23,12 +20,5 @@
   # ... send a 503 status for the requested page.
   RewriteRule ^(.*)$ /$1 [R=503,L]
 
-  <Directory <%= @app_root %>/current/public>
-    Allow from all
-    Options -MultiViews
-    XSendFile on
-    XSendFilePath <%= @app_root %>
-  </Directory>
+  ProxyPass / <%= @internal_uri %>
 </VirtualHost>
-
-PassengerPreStart <%= @uri %>

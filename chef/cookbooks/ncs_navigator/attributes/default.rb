@@ -72,6 +72,8 @@ default[:ncs_navigator][:core][:database][:name] = "ncs_navigator_core"
 default[:ncs_navigator][:core][:database][:username] = "ncs_navigator_core"
 default[:ncs_navigator][:core][:database][:pool] = 5
 
+default[:ncs_navigator][:core][:internal_uri] = "http://localhost:10000"
+
 # The default machine account username for NCS Navigator Cases is
 # "ncs_navigator_cases".  This is fine for development or isolated
 # installations; change it if you're sharing a single authentication source for
@@ -94,7 +96,7 @@ default[:ncs_navigator][:core][:ssl][:certificate_chain] = default_cert_chain_fi
 default[:ncs_navigator][:core][:status_endpoint] = "/api/v1/system-status"
 default[:ncs_navigator][:core][:sync_log_level] = "DEBUG"
 default[:ncs_navigator][:core][:user] = "ncs_navigator_core"
-default[:ncs_navigator][:core][:web][:template] = "apache/passenger.conf.erb"
+default[:ncs_navigator][:core][:web][:template] = "apache/unicorn.conf.erb"
 default[:ncs_navigator][:core][:web][:configuration] = "#{node[:apache][:dir]}/sites-available/ncs_navigator_core"
 default[:ncs_navigator][:psc][:database][:config_file] = "/etc/psc/datasource.properties"
 default[:ncs_navigator][:psc][:database][:name] = "psc"
@@ -115,11 +117,12 @@ default[:ncs_navigator][:staff_portal][:database][:bcdatabase_group] = "ncsdb_pr
 default[:ncs_navigator][:staff_portal][:database][:name] = "ncs_staff_portal"
 default[:ncs_navigator][:staff_portal][:database][:username] = "ncs_staff_portal"
 default[:ncs_navigator][:staff_portal][:root] = "/var/www/apps/ncs_staff_portal"
+default[:ncs_navigator][:staff_portal][:internal_uri] = "http://localhost:10001"
 default[:ncs_navigator][:staff_portal][:ssh_keys] = []
 default[:ncs_navigator][:staff_portal][:ssl][:certificate_chain] = default_cert_chain_file
 default[:ncs_navigator][:staff_portal][:status_endpoint] = "/"
 default[:ncs_navigator][:staff_portal][:user] = "ncs_staff_portal"
-default[:ncs_navigator][:staff_portal][:web][:template] = "apache/passenger.conf.erb"
+default[:ncs_navigator][:staff_portal][:web][:template] = "apache/unicorn.conf.erb"
 default[:ncs_navigator][:staff_portal][:web][:configuration] = "#{node[:apache][:dir]}/sites-available/ncs_staff_portal"
 default[:ncs_navigator][:staff_portal][:email_reminder] = false
 default[:ncs_navigator][:staff_portal][:exception_recipients] = []
