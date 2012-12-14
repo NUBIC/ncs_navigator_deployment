@@ -25,6 +25,11 @@ default_attributes(
   "application_user" => {
     "shell" => "/bin/bash"
   },
+  "ncs_navigator" => {
+    "rvm" => {
+      "ruby" => "ruby-1.9.3-p327"
+    }
+  },
   "rvm" => {
     "default_ruby" => "system",
     "rubies" => ["ruby-1.9.3-p327"],
