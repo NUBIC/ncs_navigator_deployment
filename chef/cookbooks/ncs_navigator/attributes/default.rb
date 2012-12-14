@@ -70,8 +70,6 @@ default[:ncs_navigator][:core][:database][:bcdatabase_config] = "ncs_navigator_c
 default[:ncs_navigator][:core][:database][:bcdatabase_group] = "ncsdb_prod"
 default[:ncs_navigator][:core][:database][:name] = "ncs_navigator_core"
 default[:ncs_navigator][:core][:database][:username] = "ncs_navigator_core"
-default[:ncs_navigator][:core][:database][:pool] = 5
-default[:ncs_navigator][:core][:passenger][:min_instances] = 6
 
 # The default machine account username for NCS Navigator Cases is
 # "ncs_navigator_cases".  This is fine for development or isolated

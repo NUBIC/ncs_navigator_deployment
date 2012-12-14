@@ -28,7 +28,16 @@ default_attributes(
   },
   "passenger" => {
     "rvm_ruby_string" => "ruby-1.9.3-p327",
-    "version" => "3.0.12"
+  },
+  "ncs_navigator" => {
+    "core" => {
+      "database" => {
+        "pool" => 5
+      },
+      "passenger" => {
+        "min_instances" => 6
+      }
+    }
   },
   "rvm" => {
     "default_ruby" => "system",
