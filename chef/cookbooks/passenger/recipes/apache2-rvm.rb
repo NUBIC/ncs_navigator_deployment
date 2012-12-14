@@ -26,6 +26,7 @@ passenger_conf = "#{node[:apache][:dir]}/mods-available/passenger.conf"
 
 passenger_ruby = "#{node[:rvm][:root_path]}/bin/#{rvm_ruby_string}"
 passenger_root = "#{node[:rvm][:root_path]}/gems/#{rvm_ruby_string}/gems/passenger-#{node[:passenger][:version]}"
+passenger_max_pool_size = node[:passenger][:max_pool_size]
 module_path = "#{passenger_root}/ext/apache2/mod_passenger.so"
 
 %w(httpd-devel curl-devel apr-devel apr-util-devel).each do |pkg|
@@ -54,7 +55,8 @@ template passenger_conf do
   owner node[:apache][:user]
   group node[:apache][:group]
   variables(:passenger_root => passenger_root,
-            :passenger_ruby => passenger_ruby)
+            :passenger_ruby => passenger_ruby,
+            :passenger_max_pool_size => passenger_max_pool_size)
 end
 
 # The apache_module definition in the apache2 cookbook will overwrite our

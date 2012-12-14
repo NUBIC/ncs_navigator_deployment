@@ -28,6 +28,8 @@ default_attributes(
   },
   "passenger" => {
     "rvm_ruby_string" => "ruby-1.9.3-p327",
+    "version" => "3.0.12",
+    "max_pool_size" => 10
   },
   "ncs_navigator" => {
     "core" => {
