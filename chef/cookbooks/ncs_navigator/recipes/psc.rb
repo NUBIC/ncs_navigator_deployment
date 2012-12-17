@@ -20,6 +20,7 @@
 # PSC requires larger-than-standard permgen and heaps.
 
 include_recipe "tomcat"
+include_recipe "application_user"
 
 ruby_block "adjust_tomcat_for_psc" do
   max_perm_size = node["ncs_navigator"]["psc"]["tomcat"]["max_perm_size"]
@@ -97,4 +98,11 @@ node["ssl_certificates"]["trust_chain"].each do |cert|
 
     notifies :restart, resources(:service => 'tomcat')
   end
+end
+
+# Put the tomcat user in the app group. This is necessary since PSC runs as the
+# tomcat user and needs to read app-scoped resources like navigator.ini.
+group node[:application_user][:group] do
+  append true
+  members node["tomcat"]["user"]
 end
