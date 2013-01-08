@@ -19,7 +19,7 @@ define :tomcat_properties, :action => :enable do
   file properties_file do
     action :create_if_missing
 
-    notifies :run, resources(:ruby_block => 'rebuild_tomcat_properties')
+    notifies :create, resources(:ruby_block => 'rebuild_tomcat_properties')
   end
 
   if params[:properties]
@@ -27,14 +27,14 @@ define :tomcat_properties, :action => :enable do
       action :create
       content params[:properties].join("\n")
 
-      notifies :run, resources(:ruby_block => 'rebuild_tomcat_properties')
+      notifies :create, resources(:ruby_block => 'rebuild_tomcat_properties')
     end
   elsif params[:source]
     template "#{properties_defs}/#{params[:name]}" do
       action :create
       source params[:source]
 
-      notifies :run, resources(:ruby_block => 'rebuild_tomcat_properties')
+      notifies :create, resources(:ruby_block => 'rebuild_tomcat_properties')
     end
   end
 end
