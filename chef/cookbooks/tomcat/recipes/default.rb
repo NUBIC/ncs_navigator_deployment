@@ -69,14 +69,34 @@ end
 properties_defs = node["tomcat"]["catalina_properties"]["defs"]
 properties_file = node["tomcat"]["catalina_properties"]["file"]
 
-script "rebuild_tomcat_properties" do
+ruby_block "rebuild_tomcat_properties" do
   action :nothing
-  code <<-END
-    find '#{properties_defs}' -type f | xargs cat > '#{properties_file}'
-  END
-  interpreter "bash"
+
+  block do
+    Chef::Log.info "Rebuilding #{properties_file}"
+
+    content = Dir["#{properties_defs}/*"].sort.map { |t| File.read(t) }.join("\n")
+    File.open(properties_file, 'w') { |f| f.write(content) }
+  end
 
   notifies :restart, resources(:service => 'tomcat')
+end
+
+# The properties file must be a concatenation of each component: nothing more,
+# nothing less.  If that assertion is false, the properties file is rebuilt.
+ruby_block "verify_property_inclusion" do
+  block do
+    actual = File.read(properties_file)
+    expected = Dir["#{properties_defs}/*"].sort.map { |t| File.read(t) }.join("\n")
+
+    if actual != expected
+      resources(:ruby_block => "rebuild_tomcat_properties").run_action(:create)
+    else
+      Chef::Log.info "#{properties_file} intact, not rebuilding"
+    end
+  end
+
+  only_if { File.exists?(properties_file) }
 end
 
 # Set default Tomcat properties
