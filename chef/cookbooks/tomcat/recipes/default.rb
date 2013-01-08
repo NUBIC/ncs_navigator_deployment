@@ -91,6 +91,9 @@ ruby_block "verify_property_inclusion" do
 
     if actual != expected
       resources(:ruby_block => "rebuild_tomcat_properties").run_action(:create)
+
+      # Annoyingly, the above doesn't trigger notifications under Chef 0.10.6.
+      resources(:service => 'tomcat').run_action(:restart)
     else
       Chef::Log.info "#{properties_file} intact, not rebuilding"
     end
