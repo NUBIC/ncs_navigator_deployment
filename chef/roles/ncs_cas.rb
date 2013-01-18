@@ -7,6 +7,7 @@ run_list(%w(
   recipe[postgresql::server]
   recipe[rvm::system]
   recipe[apache2]
+  recipe[apache2::single_access_log]
   recipe[passenger::apache2-rvm]
   recipe[tomcat]
   recipe[cas]

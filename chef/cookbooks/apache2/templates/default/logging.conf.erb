@@ -1,0 +1,4 @@
+# This configuration file is managed by Chef.  Changes will be overwritten.
+
+LogFormat "%v %h %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-agent}i\"" single
+CustomLog <%= @log_dir %>/<%= @access_log %> single
