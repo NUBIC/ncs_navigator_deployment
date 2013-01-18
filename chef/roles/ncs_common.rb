@@ -2,6 +2,7 @@ name "ncs_common"
 description "Common recipes for nodes in the NCS Navigator application suite"
 
 run_list %w(
+  recipe[cron]
   recipe[iptables]
   recipe[iptables::ssh]
   recipe[selinux::disabled]
