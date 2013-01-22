@@ -15,6 +15,7 @@ run_list %w(
   recipe[ncs_navigator]
   recipe[iptables::http]
   recipe[iptables::https]
+  recipe[gperftools]
   role[ncs_chef_managed]
 )
 
