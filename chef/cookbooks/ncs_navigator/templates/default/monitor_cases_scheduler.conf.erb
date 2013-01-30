@@ -1,6 +1,6 @@
 check directory cases_scheduler_location path <%= @current_path %>
   if changed timestamp
-  then exec "<%= @current_path %>/scripts/scheduler.sh restart <%= @env %> '<%= @pid %>' '<%= @log %>'
+  then exec "<%= @current_path %>/script/scheduler.sh restart <%= @env %> '<%= @pid %>' '<%= @log %>'
     as uid <%= @uid %> and gid <%= @gid %>
   group ncs_navigator_core
 
