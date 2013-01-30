@@ -33,6 +33,14 @@ monitrc "monitor_cases_sidekiq",
   :uid => node[:ncs_navigator][:core][:user],
   :gid => node[:application_user][:group]
 
+monitrc "monitor_cases_scheduler",
+  :pid => node[:ncs_navigator][:core][:scheduler][:pid],
+  :log => node[:ncs_navigator][:core][:scheduler][:log],
+  :env => node[:ncs_navigator][:env],
+  :current_path => node[:ncs_navigator][:core][:current_path],
+  :uid => node[:ncs_navigator][:core][:user],
+  :gid => node[:application_user][:group]
+
 monitrc "monitor_apache2", :pid => node[:apache][:pid_file]
 monitrc "monitor_tomcat", :pid => "/var/run/tomcat6.pid"
 monitrc "monitor_ncs_navigator"
