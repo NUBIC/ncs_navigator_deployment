@@ -30,10 +30,12 @@ designator = version.split('.').join
 
 package "postgresql#{designator}" do
   version package_version
+  allow_downgrade true
 end
 
 package "postgresql#{designator}-devel" do
   version package_version
+  allow_downgrade true
 end
 
 # Register pg_config with the alternatives system.

@@ -45,6 +45,7 @@ designator = version.split('.').join
 
 package "postgresql#{designator}-server" do
   version package_version
+  allow_downgrade true
 end
 
 execute "/sbin/service postgresql-#{version} initdb" do
