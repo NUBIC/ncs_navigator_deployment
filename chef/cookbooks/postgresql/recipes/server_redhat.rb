@@ -4,6 +4,7 @@
 #
 # Author:: Joshua Timberman (<joshua@opscode.com>)
 # Author:: Lamont Granquist (<lamont@opscode.com>)
+# Author:: David Yip (<yipdw@northwestern.edu>)
 # Copyright 2009-2011, Opscode, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -39,21 +40,11 @@ user "postgres" do
 end
 
 version = node['postgresql']['version']
+package_version = node['postgresql']['package_version']
+designator = version.split('.').join
 
-package "postgresql" do
-  case node.platform
-  when "redhat","centos","scientific","fedora"
-    package_name "postgresql#{version.split('.').join}"
-  else
-    package_name "postgresql"
-  end
-end
-
-case node.platform
-when "redhat","centos","scientific","fedora"
-  package "postgresql#{version.split('.').join}-server"
-when "suse"
-  package "postgresql-server"
+package "postgresql#{designator}-server" do
+  version package_version
 end
 
 execute "/sbin/service postgresql-#{version} initdb" do

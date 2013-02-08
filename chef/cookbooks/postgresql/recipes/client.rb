@@ -24,26 +24,16 @@
 #
 include_recipe "yumrepo::postgresql9"
 
-case node['platform']
-when "redhat","centos","scientific","fedora"
-  include_recipe "yumrepo::postgresql9"
-end
-
 version = node['postgresql']['version']
+package_version = node['postgresql']['package_version']
+designator = version.split('.').join
 
-pg_packages = case node['platform']
-when "ubuntu","debian"
-  %w{postgresql-client libpq-dev make}
-when "fedora","suse","amazon"
-  %w{postgresql-devel}
-when "redhat","centos","scientific"
-  [ "postgresql#{version.split('.').join}-devel" ]
+package "postgresql#{designator}" do
+  version package_version
 end
 
-pg_packages.each do |pg_pack|
-  package pg_pack do
-    action :install
-  end
+package "postgresql#{designator}-devel" do
+  version package_version
 end
 
 # Register pg_config with the alternatives system.
