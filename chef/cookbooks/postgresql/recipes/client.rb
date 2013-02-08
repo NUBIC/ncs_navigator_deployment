@@ -42,6 +42,16 @@ end
 # path breaks configure scripts and gem native extensions.
 execute "alternatives --install /usr/bin/pg_config pgsql-pg_config /usr/pgsql-#{version}/bin/pg_config #{(version.to_f * 100).to_i}"
 
+# Some versions of the 9.1.8 PGDG RPM don't properly install the ldpath where
+# libpq is.  We remedy that if necessary.
+execute "alternatives --install /etc/ld.so.conf.d/postgresql-pgdg-libs.conf pgsql-ld-conf /usr/pgsql-#{version}/share/postgresql-#{version}-libs.conf #{(version.to_f * 100).to_i}" do
+  not_if { File.exists?('/etc/alternatives/pgsql-ld-conf') }
+end
+
+execute "ldconfig" do
+  not_if { File.exists?('/etc/alternatives/pgsql-ld-conf') }
+end
+
 gem_package "pg" do
   action :install
 end

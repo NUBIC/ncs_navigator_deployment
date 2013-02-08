@@ -27,7 +27,6 @@ default_attributes(
     "epel_release" => 6
   },
   "postgresql" => {
-    "version" => "9.1",
-    'package_version' => '9.1.6-1PGDG.rhel6'
+    "version" => "9.1"
   }
 )
