@@ -28,12 +28,12 @@ version = node['postgresql']['version']
 package_version = node['postgresql']['package_version']
 designator = version.split('.').join
 
-package "postgresql#{designator}" do
+yum_package "postgresql#{designator}" do
   version package_version
   allow_downgrade true
 end
 
-package "postgresql#{designator}-devel" do
+yum_package "postgresql#{designator}-devel" do
   version package_version
   allow_downgrade true
 end
