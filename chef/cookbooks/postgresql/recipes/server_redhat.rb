@@ -43,9 +43,8 @@ version = node['postgresql']['version']
 package_version = node['postgresql']['package_version']
 designator = version.split('.').join
 
-yum_package "postgresql#{designator}-server" do
+package "postgresql#{designator}-server" do
   version package_version
-  allow_downgrade true
 end
 
 execute "/sbin/service postgresql-#{version} initdb" do
