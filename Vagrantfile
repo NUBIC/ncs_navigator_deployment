@@ -9,7 +9,7 @@ def make_hostname(role)
   username = ENV['USER']
   hostname = `hostname -s`.chomp
 
-  "ncs-#{role}-#{username}-#{hostname}"
+  "ncs-#{role}"
 end
 
 def ncs_navigator_configuration
