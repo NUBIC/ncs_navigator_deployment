@@ -104,3 +104,11 @@ node[:ncs_navigator][:devenv][:urls].each do |app, url|
     source "wildcard.local.key"
   end
 end
+
+java_keystore "add_devenv_certificates_to_psc" do
+  action :import
+  keystore node["tomcat"]["keystore"]["path"]
+  storepass node["tomcat"]["keystore"]["password"]
+  cert_file node[:ncs_navigator][:psc][:ssl][:certificate]
+  cert_alias "devenv"
+end
