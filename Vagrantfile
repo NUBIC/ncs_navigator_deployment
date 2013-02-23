@@ -5,6 +5,12 @@ require 'yaml'
 
 CODE_SHARE_PATH = ENV['CODE_SHARE_PATH'] || File.dirname(__FILE__) + '/shared/code'
 
+# MiB of memory for each VM
+MEM = ENV['MEM'] || 2048
+
+# Virtual CPUs for each VM
+CPUS = ENV['CPUS'] || 1
+
 def make_hostname(role)
   username = ENV['USER']
   hostname = `hostname -s`.chomp
@@ -123,8 +129,8 @@ def base_config(role, config)
       config.vm.boot_mode = :gui
     end
 
-    config.vm.customize ['modifyvm', :id, '--memory', ENV['MEM']] if ENV['MEM']
-    config.vm.customize ['modifyvm', :id, '--cpus', ENV['CPUS']] if ENV['CPUS']
+    config.vm.customize ['modifyvm', :id, '--memory', MEM]
+    config.vm.customize ['modifyvm', :id, '--cpus', CPUS]
 
     yield config
   end
