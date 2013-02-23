@@ -1,8 +1,8 @@
 #
-# Cookbook Name:: apache2
-# Recipe:: mod_xsendfile 
+# Cookbook Name:: ncs_navigator
+# Resource:: app_db
 #
-# Copyright 2011, CustomInk, LLC.
+# Copyright 2013, Northwestern University
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,17 +17,7 @@
 # limitations under the License.
 #
 
-case node['platform']
-when "debian","ubuntu"
-  package "libapache2-mod-xsendfile"
-when "centos","redhat","scientific","fedora","amazon"
-  package "mod_xsendfile"
-end
+actions :create, :drop
 
-apache_module "xsendfile"
-
-# The package-provided configuration file is removed because all it does is
-# load the module, which is the job of the apache_module definition.
-file "#{node["apache"]["dir"]}/conf.d/xsendfile.conf" do
-  action :delete
-end
+attribute :password, :kind_of => String
+attribute :username, :kind_of => String

@@ -1,8 +1,8 @@
 #
 # Cookbook Name:: ncs_navigator
-# Recipe:: db_monitoring
+# Provider:: app_user
 #
-# Copyright 2012, Northwestern University
+# Copyright 2013, Northwestern University
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -15,17 +15,27 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-#
 
-include_recipe "monit"
-include_recipe "postgresql::server"
-include_recipe "redisio"
+action :create do
+  extend Chef::ApplicationUser::Home
 
-pg_version = node[:postgresql][:version]
-monitrc "monitor_postgres", :pid => "/var/run/postmaster-#{pg_version}.pid", :version => pg_version
+  user = new_resource.name
+  groups = new_resource.groups
+  keys = new_resource.keys
 
-node[:redisio][:servers].each do |server|
-  port = server['port']
+  application_user user do
+    action :create
+    groups groups
+    authorized_keys keys
+  end
 
-  monitrc "monitor_redis_#{port}", :pid => "/var/run/redis/redis_#{port}.pid", :port => port
+  user_home = application_user_home(user)
+
+  # Configure the user's environment for running the app.
+  template "#{user_home}/.bashrc" do
+    source "bashrc.erb"
+    mode 0444
+    variables(:ruby => node["passenger"]["rvm_ruby_string"])
+    only_if { ::File.exists?(user_home) }
+  end
 end

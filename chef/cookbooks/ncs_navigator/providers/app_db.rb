@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: ncs_navigator
-# Recipe:: instruments
+# Provider:: app_db
 #
 # Copyright 2013, Northwestern University
 #
@@ -17,13 +17,26 @@
 # limitations under the License.
 #
 
-include_recipe "application_user"
+action :create do
+  db_host = node["ncs_navigator"]["db"]["host"]
+  db_name = new_resource.name
+  password = new_resource.password
+  username = new_resource.username
 
-app_group = node["application_user"]["group"]
+  postgresql_database db_name do
+    action :create
+    connection :host => db_host, :username => username, :password => password
+  end
+end
 
-# Instruments setup.
-directory node["ncs_navigator"]["instruments"]["dir"] do
-  group app_group
-  mode 0775
-  recursive true
+action :drop do
+  db_host = node["ncs_navigator"]["db"]["host"]
+  db_name = new_resource.name
+  password = new_resource.password
+  username = new_resource.username
+
+  postgresql_database db_name do
+    action :drop
+    connection :host => db_host, :username => username, :password => password
+  end
 end

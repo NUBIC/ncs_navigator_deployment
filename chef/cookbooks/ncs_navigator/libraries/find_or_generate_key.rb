@@ -1,8 +1,8 @@
 #
 # Cookbook Name:: ncs_navigator
-# Recipe:: logos
+# Library:: find_or_generate_key
 #
-# Copyright 2012, Northwestern University
+# Copyright 2013, Northwestern University
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,19 +17,16 @@
 # limitations under the License.
 #
 
-sc = node[:ncs_navigator][:study_center]
+module NcsNavigator
+  module FindOrGenerateKey
+    def self.extended(recipe)
+      recipe.include_recipe "openssl"
+      recipe.extend Opscode::OpenSSL::Password
+      recipe.extend PersistentGeneratedAttribute
+    end
 
-%w(footer_logo_left footer_logo_right).each do |logo|
-  raise "ncs_navigator.study_center.#{logo}.path not defined" unless sc[logo][:path]
-
-  directory ::File.dirname(sc[logo][:path]) do
-    mode 0755
-    recursive true
-  end
-
-  remote_file sc[logo][:path] do
-    source sc[logo][:source]
-    checksum sc[logo][:checksum]
-    mode 0444
+    def find_or_generate_key(key_path, len = 32)
+      find_or_generate(key_path) { secure_password(len) }
+    end
   end
 end

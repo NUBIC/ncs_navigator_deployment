@@ -23,7 +23,7 @@ require 'yaml'
 include_recipe "cas::server"
 include_recipe "tomcat"
 
-accounts = node["ncs_navigator"]["machine_accounts"]
+accounts = node["ncs_navigator"]["cas"]["machine_accounts"]
 account_file = accounts["file"]
 
 directory ::File.dirname(account_file) do
@@ -37,6 +37,7 @@ end
 # force all keys to a single type.
 #
 # If there's a recursive variant of Mash#to_hash, I'd love to know about it.
+raise "Aker static authority data not defined" unless accounts['data']
 account_data = JSON.parse(accounts['data'].to_hash.to_json).to_yaml
 
 # The CAS server needs to be able to read the machine account file.
@@ -52,7 +53,7 @@ cas_authority "ncs_machine_accounts" do
   action :create
   authority :static
   configuration node["cas"]["bcsec"]
-  static_file node["ncs_navigator"]["machine_accounts"]["file"]
+  static_file node["ncs_navigator"]["cas"]["machine_accounts"]["file"]
 
   notifies :restart, :service => 'tomcat'
 end

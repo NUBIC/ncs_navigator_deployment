@@ -1,8 +1,8 @@
 #
 # Cookbook Name:: ncs_navigator
-# Recipe:: hosted_data_scripts
+# Recipe:: cas_client_monitoring
 #
-# Copyright 2012, Northwestern University
+# Copyright 2013, Northwestern University
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,15 +17,12 @@
 # limitations under the License.
 #
 
-include_recipe "application_user"
+require 'uri'
 
-# Create a deployment directory for the hosted data maintenance scripts.
-dir_user = node[:ncs_navigator][:warehouse][:user]
-dir_group = node[:application_user][:group]
+include_recipe "monit"
 
-directory node[:ncs_navigator][:hosted_data][:dir] do
-  owner dir_user
-  group dir_group
-  mode 0775
-  recursive true
-end
+monitrc "monitor_cas",
+  :uri => URI(node["ncs_navigator"]["cas"]["base_url"])
+
+monitrc "monitor_cas_proxy_callback",
+  :uri => URI(node["ncs_navigator"]["cas"]["proxy_callback_url"])

@@ -1,0 +1,24 @@
+1. ncs_navigator
+
+This cookbook lays groundwork for the NCS Navigator application suite.
+
+The NCS Navigator application suite has (conceptually) one PSC instance, one
+Ops instance, one database instance, and many Cases instances.  Each Cases
+instance services a single study center.  Each instance may be composed of
+multiple processes.
+
+2. Recipes
+
+This cookbook contains the following recipes:
+
+- cases_devenv: Sets up development infrastructure for Cases
+- cases: Provisions a Cases instance
+- db: Provisions the database instance
+- ops: Provisions the Ops instance
+- psc: Provisions the PSC instance
+
+3. Attributes
+
+There's a lot.  See this cookbook's metadata.
+
+# vim:ts=2:sw=2:et:tw=78

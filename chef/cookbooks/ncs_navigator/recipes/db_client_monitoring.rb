@@ -1,8 +1,8 @@
 #
 # Cookbook Name:: ncs_navigator
-# Recipe:: sampling_units
+# Recipe:: db_client_monitoring
 #
-# Copyright 2012, Northwestern University
+# Copyright 2013, Northwestern University
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,24 +17,8 @@
 # limitations under the License.
 #
 
-include_recipe "application_user"
+include_recipe "monit"
 
-app_group = node[:application_user][:group]
-ssu_src = node[:ncs_navigator][:study_center][:sampling_units][:data_bag_item]
-ssu_dst = node[:ncs_navigator][:study_center][:sampling_units][:target]
-
-ssu_data = data_bag_item("ncs_ssus", ssu_src)
-
-raise "Unable to find SSU data for #{ssu_src} in ncs_ssus data bag" unless ssu_data
-
-directory ::File.dirname(ssu_dst) do
-  recursive true
-  group app_group
-end
-
-file ssu_dst do
-  mode 0444
-  group app_group
-  content ssu_data['data']
-end
-
+monitrc "monitor_db",
+  :host => node["ncs_navigator"]["db"]["host"],
+  :port => node["ncs_navigator"]["db"]["port"]

@@ -2,7 +2,7 @@
 # overwritten.
 
 <%- def n(key, value) %>
-<%- if value.to_s.strip.empty?; ''; else; %Q{#{key} = "#{value}"}; end %>
+<%- if value.to_s.strip.empty?; "# #{key} not defined"; else; %Q{#{key} = "#{value}"}; end %>
 <%- end %>
 
 [Core]

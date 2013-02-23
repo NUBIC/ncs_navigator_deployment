@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: ncs_navigator
-# Recipe:: instruments
+# Recipe:: cases_devenv
 #
 # Copyright 2013, Northwestern University
 #
@@ -17,13 +17,28 @@
 # limitations under the License.
 #
 
-include_recipe "application_user"
+unless node[:development]
+  raise "cases_devenv cannot be used in a non-development node"
+end
 
-app_group = node["application_user"]["group"]
+# Install SSL certificate and key material.
+ssl_certificate = node["ncs_navigator"]["cases"]["ssl"]["certificate"]
+ssl_key = node["ncs_navigator"]["cases"]["ssl"]["key"]
+group = node["apache"]["group"]
+owner = node["apache"]["owner"]
 
-# Instruments setup.
-directory node["ncs_navigator"]["instruments"]["dir"] do
-  group app_group
-  mode 0775
-  recursive true
+cookbook_file ssl_certificate do
+  cookbook "ssl_certificates"
+  group group
+  owner owner
+  mode 0444
+  source "wildcard.local.crt"
+end
+
+cookbook_file ssl_key do
+  cookbook "ssl_certificates"
+  group group
+  owner owner
+  mode 0400
+  source "wildcard.local.key"
 end

@@ -1,8 +1,8 @@
 #
 # Cookbook Name:: ncs_navigator
-# Recipe:: app_dependencies
+# Resource:: db_user
 #
-# Copyright 2012, Northwestern University
+# Copyright 2013, Northwestern University
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,9 +17,6 @@
 # limitations under the License.
 #
 
-%w(
-libxml2-devel
-libxslt-devel
-).each do |pkg|
-  package pkg
-end
+actions :create, :drop
+
+attribute :password, :kind_of => String, :default => nil
