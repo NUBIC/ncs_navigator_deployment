@@ -60,7 +60,7 @@ end
 ruby_block "rebuild iptables" do
   block { }
 
-  notifies :run, resources(:execute => "rebuild-iptables"), :immediately
+  notifies :run, resources(:execute => "rebuild-iptables")
 end
 
 %w(messagebus avahi-daemon).each do |s|
