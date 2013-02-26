@@ -19,6 +19,12 @@ The devel recipe:
 1. includes the default recipe
 2. installs avahi-devel
 
+The cnames recipe:
+
+1. installs the devel recipe
+2. installs build tools
+3. builds and installs a tool to publish CNAMEs over Zeroconf
+
 Requirements
 ============
 
@@ -33,6 +39,8 @@ Attributes
 * `zeroconf[:allowed_interfaces]`: A list of interfaces that avahi-daemon
   should use.  Defaults to the empty list, which means that avahi-daemon will
   use all non-loopback and non-point-to-point interfaces.
+* `zeroconf["cnames"]`: CNAME records to publish for the host.  Only used with
+  zeroconf::cnames.  Defaults to [].
 
 Usage
 =====
