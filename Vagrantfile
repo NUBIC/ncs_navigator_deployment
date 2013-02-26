@@ -26,7 +26,10 @@ def ncs_navigator_configuration
 
   {
     "aker" => {
-      "netid" => {}
+      "netid" => {},
+      "central" => {
+        "path" => "/etc/nubic/ncs/aker-local.yml"
+      }
     },
     "application_user" => {
       "ssh_key_databag" => "vagrant_public_keys"
@@ -77,7 +80,7 @@ def ncs_navigator_configuration
         "mail_from" => "ncs-cases@example.edu",
         "db" => {
           "bcdatabase" => {
-            "group" => "ncsdb_development"
+            "group" => "local_postgresql"
           },
           "user" => {
             "password" => "p@ssw0rd1"
@@ -86,7 +89,7 @@ def ncs_navigator_configuration
         "redis" => {
           "host" => db_host,
           "bcdatabase" => {
-            "group" => "ncsredis_development"
+            "group" => "local_redis"
           }
         },
         "user" => {
@@ -102,7 +105,7 @@ def ncs_navigator_configuration
         },
         "db" => {
           "bcdatabase" => {
-            "group" => "ncsdb_development"
+            "group" => "local_postgresql"
           },
           "user" => {
             "password" => "p@ssw0rd1"
@@ -138,22 +141,22 @@ def ncs_navigator_configuration
           "databases" => {
             "mdes_warehouse_working" => {
               "bcdatabase" => {
-                "group" => "ncsdb_development"
+                "group" => "local_postgresql"
               }
             },
             "mdes_warehouse_reporting" => {
               "bcdatabase" => {
-                "group" => "ncsdb_development"
+                "group" => "local_postgresql"
               }
             },
             "mdes_import_working" => {
               "bcdatabase" => {
-                "group" => "ncsdb_development"
+                "group" => "local_postgresql"
               }
             },
             "mdes_import_reporting" => {
               "bcdatabase" => {
-                "group" => "ncsdb_development"
+                "group" => "local_postgresql"
               }
             }
           },
