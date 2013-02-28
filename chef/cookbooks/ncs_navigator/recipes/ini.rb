@@ -27,6 +27,7 @@ directory File.dirname(ini_path) do
 end
 
 app_group = node["application_user"]["group"]
+ops = node["ncs_navigator"]["ops"]
 sp = node["ncs_navigator"]["staff_portal"]
 sc = node["ncs_navigator"]["cases"]["study_center"]
 sm = node["ncs_navigator"]["smtp"]
@@ -60,12 +61,12 @@ template ini_path do
     :smtp_port => sm["port"],
     :smtp_starttls => sm["starttls"],
     :smtp_username => sm["username"],
-    :sp_bootstrap_user => sp["bootstrap_user"],
-    :sp_email_reminder => sp["email_reminder"],
-    :sp_exception_recipients => sp["exception_recipients"],
-    :sp_google_analytics_number => sp["google_analytics_number"],
-    :sp_mail_from => sp["mail_from"],
-    :sp_psc_user_password => sp["psc_user_password"],
-    :sp_uri => node["ncs_navigator"]["staff_portal"]["url"]
+    :ops_bootstrap_user => ops["bootstrap_user"],
+    :ops_email_reminder => ops["email_reminder"],
+    :ops_exception_recipients => ops["exception_recipients"],
+    :ops_google_analytics_number => ops["google_analytics_number"],
+    :ops_mail_from => ops["mail_from"],
+    :ops_psc_user_password => ops["psc_user_password"],
+    :ops_uri => ops["app"]["url"]
   )
 end

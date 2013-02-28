@@ -115,7 +115,10 @@ def ncs_navigator_configuration
           "ssh_keys" => [
             "ncs-vagrant"
           ]
-        }
+        },
+        "bootstrap_user" => "abc123",
+        "mail_from" => "ncs-ops@example.edu",
+        "psc_user_password" => "p@ssw0rd1"
       },
       "psc" => {
         "url" => "https://ncs-psc.local",
@@ -129,12 +132,6 @@ def ncs_navigator_configuration
             "ncs-vagrant"
           ]
         }
-      },
-      "staff_portal" => {
-        "bootstrap_user" => "abc123",
-        "mail_from" => "ncs-ops@example.edu",
-        "psc_user_password" => "p@ssw0rd1",
-        "url" => "https://ncs-ops.local"
       },
       "warehouse" => {
         "db" => {
