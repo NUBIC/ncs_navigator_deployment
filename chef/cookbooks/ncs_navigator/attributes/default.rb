@@ -46,6 +46,7 @@ default["ncs_navigator"]["cases"]["worker"]["log"] = "#{cases_shared}/log/sideki
 default["ncs_navigator"]["cases"]["worker"]["pid"] = "#{cases_shared}/pids/sidekiq.pid"
 default["ncs_navigator"]["db"]["admin"]["user"] = "ncs_navigator_db_admin"
 default["ncs_navigator"]["db"]["port"] = "5432"
+default["ncs_navigator"]["diagnostic_users"] = []
 default["ncs_navigator"]["hosted_data"]["dir"] = "/var/www/apps/ncs_navigator_hosted_data"
 default["ncs_navigator"]["ini"]["path"] = "/etc/nubic/ncs/navigator.ini"
 default["ncs_navigator"]["instruments"]["dir"] = "/var/www/apps/ncs_instruments"

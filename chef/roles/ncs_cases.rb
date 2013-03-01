@@ -14,6 +14,7 @@ run_list %w(
   recipe[bcdatabase]
   recipe[ssl_certificates]
   recipe[gperftools]
+  recipe[ncs_navigator::diagnostic_users]
   recipe[ncs_navigator::instruments]
   recipe[ncs_navigator::cases]
   recipe[ncs_navigator::cases_ini]

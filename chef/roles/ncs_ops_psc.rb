@@ -12,6 +12,7 @@ run_list %w(
   recipe[tomcat]
   recipe[bcdatabase]
   recipe[ssl_certificates]
+  recipe[ncs_navigator::diagnostic_users]
   recipe[ncs_navigator::ops]
   recipe[ncs_navigator::psc]
   recipe[ncs_navigator::ops_psc_ini]
