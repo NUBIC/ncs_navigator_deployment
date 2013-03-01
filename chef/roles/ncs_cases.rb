@@ -14,6 +14,7 @@ run_list %w(
   recipe[gperftools]
   recipe[ncs_navigator::instruments]
   recipe[ncs_navigator::cases]
+  recipe[ncs_navigator::cases_ini]
   recipe[ncs_navigator::warehouse]
   recipe[ncs_navigator::postgresql_env]
   recipe[ncs_navigator::cas_client_monitoring]

@@ -26,7 +26,7 @@
 <%= n "footer_logo_left", @sc_footer_logo_left %>
 <%= n "footer_logo_right", @sc_footer_logo_right %>
 <%= n "footer_text", @sc_footer_text %>
-<%= n "exception_email_recipients", @sc_exception_email_recipients.join(", ") %>
+<%= n "exception_email_recipients", (@sc_exception_email_recipients.join(", ") if @sc_exception_email_recipients) %>
 
 [SMTP]
 <%= n "authentication", @smtp_authentication %>
@@ -40,7 +40,7 @@
 [Staff Portal]
 <%= n "bootstrap_user", @ops_bootstrap_user %>
 <%= n "email_reminder", @ops_email_reminder %>
-<%= n "exception_recipients", @ops_exception_recipients.join(', ') %>
+<%= n "exception_recipients", (@ops_exception_recipients.join(', ') if @ops_exception_recipients) %>
 <%= n "google_analytics_number", @ops_google_analytics_number %>
 <%= n "mail_from", @ops_mail_from %>
 <%= n "psc_user_password", @ops_psc_user_password %>

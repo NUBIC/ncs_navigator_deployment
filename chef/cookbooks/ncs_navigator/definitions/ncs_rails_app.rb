@@ -156,33 +156,6 @@ define :ncs_rails_app do
     :uri => URI(app_url),
     :endpoint => a["status_endpoint"]
 
-  # Build ncs_navigator.ini.
-  include_recipe "ncs_navigator::ini"
-
-  # Restart the app if ncs_navigator.ini changes.
-  ini_path = node["ncs_navigator"]["ini"]["path"]
-  current_path = a["app"]["current_path"]
-
-  directory "#{current_path}/tmp" do
-    action :nothing
-    group app_group
-    mode 0700
-    owner user
-
-    subscribes :create, resources(:template => ini_path)
-    only_if { ::File.exists?(current_path) }
-  end
-
-  file "#{current_path}/tmp/restart.txt" do
-    action :nothing
-    group app_group
-    mode 0700
-    owner user
-
-    subscribes :touch, resources(:template => ini_path)
-    only_if { ::File.exists?(current_path) }
-  end
-
   # Set up authentication services.
   include_recipe "ncs_navigator::auth"
 
