@@ -18,6 +18,7 @@ default["ncs_navigator"]["cases"]["db"]["user_prefix"] = "ncs_navigator_cases"
 default["ncs_navigator"]["cases"]["old_log_path"] = "#{cases_shared}/old_logs"
 default["ncs_navigator"]["cases"]["redis"]["bcdatabase"]["config"] = "ncs_navigator_cases"
 default["ncs_navigator"]["cases"]["redis"]["db"] = 0
+default["ncs_navigator"]["cases"]["redis"]["host"] = "localhost"
 default["ncs_navigator"]["cases"]["redis"]["port"] = "6379"
 default["ncs_navigator"]["cases"]["scheduler"]["log"] = "#{cases_shared}/log/scheduler.log"
 default["ncs_navigator"]["cases"]["scheduler"]["pid"] = "#{cases_shared}/pids/scheduler.pid"

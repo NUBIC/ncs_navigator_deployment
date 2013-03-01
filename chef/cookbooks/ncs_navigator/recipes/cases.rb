@@ -132,3 +132,9 @@ monitrc "monitor_cases_scheduler",
 monitrc "monitor_cases_redis",
   :host => node["ncs_navigator"]["cases"]["redis"]["host"],
   :port => node["ncs_navigator"]["cases"]["redis"]["port"]
+
+node["redisio"]["servers"].each do |server|
+  port = server['port']
+
+  monitrc "monitor_redis_#{port}", :pid => "/var/run/redis/redis_#{port}.pid", :port => port
+end

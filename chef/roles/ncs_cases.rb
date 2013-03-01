@@ -5,6 +5,8 @@ run_list %w(
   role[ncs_common]
   recipe[build-essential]
   recipe[postgresql::client]
+  recipe[redisio::install]
+  recipe[redisio::enable]
   recipe[rvm::system]
   recipe[apache2]
   recipe[apache2::single_access_log]
@@ -33,6 +35,15 @@ default_attributes(
   },
   "application_user" => {
     "shell" => "/bin/bash"
+  },
+  'redisio' => {
+    'version' => '2.4.14',
+    'safe_install' => true,
+    'servers' => [
+      { 'port' => '6379',
+        'address' => '127.0.0.1'
+      }
+    ]
   },
   "passenger" => {
     "rvm_ruby_string" => "ruby-1.9.3-p327",
