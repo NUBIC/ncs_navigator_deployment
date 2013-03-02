@@ -21,6 +21,7 @@ include_recipe "application_user"
 include_recipe "ncs_navigator::cases"
 
 cases = node["ncs_navigator"]["cases"]
+psc = node["ncs_navigator"]["psc"]
 smtp = node["ncs_navigator"]["smtp"]
 study_center = node["ncs_navigator"]["cases"]["study_center"]
 
@@ -34,15 +35,16 @@ ncs_navigator_ini ini_path do
   cr_with_specimens cases["with_specimens"]
   cr_machine_account_username cases["machine_account"]["username"]
   cr_machine_account_password cases["machine_account"]["password"]
+  ps_uri psc["url"]
+  sc_exception_email_recipients study_center["exception_email_recipients"]
   sc_footer_logo_left study_center["footer_logo_left"]["path"]
   sc_footer_logo_right study_center["footer_logo_right"]["path"]
   sc_footer_text study_center["footer_text"]
   sc_id study_center["sc_id"]
   sc_recruitment_type_id study_center["recruitment_type_id"]
   sc_sampling_units_file (su = study_center["sampling_units"]) ? su["target"] : nil
-  sc_username study_center["username"]
   sc_short_name study_center["short_name"]
-  sc_exception_email_recipients study_center["exception_email_recipients"]
+  sc_username study_center["username"]
   smtp_authentication smtp["authentication"]
   smtp_domain smtp["domain"]
   smtp_host smtp["host"]
