@@ -55,13 +55,56 @@ when "debian", "ubuntu"
   include_recipe "postgresql::server_debian"
 end
 
-template "#{node[:postgresql][:dir]}/pg_hba.conf" do
-  source "pg_hba.conf.erb"
-  owner "postgres"
-  group "postgres"
-  mode 0600
-  variables :hba => node[:postgresql][:hba]
-  notifies :reload, resources(:service => "postgresql-#{version}"), :immediately
+# This is needed by the PostgreSQL password set step below, so it triggers
+# an immediate rebuild.
+postgresql_hba "00_postgres_superuser" do
+  action :create
+  database "all"
+  method "ident"
+  type "local"
+  user "postgres"
+end
+
+postgresql_hba "01_local_ident_access" do
+  action :create
+  database "all"
+  method "ident"
+  type "local"
+  user "all"
+end
+
+postgresql_hba "02_ipv4_localhost_md5_access" do
+  action :create
+  cidr_address "127.0.0.1/32"
+  database "all"
+  method "md5"
+  type "host"
+  user "all"
+end
+
+postgresql_hba "03_ipv6_localhost_md5_access" do
+  action :create
+  cidr_address "::1/128"
+  database "all"
+  method "md5"
+  type "host"
+  user "all"
+end
+
+# Build all hba entries in node/postgresql/hba.
+node["postgresql"]["hba"].each_with_index do |a, i|
+  postgresql_hba "04_#{i}_node_hba" do
+    action :create
+    cidr_address a["cidr-address"]
+    database a["database"]
+    method a["ident"]
+    type a["type"]
+    user a["user"]
+  end
+end
+
+postgresql_hba "rebuild_table" do
+  action :rebuild
 end
 
 # Default PostgreSQL install has 'ident' checking on unix user 'postgres'
