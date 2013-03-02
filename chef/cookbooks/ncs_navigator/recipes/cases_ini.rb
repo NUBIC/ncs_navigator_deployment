@@ -37,7 +37,7 @@ ncs_navigator_ini ini_path do
   sc_footer_logo_left study_center["footer_logo_left"]["path"]
   sc_footer_logo_right study_center["footer_logo_right"]["path"]
   sc_footer_text study_center["footer_text"]
-  sc_id study_center["id"]
+  sc_id study_center["sc_id"]
   sc_recruitment_type_id study_center["recruitment_type_id"]
   sc_sampling_units_file (su = study_center["sampling_units"]) ? su["target"] : nil
   sc_username study_center["username"]
