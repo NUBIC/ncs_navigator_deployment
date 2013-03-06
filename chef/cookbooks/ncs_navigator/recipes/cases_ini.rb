@@ -21,6 +21,7 @@ include_recipe "application_user"
 include_recipe "ncs_navigator::cases"
 
 cases = node["ncs_navigator"]["cases"]
+ops = node["ncs_navigator"]["ops"]
 psc = node["ncs_navigator"]["psc"]
 smtp = node["ncs_navigator"]["smtp"]
 study_center = node["ncs_navigator"]["cases"]["study_center"]
@@ -45,6 +46,7 @@ ncs_navigator_ini ini_path do
   sc_sampling_units_file (su = study_center["sampling_units"]) ? su["target"] : nil
   sc_short_name study_center["short_name"]
   sc_username study_center["username"]
+  ops_uri ops["app"]["url"]
   smtp_authentication smtp["authentication"]
   smtp_domain smtp["domain"]
   smtp_host smtp["host"]
