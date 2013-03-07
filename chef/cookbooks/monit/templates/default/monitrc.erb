@@ -7,6 +7,10 @@ set eventqueue basedir <%= @node[:monit][:eventqueue][:path] %> slots <%= @node[
 set mmonit <%= @node[:monit][:mmonit] %>
 <% end %>
 
+<% if @node[:monit][:mailserver] %>
+set mailserver <% @node[:monit][:mailserver][:configs].join(',') %>
+<% end %>
+
 set logfile syslog facility log_daemon
 
 set httpd port <%= @node[:monit][:httpd][:port] %>
