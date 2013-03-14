@@ -26,6 +26,7 @@ default["ncs_navigator"]["cases"]["session_secret"]["env_var"] = "CORE_SECRET"
 default["ncs_navigator"]["cases"]["session_secret"]["path"] = "/etc/nubic/.chef-state/cases_session_secret"
 default["ncs_navigator"]["cases"]["ssl"]["certificate"] = "/etc/pki/tls/certs/cases.crt"
 default["ncs_navigator"]["cases"]["ssl"]["key"] = "/etc/pki/tls/private/cases.key"
+default["ncs_navigator"]["cases"]["status_endpoint"] = "/api/v1/system-status"
 default["ncs_navigator"]["cases"]["study_center"]["exception_email_recipients"] = []
 default["ncs_navigator"]["cases"]["study_center"]["footer_logo_left"]["checksum"] = "2d288345f95e90c25a59068b6eab776c82ff6c555a80d41322ba203bccc9d524"
 default["ncs_navigator"]["cases"]["study_center"]["footer_logo_left"]["path"] = "/var/www/apps/ncs_shared/footer_logo_left.png"
