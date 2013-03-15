@@ -36,7 +36,9 @@ action :create do
   end
 
   content << new_resource.method
-  content << new_resource.options.map { |k, v| %Q{#{k}="#{v}"} }.join(' ')
+
+  set_options = new_resource.options.reject { |_, v| v.nil? || v.empty? }
+  content << set_options.map { |k, v| %Q{#{k}="#{v}"} }.join(' ')
 
   file "#{postgresql_hba_dir}/#{new_resource.name}" do
     action :create

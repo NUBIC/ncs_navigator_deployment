@@ -100,6 +100,7 @@ node["postgresql"]["hba"].each_with_index do |a, i|
     method a["ident"]
     type a["type"]
     user a["user"]
+    options a["options"] || {}
   end
 end
 
