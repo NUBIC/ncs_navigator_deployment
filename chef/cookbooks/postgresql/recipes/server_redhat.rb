@@ -62,4 +62,5 @@ template "#{node[:postgresql][:dir]}/postgresql.conf" do
   group "postgres"
   mode 0600
   notifies :restart, resources(:service => "postgresql-#{version}")
+  variables :max_locks_per_transaction => node[:postgresql][:max_locks_per_transaction]
 end

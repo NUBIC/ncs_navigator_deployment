@@ -21,6 +21,7 @@ default_attributes(
 
 override_attributes(
   'postgresql' => {
-    'interfaces' => ['*']
+    'interfaces' => ['*'],
+    'max_locks_per_transaction' => 256
   }
 )

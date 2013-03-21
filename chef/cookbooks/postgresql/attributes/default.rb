@@ -72,3 +72,6 @@ end
 
 default[:postgresql][:interfaces] = ['localhost']
 default[:postgresql][:hba] = []
+
+# Minimum enforced by PostgreSQL is 10.
+default[:postgresql][:max_locks_per_transaction] = 64
