@@ -18,8 +18,8 @@
 #
 
 remote_file "/tmp/repoforge.rpm" do
-  source "http://pkgs.repoforge.org/rpmforge-release/rpmforge-release-0.5.2-2.el6.rf.x86_64.rpm"
-  checksum "8e9b34285a0251e777a39e65b8d76ba6cd6ca22a0d2eb7c8c153bd5023d6d952"
+  source "http://pkgs.repoforge.org/rpmforge-release/rpmforge-release-0.5.3-1.el6.rf.x86_64.rpm"
+  checksum "1f98252908e397f70a216964ed836e93ba4e80550eac343586895a993a41afb7"
 end
 
 rpm_package "repoforge" do
