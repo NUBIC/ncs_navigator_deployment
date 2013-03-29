@@ -30,6 +30,7 @@ include_recipe "screen"
   sysstat
   system-config-network-tui
   telnet
+  tmux
   wget
 ).each do |pkg|
   package pkg
