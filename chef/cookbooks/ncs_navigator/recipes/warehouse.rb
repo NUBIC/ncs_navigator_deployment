@@ -67,7 +67,7 @@ node["ncs_navigator"]["warehouse"]["db"]["databases"].values.each do |config|
     datamapper_adapter "postgres"
     group bcd_group
     host db_host
-    password db_password
+    password db_user_password
     username db_user
   end
 end
