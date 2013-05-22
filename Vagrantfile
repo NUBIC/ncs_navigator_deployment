@@ -48,6 +48,22 @@ def ncs_navigator_configuration
       "upgrade" => "1.20.12"
     },
     "ncs_navigator" => {
+      "locations" => [
+        { "name" => "Foo",
+          "url" => cases_url,
+          "machine_account" => {
+            "username" => "ncs_navigator_cases_dev",
+            "password" => "p@ssw0rd1"
+          }
+        },
+        { "name" => "Bar",
+          "url" => cases_url,
+          "machine_account" => {
+            "username" => "ncs_navigator_cases_dev",
+            "password" => "p@ssw0rd1"
+          }
+        }
+      ],
       "cas" => {
         "base_url" => "#{cas_url}/cas",
         "proxy_callback_url" => "#{cas_url}/cas-proxy-callback/receive_pgt",
