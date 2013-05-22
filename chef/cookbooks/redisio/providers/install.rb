@@ -259,16 +259,19 @@ def configure
 end
 
 def redis_exists?
-  exists = Mixlib::ShellOut.new("which redis-server")
-  exists.run_command
-  exists.exitstatus == 0 ? true : false
+  `which redis-server`
+  $?.success?
 end
 
 def version
   if redis_exists?
-    redis_version = Mixlib::ShellOut.new("redis-server -v")
-    redis_version.run_command
-    version = redis_version.stdout[/version (\d*.\d*.\d*)/,1] || redis_version.stdout[/v=(\d*.\d*.\d*)/,1]
+    output = `redis-server -v`
+    unless output =~ /version (\d*.\d*.\d*)/
+      output =~ /v=(\d*.\d*.\d*)/
+    end
+
+    version = $1
+
     Chef::Log.info("The Redis server version is: #{version}")
     return version.gsub("\n",'')
   end
