@@ -14,12 +14,13 @@
 
 # By default Redis does not run as a daemon. Use 'yes' if you need it.
 # Note that Redis will write a pid file in /var/run/redis.pid when daemonized.
+<% unless @job_control == 'upstart' %> 
 daemonize yes
+<% end %>
 
 # When running daemonized, Redis writes a pid file in /var/run/redis.pid by
 # default. You can specify a custom pid file location here.
-pidfile <%=@piddir%>/redis_<%=@port%>.pid
-pidfile /var/run/redis/redis_<%=@port%>.pid
+pidfile <%= @piddir %>/redis_<%=@name%>.pid
 
 # Accept connections on the specified port, default is 6379.
 # If port 0 is specified Redis will not listen on a TCP socket.
@@ -37,6 +38,9 @@ port <%=@port%>
 #
 # unixsocket /tmp/redis.sock
 # unixsocketperm 755
+<%= "unixsocket #{@unixsocket}" unless @unixsocket.nil? %>
+<%= "unixsocketperm #{@unixsocketperm}" unless @unixsocketperm.nil? %>
+
 # Close the connection after a client is idle for N seconds (0 to disable)
 <%= "timeout #{@timeout}" %>
 
@@ -51,17 +55,19 @@ loglevel <%=@loglevel%>
 # Specify the log file name. Also 'stdout' can be used to force
 # Redis to log on the standard output. Note that if you use standard
 # output for logging but daemonize, logs will be sent to /dev/null
-logfile stdout
+#
+# logfile stdout
+<%= "logfile #{@logfile}" unless @logfile.nil? %>
 
 # To enable logging to the system logger, just set 'syslog-enabled' to yes,
 # and optionally update the other syslog parameters to suit your needs.
-syslog-enabled yes
+syslog-enabled <%= "#{@syslogenabled}" %>
 
 # Specify the syslog identity.
-syslog-ident redis-<%=@port%>
+syslog-ident redis-<%=@name%>
 
 # Specify the syslog facility.  Must be USER or between LOCAL0-LOCAL7.
-# syslog-facility local0
+syslog-facility <%= "#{@syslogfacility}" %>
 
 # Set the number of databases. The default database is DB 0, you can select
 # a different one on a per-connection basis using SELECT <dbid> where
@@ -89,8 +95,15 @@ databases <%=@databases%>
 #save 60 10000
 
 <% if (@backuptype == 'rdb' || @backuptype == 'both') %>
-  <% @save.each do |save_option| %>
-    <%= "save #{save_option}" %>
+
+  <% if @save.nil? %>
+    save 900 1
+    save 300 10
+    save 60 10000
+  <% else %>
+    <% @save.each do |save_option| %>
+      <%= "save #{save_option}" %>
+    <% end %>
   <% end %>
 
 # Compress string objects using LZF when dump .rdb databases?
@@ -100,7 +113,7 @@ databases <%=@databases%>
 rdbcompression yes
 
 # The filename where to dump the DB
-dbfilename dump-<%=@port%>.rdb
+dbfilename dump-<%=@name%>.rdb
 <%end%>
 
 # The working directory.
@@ -284,7 +297,7 @@ appendonly yes
 appendonly no
 <%end%>
 # The name of the append only file (default: "appendonly.aof")
-appendfilename appendonly-<%=@port%>.aof
+appendfilename appendonly-<%=@name%>.aof
 
 # The fsync() call tells the Operating System to actually write data on disk
 # instead to wait for more data in the output buffer. Some OS will really flush 
@@ -375,6 +388,7 @@ slowlog-log-slower-than 10000
 # You can reclaim memory used by the slow log with SLOWLOG RESET.
 slowlog-max-len 1024
 
+<% unless @version[:major].to_i == 2 && @version[:minor].to_i >= 5 %> 
 ################################ VIRTUAL MEMORY ###############################
 
 ### WARNING! Virtual Memory is deprecated in Redis 2.4
@@ -449,15 +463,24 @@ vm-pages 134217728
 # The special value of 0 turn off threaded I/O and enables the blocking
 # Virtual Memory implementation.
 vm-max-threads 4
+<% end %>
 
 ############################### ADVANCED CONFIG ###############################
 
-# Hashes are encoded in a special way (much more memory efficient) when they
-# have at max a given numer of elements, and the biggest element does not
-# exceed a given threshold. You can configure this limits with the following
-# configuration directives.
-hash-max-zipmap-entries 512
-hash-max-zipmap-value 64
+# Hashes are encoded using a memory efficient data structure when they have a
+# small number of entries, and the biggest entry does not exceed a given
+# threshold. These thresholds can be configured using the following directives.
+
+<% #Once the first official 2.6 release is out, it would make sense to remove the extraneous :minor 5 comparison %>
+<% if @version[:major].to_i == 2 && (@version[:minor].to_i == 6 || @version[:minor].to_i == 5)  %> 
+  ######## Redis 2.6 ########
+  hash-max-ziplist-entries 512
+  hash-max-ziplist-value 64
+<% elsif @version[:major].to_i == 2 && @version[:minor].to_i == 4 %>
+  ######## Redis 2.4 ########
+  hash-max-zipmap-entries 512
+  hash-max-zipmap-value 64
+<% end %>
 
 # Similarly to hashes, small lists are also encoded in a special way in order
 # to save a lot of space. The special representation is only used when
@@ -497,6 +520,12 @@ zset-max-ziplist-value 64
 # use "activerehashing yes" if you don't have such hard requirements but
 # want to free memory asap when possible.
 activerehashing yes
+
+<%if @clusterenabled == 'yes' %>
+cluster-enabled yes
+cluster-config-file <%= @clusterconfigfile || "nodes-#{@name}.conf" %>
+cluster-node-timeout <%= @clusternodetimeout %>
+<%end%>
 
 ################################## INCLUDES ###################################
 

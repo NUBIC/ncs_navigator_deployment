@@ -2,7 +2,7 @@
 # Cookbook Name:: redisio
 # Provider::service
 #
-# Copyright 2012, Brian Bianco <brian.bianco@gmail.com>
+# Copyright 2013, Brian Bianco <brian.bianco@gmail.com>
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -18,30 +18,33 @@
 #
 
 action :start do
+  Chef::Log.warn("The redisio_service resource is deprecated!  Please use the redis<port> resource instead!")
   case node.platform
-  when 'ubuntu','debian','centos','redhat','fedora'
+  when 'ubuntu','debian','centos','redhat','fedora', 'amazon'
     if ::File.exists?("/etc/init.d/redis#{new_resource.server_port}")
       execute "/etc/init.d/redis#{new_resource.server_port} start"
     else
-      Chef::Log.warn("Cannot start service, init script does not exist")
+      Chef::Log.warn("Cannot start service, init script not found")
     end
   end
 end
 
 action :stop do
+  Chef::Log.warn("The redisio_service resource is deprecated!  Please use the redis<port> resource instead!")
   case node.platform
-  when 'ubuntu','debian','centos','redhat','fedora'
+  when 'ubuntu','debian','centos','redhat','fedora', 'amazon'
     if ::File.exists?("/etc/init.d/redis#{new_resource.server_port}")
       execute "/etc/init.d/redis#{new_resource.server_port} stop"
     else
-      Chef::Log.warn("Cannot stop service, init script does not exist")
+      Chef::Log.warn("Cannot stop service, init script not found")
     end
   end
 end
 
 action :restart do
+  Chef::Log.warn("The redisio_service resource is deprecated!  Please use the redis<port> resource instead!")
   case node.platform
-  when 'ubuntu','debian','centos','redhat','fedora'
+  when 'ubuntu','debian','centos','redhat','fedora', 'amazon'
     if ::File.exists?("/etc/init.d/redis#{new_resource.server_port}")
       execute "/etc/init.d/redis#{new_resource.server_port} stop && /etc/init.d/redis#{new_resource.server_port} start"
     else
@@ -51,6 +54,7 @@ action :restart do
 end
 
 action :enable do
+  Chef::Log.warn("The redisio_service resource is deprecated!  Please use the redis<port> resource instead!")
   case node.platform
   when 'ubuntu','debian'
     if ::File.exists?("/etc/init.d/redis#{new_resource.server_port}")
@@ -68,6 +72,7 @@ action :enable do
 end
 
 action :disable do
+  Chef::Log.warn("The redisio_service resource is deprecated!  Please use the redis<port> resource instead!")
   case node.platform
   when 'ubuntu','debian'
     if ::File.exists?("/etc/init.d/redis#{new_resource.server_port}")
