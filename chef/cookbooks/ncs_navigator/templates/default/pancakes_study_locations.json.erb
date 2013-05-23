@@ -1,0 +1,5 @@
+{"study_locations":[
+  <%- @locations.each do |l| %>
+  { "name": "<%= l['name'] %>", "url": "<%= l['url'] %>" }
+  <%- end %>
+]}

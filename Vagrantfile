@@ -22,6 +22,7 @@ def ncs_navigator_configuration
   cas_url = "https://ncs-cas.local"
   cases_url = "https://ncs-cases.local"
   ops_url = "https://ncs-ops.local"
+  pancakes_url = "https://ncs-pancakes.local"
   db_host = "#{make_hostname('db')}.local"
 
   {
@@ -144,6 +145,29 @@ def ncs_navigator_configuration
         "mail_from" => "ncs-ops@example.edu",
         "psc_user_password" => "p@ssw0rd1"
       },
+      "pancakes" => {
+        "app" => {
+          "url" => pancakes_url
+        },
+        "db" => {
+          "bcdatabase" => {
+            "group" => "local_postgresql"
+          },
+          "user" => {
+            "password" => "p@ssw0rd1"
+          }
+        },
+        "redis" => {
+          "bcdatabase" => {
+            "group" => "local_redis"
+          }
+        },
+        "user" => {
+          "ssh_keys" => [
+            "ncs-vagrant"
+          ]
+        }
+      },
       "psc" => {
         "url" => "https://ncs-psc.local",
         "db" => {
@@ -261,12 +285,14 @@ Vagrant::Config.run do |config|
         'recipe[zeroconf]',
         'recipe[zeroconf::cnames]',
         'role[ncs_ops_psc]',
+        'role[ncs_pancakes]',
         'recipe[ncs_navigator::psc_devenv]',
-        'recipe[ncs_navigator::ops_devenv]'
+        'recipe[ncs_navigator::ops_devenv]',
+        'recipe[ncs_navigator::pancakes_devenv]'
       ]
 
       chef.json['zeroconf'].update({
-        'cnames' => ['ncs-psc.local']
+        'cnames' => ['ncs-psc.local', 'ncs-pancakes.local']
       })
     end
   end
