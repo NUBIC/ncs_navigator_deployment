@@ -12,12 +12,33 @@
 # Description: redis<%= @port %> init script
 ### END INIT INFO
 
+REDISNAME=<%= @name %>
 REDISPORT=<%= @port %>
-EXEC=/usr/local/bin/redis-server
+<% case @platform %>
+<% when 'ubuntu','debian','fedora' %>
+EXEC="sudo -u <%= @user %> /usr/local/bin/redis-server <%= @configdir %>/${REDISNAME}.conf"
+<% else %> 
+EXEC="runuser <%= @user %> -c \"/usr/local/bin/redis-server <%= @configdir %>/${REDISNAME}.conf\""
+<% end %>
 CLIEXEC=/usr/local/bin/redis-cli
 
-PIDFILE=/var/run/redis_${REDISPORT}.pid
-CONF="/etc/redis/${REDISPORT}.conf"
+<% connection_string = String.new %>
+<% if @unixsocket.nil? %> 
+  <% connection_string << " -p #{@port}" %>
+  <% connection_string << " -h #{@address}" if @address %>
+<% else %>
+  <% connection_string << " -s #{@unixsocket}" %>
+<% end %>
+<% connection_string  << " -a '#{@requirepass}'" unless @requirepass.nil? %>  
+
+PIDFILE=<%= @piddir %>/redis_${REDISNAME}.pid
+
+if [ ! -d <%= @piddir %> ]; then
+    mkdir -p <%= @piddir %>
+    chown <%= @user %>  <%= @piddir %>
+fi
+
+ulimit -n <%= @ulimit %>
 
 case "$1" in
     start)
@@ -26,7 +47,7 @@ case "$1" in
                 echo "$PIDFILE exists, process is already running or crashed"
         else
                 echo "Starting Redis server..."
-                $EXEC $CONF
+                eval $EXEC
         fi
         ;;
     stop)
@@ -36,7 +57,10 @@ case "$1" in
         else
                 PID=$(cat $PIDFILE)
                 echo "Stopping ..."
-                $CLIEXEC -p $REDISPORT shutdown
+
+                <%= "$CLIEXEC #{connection_string} save" if @shutdown_save %>                 
+                $CLIEXEC <%= connection_string %> shutdown
+
                 while [ -x /proc/${PID} ]
                 do
                     echo "Waiting for Redis to shutdown ..."

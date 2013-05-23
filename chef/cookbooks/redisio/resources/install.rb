@@ -2,7 +2,7 @@
 # Cookbook Name:: redisio
 # Resource::install
 #
-# Copyright 2012, Brian Bianco <brian.bianco@gmail.com>
+# Copyright 2013, Brian Bianco <brian.bianco@gmail.com>
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,8 +16,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-
 actions :run
+
+#Uncomment this and remove the block in initialize when ready to drop support for chef <= 0.10.8
+#default_action :run
 
 #Installation attributes
 attribute :version, :kind_of => String
@@ -26,6 +28,7 @@ attribute :download_dir, :kind_of => String, :default => Chef::Config[:file_cach
 attribute :artifact_type, :kind_of => String, :default => 'tar.gz'
 attribute :base_name, :kind_of => String, :default => 'redis-'
 attribute :safe_install, :kind_of => [ TrueClass, FalseClass ], :default => true
+attribute :base_piddir, :kind_of => String, :default => '/var/run/redis'
 
 #Configuration attributes
 attribute :user, :kind_of => String, :default => 'redis'
