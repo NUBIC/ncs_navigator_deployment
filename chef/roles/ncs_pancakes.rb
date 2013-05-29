@@ -4,6 +4,8 @@ description "NCS Navigator Pancakes application server"
 run_list %w(
   recipe[build-essential]
   recipe[postgresql::client]
+  recipe[redisio::install]
+  recipe[redisio::enable]
   recipe[rvm::system]
   recipe[apache2]
   recipe[bcdatabase]
@@ -23,6 +25,15 @@ default_attributes(
   },
   "application_user" => {
     "shell" => "/bin/bash"
+  },
+  "redisio" => {
+    "version" => "2.6.13",
+    "safe_install" => true,
+    "servers" => [
+      { "port" => "6379",
+        "address" => "127.0.0.1"
+      }
+    ]
   },
   "passenger" => {
     "rvm_ruby_string" => "ruby-1.9.3-p327",
