@@ -11,6 +11,11 @@
   DocumentRoot <%= @app_root %>/current/public
   RailsEnv <%= @env %>
   SetEnv <%= @secret_token_env_var %> "<%= @secret_token %>"
+
+  <% @additional_env_vars.each do |k, v| %>
+  SetEnv <%= k %> "<%= v %>"
+  <% end %>
+
   <% if @min_instances %>
   PassengerMinInstances <%= @min_instances %>
   <% end %>

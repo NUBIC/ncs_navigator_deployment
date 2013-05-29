@@ -17,7 +17,7 @@
 # limitations under the License.
 #
 
-define :ncs_rails_app do
+define :ncs_rails_app, :additional_env_vars => {} do
   require 'uri'
 
   include_recipe "apache2"
@@ -118,7 +118,8 @@ define :ncs_rails_app do
       :ssl_certificate_chain => ssl_certificate_chain,
       :ssl_certificate => ssl_certificate,
       :ssl_key => ssl_key,
-      :uri => app_url
+      :uri => app_url,
+      :additional_env_vars => params[:additional_env_vars]
     )
 
     notifies :reload, resources(:service => 'apache2')

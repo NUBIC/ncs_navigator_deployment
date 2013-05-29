@@ -24,13 +24,21 @@ include_recipe "bcdatabase"
 include_recipe "database"
 
 app_key = "pancakes"
+app = node["ncs_navigator"][app_key]
 
-ncs_rails_app app_key
+ncs_rails_app app_key do
+  additional_env_vars({
+    'AKER_CENTRAL_PATH' => node["aker"]["central"]["path"],
+    'OPS_URL' => node["ncs_navigator"]["ops"]["app"]["url"],
+    'STUDY_LOCATIONS_PATH' => app["study_locations_path"],
+    'USE_BCDATABASE_FOR_REDIS' => '1'
+  })
+end
 
 # Database and corresponding user.
-db_name = node["ncs_navigator"][app_key]["db"]["name"]
-db_user_name = node["ncs_navigator"][app_key]["db"]["user"]["name"]
-db_user_password = node["ncs_navigator"][app_key]["db"]["user"]["password"]
+db_name = app["db"]["name"]
+db_user_name = app["db"]["user"]["name"]
+db_user_password = app["db"]["user"]["password"]
 
 ncs_navigator_db_user db_user_name do
   action :create
@@ -45,15 +53,15 @@ end
 
 # Set up database information in bcdatabase.
 ncs_navigator_bcdatabase_config app_key do
-  config_hash node["ncs_navigator"][app_key]["db"]["bcdatabase"]
+  config_hash app["db"]["bcdatabase"]
   database db_name
   password db_user_password
-  pool_size node["ncs_navigator"][app_key]["db"]["pool"]
+  pool_size app["db"]["pool"]
   username db_user_name
 end
 
 # Redis configuration.
-redis = node["ncs_navigator"][app_key]["redis"]
+redis = app["redis"]
 
 bcdatabase_config "redis_for_#{app_key}" do
   action :create
