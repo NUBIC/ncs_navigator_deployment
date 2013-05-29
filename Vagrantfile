@@ -71,7 +71,7 @@ def ncs_navigator_configuration
       "cases" => {
         "study_center" => {
           "sc_id" => "1234567890",
-          "recruitment_type_id" => "3",
+          "recruitment_type_id" => 3,
           "short_name" => "DEV",
           "exception_email_recipients" => [],
           "sampling_units" => {
