@@ -39,6 +39,14 @@ def ncs_navigator_configuration
         "password" => "CAS#pass"
       }
     },
+    "passenger" => {
+      "rvm_ruby_string" => "ruby-1.9.3-p429"
+    },
+    "rvm" => {
+      "rubies" => ["ruby-1.9.3-p429"],
+      "version" => "1.20.12",
+      "upgrade" => "1.20.12"
+    },
     "ncs_navigator" => {
       "cas" => {
         "base_url" => "#{cas_url}/cas",

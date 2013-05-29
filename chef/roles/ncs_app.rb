@@ -29,7 +29,6 @@ default_attributes(
     "shell" => "/bin/bash"
   },
   "passenger" => {
-    "rvm_ruby_string" => "ruby-1.9.3-p327",
     "version" => "3.0.12",
     "max_pool_size" => 10
   },
@@ -45,16 +44,13 @@ default_attributes(
   },
   "rvm" => {
     "default_ruby" => "system",
-    "rubies" => ["ruby-1.9.3-p327"],
     "global_gems" => [
         { "name" => "bundler", "version" => "~> 1.1" }
      ],
      "rvmrc" => {
         'rvm_project_rvmrc' => '0'
      },
-     "branch" => "none",
-     "version" => "1.16.20",
-     "upgrade" => "1.16.20"
+     "branch" => "none"
   },
   "bcdatabase" => {
     "version" => "1.2.1"
