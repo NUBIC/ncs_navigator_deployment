@@ -29,6 +29,7 @@ app = node["ncs_navigator"][app_key]
 ncs_rails_app app_key do
   additional_env_vars({
     'AKER_CENTRAL_PATH' => node["aker"]["central"]["path"],
+    'NCS_NAVIGATOR_INI_PATH' => node["ncs_navigator"]["ini"]["path"],
     'OPS_URL' => node["ncs_navigator"]["ops"]["app"]["url"],
     'STUDY_LOCATIONS_PATH' => app["study_locations_path"],
     'USE_BCDATABASE_FOR_REDIS' => '1'
