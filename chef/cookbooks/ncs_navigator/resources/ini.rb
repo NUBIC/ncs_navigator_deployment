@@ -33,6 +33,7 @@ attribute :ops_google_analytics_number, :kind_of => String
 attribute :ops_mail_from, :kind_of => String
 attribute :ops_psc_user_password, :kind_of => String
 attribute :ops_uri, :kind_of => String
+attribute :pancakes_mdes_version, :kind_of => String
 attribute :ps_ssl_ca_file, :kind_of => String
 attribute :ps_uri, :kind_of => String
 attribute :sc_exception_email_recipients, :kind_of => Array

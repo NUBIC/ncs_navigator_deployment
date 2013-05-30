@@ -57,6 +57,7 @@ def vars(new_resource)
     ops_mail_from
     ops_psc_user_password
     ops_uri
+    pancakes_mdes_version
     ps_ssl_ca_file
     ps_uri
     sc_exception_email_recipients

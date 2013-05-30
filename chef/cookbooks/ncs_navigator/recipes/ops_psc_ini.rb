@@ -20,15 +20,18 @@
 include_recipe "application_user"
 include_recipe "ncs_navigator::ops"
 include_recipe "ncs_navigator::psc"
+include_recipe "ncs_navigator::pancakes"
 
 psc = node["ncs_navigator"]["psc"]
 smtp = node["ncs_navigator"]["smtp"]
 ops = node["ncs_navigator"]["ops"]
+pancakes = node["ncs_navigator"]["pancakes"]
 
 ini_path = node["ncs_navigator"]["ini"]["path"]
 
 ncs_navigator_ini ini_path do
   action :create
+  pancakes_mdes_version pancakes["mdes_version"]
   ps_uri psc["url"]
   ps_ssl_ca_file psc["ssl"]["ca_file"]
   smtp_authentication smtp["authentication"]
