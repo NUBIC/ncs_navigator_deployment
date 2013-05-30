@@ -82,3 +82,17 @@ file app["study_locations_path"] do
   group node["application_user"]["group"]
   content({ "study_locations" => locs }.to_json)
 end
+
+# Monitoring.
+monitrc "monitor_pancakes_sidekiq",
+  :pid => app["worker"]["pid"],
+  :log => app["worker"]["log"],
+  :concurrency => app["worker"]["concurrency"],
+  :env => node["ncs_navigator"]["env"],
+  :current_path => app["app"]["current_path"],
+  :uid => app["user"]["name"],
+  :gid => node["application_user"]["group"]
+
+monitrc "monitor_pancakes_redis",
+  :host => node["ncs_navigator"]["pancakes"]["redis"]["host"],
+  :port => node["ncs_navigator"]["pancakes"]["redis"]["port"]
