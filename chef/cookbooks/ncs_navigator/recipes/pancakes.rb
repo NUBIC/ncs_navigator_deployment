@@ -91,6 +91,7 @@ monitrc "monitor_pancakes_sidekiq",
   :concurrency => app["worker"]["concurrency"],
   :env => node["ncs_navigator"]["env"],
   :current_path => app["app"]["current_path"],
+  :aker_central_path => node["aker"]["central"]["path"],
   :uid => app["user"]["name"],
   :gid => node["application_user"]["group"]
 
