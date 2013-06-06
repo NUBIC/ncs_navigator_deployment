@@ -81,6 +81,7 @@ default["ncs_navigator"]["pancakes"]["db"]["name"] = "ncs_navigator_pancakes"
 default["ncs_navigator"]["pancakes"]["db"]["pool_size"] = "10"
 default["ncs_navigator"]["pancakes"]["db"]["user"]["name"] = "ncs_navigator_pancakes"
 default["ncs_navigator"]["pancakes"]["old_log_path"] = "#{pancakes_shared}/old_logs"
+default["ncs_navigator"]["pancakes"]["query_concurrency"] = 2
 default["ncs_navigator"]["pancakes"]["redis"]["bcdatabase"]["config"] = "ncs_navigator_pancakes"
 default["ncs_navigator"]["pancakes"]["redis"]["db"] = 0
 default["ncs_navigator"]["pancakes"]["redis"]["host"] = "localhost"
