@@ -1,5 +1,6 @@
 package "monit" do
-  action :install
+  action :upgrade
+  version "5.5-1"
 end
 
 monit_conf = case node[:platform]
