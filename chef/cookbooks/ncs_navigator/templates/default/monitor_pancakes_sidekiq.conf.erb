@@ -1,12 +1,12 @@
 check directory pancakes_sidekiq_location path <%= @current_path %>
   if changed timestamp
-  then exec "/usr/bin/env AKER_CENTRAL_PATH=<%= @aker_central_path %> USE_BCDATABASE_FOR_REDIS=1 <%= @current_path %>/script/sidekiq.sh restart <%= @env %> '<%= @pid %>' '<%= @log %>' <%= @concurrency %>"
+  then exec "/usr/bin/env QUERY_CONCURRENCY=<%= @query_concurrency %> AKER_CENTRAL_PATH=<%= @aker_central_path %> USE_BCDATABASE_FOR_REDIS=1 <%= @current_path %>/script/sidekiq.sh restart <%= @env %> '<%= @pid %>' '<%= @log %>' <%= @concurrency %>"
     as uid <%= @uid %> and gid <%= @gid %>
   group ncs_navigator_pancakes
 
 check process pancakes_sidekiq
   with pidfile <%= @pid %>
-  start program = "/usr/bin/env AKER_CENTRAL_PATH=<%= @aker_central_path %> USE_BCDATABASE_FOR_REDIS=1 <%= @current_path %>/script/sidekiq.sh start <%= @env %> '<%= @pid %>' '<%= @log %>' <%= @concurrency %>"
+  start program = "/usr/bin/env QUERY_CONCURRENCY=<%= @query_concurrency %> AKER_CENTRAL_PATH=<%= @aker_central_path %> USE_BCDATABASE_FOR_REDIS=1 <%= @current_path %>/script/sidekiq.sh start <%= @env %> '<%= @pid %>' '<%= @log %>' <%= @concurrency %>"
     as uid <%= @uid %> and gid <%= @gid %>
   stop program = "<%= @current_path %>/script/sidekiq.sh stop <%= @env %> '<%= @pid %>' '<%= @log %>' <%= @concurrency %>"
   group ncs_navigator_pancakes
