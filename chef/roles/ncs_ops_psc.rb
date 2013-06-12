@@ -51,5 +51,11 @@ default_attributes(
   },
   "bcdatabase" => {
     "version" => "1.2.1"
+  },
+  "ncs_navigator_nubic" => {
+    "deploy_monitor" => {
+      "ops" => true,
+      "psc" => true
+    }
   }
 )
