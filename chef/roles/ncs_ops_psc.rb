@@ -54,8 +54,10 @@ default_attributes(
   },
   "ncs_navigator_nubic" => {
     "deploy_monitor" => {
-      "ops" => true,
-      "psc" => true
+      "monitor" => {
+        "ops" => true,
+        "psc" => true
+      }
     }
   }
 )

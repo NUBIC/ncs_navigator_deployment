@@ -65,7 +65,9 @@ default_attributes(
   },
   "ncs_navigator_nubic" => {
     "deploy_monitor" => {
-      "cases" => true
+      "monitor" => {
+        "cases" => true
+      }
     }
   }
 )

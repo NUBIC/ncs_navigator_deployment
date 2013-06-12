@@ -58,7 +58,9 @@ default_attributes(
   },
   "ncs_navigator_nubic" => {
     "deploy_monitor" => {
-      "pancakes" => true
+      "monitor" => {
+        "pancakes" => true
+      }
     }
   }
 )
