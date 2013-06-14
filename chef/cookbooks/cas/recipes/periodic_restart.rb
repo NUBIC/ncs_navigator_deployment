@@ -27,5 +27,6 @@ cron "periodic_cas_restart" do
   user "root"
   command "monit restart cas_via_tomcat"
   hour "0"
+  minute "00"
   weekday "0"
 end
