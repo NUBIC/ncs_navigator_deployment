@@ -14,6 +14,7 @@ run_list(%w(
   recipe[iptables::http]
   recipe[iptables::https]
   recipe[ncs_navigator::cas_machine_accounts]
+  recipe[cas::periodic_restart]
   role[ncs_chef_managed]
 ))
 
