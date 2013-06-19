@@ -42,6 +42,14 @@ default_attributes(
       }
     }
   },
+  "ncs_navigator_nubic" => {
+    "deploy_monitor" => {
+      "monitor" => {
+        "cases" => true,
+        "ops" => true
+      }
+    }
+  },
   "rvm" => {
     "default_ruby" => "system",
     "global_gems" => [
