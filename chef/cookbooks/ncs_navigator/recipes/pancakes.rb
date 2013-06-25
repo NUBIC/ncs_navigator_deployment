@@ -75,7 +75,7 @@ bcdatabase_config "redis_for_#{app_key}" do
 end
 
 # Configure Pancakes' study locations.
-locs = node["ncs_navigator"]["locations"].map do |loc|
+locs = node["ncs_navigator"]["locations"].select { |l| l['pancakes'] }.map do |loc|
   { "name" => loc["name"], "url" => loc["url"] }
 end
 
