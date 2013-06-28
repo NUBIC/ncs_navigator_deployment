@@ -22,6 +22,7 @@ include_recipe "screen"
 
 %w(
   bind-utils
+  emacs
   lsof
   mlocate
   multitail
@@ -31,6 +32,7 @@ include_recipe "screen"
   system-config-network-tui
   telnet
   tmux
+  vim
   wget
 ).each do |pkg|
   package pkg
