@@ -47,6 +47,7 @@ ncs_navigator_ini ini_path do
   sc_short_name study_center["short_name"]
   sc_username study_center["username"]
   ops_uri ops["app"]["url"]
+  ops_psc_user_password ops["psc_user_password"]
   smtp_authentication smtp["authentication"]
   smtp_domain smtp["domain"]
   smtp_host smtp["host"]
