@@ -2,7 +2,7 @@ name "ncs_production"
 description "Production environment"
 
 cookbook_versions(
-  'ncs_navigator' => '0.2.0'
+  'ncs_navigator' => '~> 0.3.0'
 )
 
 default_attributes(
