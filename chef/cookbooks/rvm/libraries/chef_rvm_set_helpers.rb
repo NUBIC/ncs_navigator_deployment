@@ -7,7 +7,7 @@ class Chef
         if Gem::Version.new(rvm_version) < Gem::Version.new("1.8.6")
           "exec"
         else
-          "do"
+          "all do"
         end
       end
 
