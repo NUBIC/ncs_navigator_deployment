@@ -143,6 +143,12 @@ node[:ncs_navigator][:apps].each do |app|
 
         subscribes :touch, resources(:template => config_dest)
       end
+
+      cookbook_file "#{current_path}/public/offline.html" do
+        action :create
+        mode 0644
+        owner user
+      end
     end
 
     apache_site File.basename(config_dest) do

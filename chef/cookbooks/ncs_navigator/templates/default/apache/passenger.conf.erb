@@ -15,16 +15,14 @@
   PassengerMinInstances <%= @min_instances %>
   <% end %>
 
-  ErrorDocument 503 /maintenance.html
+  ErrorDocument 410 /offline.html
 
   RewriteEngine on
 
-  # If tmp/stop.txt exists ...
-  RewriteCond %{DOCUMENT_ROOT}/../tmp/stop.txt -f
-  # ... and the request is not for an existing static file ...
+  # If it's not from us, block it.
+  RewriteCond %{REMOTE_ADDR} !^165.124.223.*
   RewriteCond %{DOCUMENT_ROOT}/%{REQUEST_FILENAME} !-f
-  # ... send a 503 status for the requested page.
-  RewriteRule ^(.*)$ /$1 [R=503,L]
+  RewriteRule ^(.*)$ /$1 [R=410,L]
 
   <Directory <%= @app_root %>/current/public>
     Allow from all
